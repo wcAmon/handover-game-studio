@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Prints how much time the current shift has left and what the agent should be doing now.
+# Reads STUDIO_* from the environment, falling back to .studio/session.env.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+if [ -z "${STUDIO_HARD_DEADLINE_EPOCH:-}" ] && [ -f "$ROOT/.studio/session.env" ]; then
+  . "$ROOT/.studio/session.env"
+fi
+if [ -z "${STUDIO_HARD_DEADLINE_EPOCH:-}" ]; then
+  echo "目前沒有進行中的班次（非 harness 啟動的 session 沒有時間限制）。"
+  exit 0
+fi
+
+now=$(date +%s)
+fmt() { date -d "@$1" '+%H:%M' 2>/dev/null || date -r "$1" '+%H:%M'; }
+elapsed=$(( (now - STUDIO_START_EPOCH) / 60 ))
+to_soft=$(( (STUDIO_SOFT_DEADLINE_EPOCH - now) / 60 ))
+to_hard=$(( (STUDIO_HARD_DEADLINE_EPOCH - now) / 60 ))
+
+echo "現在 $(fmt "$now")｜已用 ${elapsed} 分｜距軟截止 $(fmt "$STUDIO_SOFT_DEADLINE_EPOCH") 還有 ${to_soft} 分｜距硬截止 $(fmt "$STUDIO_HARD_DEADLINE_EPOCH") 還有 ${to_hard} 分"
+if [ "$now" -ge "$STUDIO_HARD_DEADLINE_EPOCH" ]; then
+  echo "⛔ 已過硬截止：隨時會被終止。立刻把進度寫進 handover.md 並結束。"
+elif [ "$now" -ge "$STUDIO_SOFT_DEADLINE_EPOCH" ]; then
+  echo "⚠️ 已過軟截止：停止新工作，進入收班（驗證 → 改寫 handover.md → check-handover → commit）。"
+elif [ "$to_soft" -le 10 ]; then
+  echo "⏳ 剩不到 10 分鐘就要收班：不要開始新的大改動，把手上的做到可驗證的狀態。"
+fi

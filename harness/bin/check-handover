@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+"""Validate handover.md: size limit, required sections, exactly one NOW task, updated this shift.
+
+Usage: check-handover [--file handover.md] [--max 8000] [--baseline snapshot.md]
+Exit 0 when valid; otherwise prints one '✗' line per problem and exits 1.
+Agents should run this before ending a shift.
+"""
+import argparse
+import os
+import re
+import sys
+
+ROOT = os.environ.get("STUDIO_ROOT") or os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SECTIONS = ["NORTH_STAR", "STATE", "TASKS", "PITFALLS", "PLAYBOOK", "HUMAN", "LOG"]
+MAX_LOG_ENTRIES = 5
+
+
+def section(text, marker):
+    """Body of the '## ... MARKER' section, up to the next '## ' heading."""
+    m = re.search(rf"^##\s[^\n]*\b{marker}\b[^\n]*\n(.*?)(?=^##\s|\Z)", text, re.M | re.S)
+    return m.group(1) if m else None
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--file", default=os.path.join(ROOT, os.environ.get("HANDOVER_FILE", "handover.md")))
+    ap.add_argument("--max", type=int, default=int(os.environ.get("HANDOVER_MAX_CHARS", 8000)))
+    ap.add_argument("--baseline", help="snapshot from shift start; the handover must differ from it")
+    args = ap.parse_args()
+
+    if not os.path.exists(args.file):
+        print(f"✗ {args.file} does not exist")
+        return 1
+    text = open(args.file, encoding="utf-8").read()
+    errors = []
+
+    n = len(text)
+    if n > args.max:
+        errors.append(f"✗ 長度 {n} 字元，超過上限 {args.max}（超出 {n - args.max}）。"
+                      "把舊的坑移到 docs/lessons.md、刪除已完成任務、LOG 只留最近 5 班。")
+
+    status = re.search(r"^STATUS:\s*(ACTIVE|BLOCKED|DONE)\b", text, re.M)
+    if not status:
+        errors.append("✗ 缺少 'STATUS: ACTIVE|BLOCKED|DONE' 行")
+
+    for marker in SECTIONS:
+        if section(text, marker) is None:
+            errors.append(f"✗ 缺少區段：標題中含有 {marker} 的 '## ' 標題")
+
+    tasks = section(text, "TASKS")
+    if tasks is not None and status and status.group(1) == "ACTIVE":
+        now = re.search(r"^###\s[^\n]*\bNOW\b[^\n]*\n(.*?)(?=^#{2,3}\s|\Z)", tasks, re.M | re.S)
+        count = len(re.findall(r"^\s*- \[T-\d+\]", now.group(1), re.M)) if now else 0
+        if count != 1:
+            errors.append(f"✗ STATUS 為 ACTIVE 時 '### NOW' 下必須恰好一個任務（'- [T-001] ...'），目前 {count} 個")
+
+    if status and status.group(1) == "BLOCKED":
+        human = section(text, "HUMAN") or ""
+        if not re.search(r"^\s*- ", human, re.M):
+            errors.append("✗ STATUS 為 BLOCKED，但 HUMAN 區段沒有列出需要人類回答的問題")
+
+    log = section(text, "LOG")
+    if log is not None:
+        entries = re.findall(r"^\s*- #\d+", log, re.M)
+        if len(entries) > MAX_LOG_ENTRIES:
+            errors.append(f"✗ LOG 有 {len(entries)} 筆，只保留最近 {MAX_LOG_ENTRIES} 班（歷史在 git log）")
+
+    if args.baseline and os.path.exists(args.baseline):
+        if open(args.baseline, encoding="utf-8").read() == text:
+            errors.append("✗ 本班沒有更新 handover.md（至少要更新 STATE、TASKS 與 LOG）")
+
+    if errors:
+        print("\n".join(errors))
+        return 1
+    print(f"✓ handover OK（{n}/{args.max} 字元）")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,8 @@
+# harness runtime state (locks, logs, counters)
+.studio/
+harness/config.local.sh
+
+node_modules/
+dist/
+.DS_Store
+__pycache__/

@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Stand-in agent for rehearsing the harness without spending tokens (AGENT=mock).
+
+MOCK_BEHAVIOR:
+  ok        (default) record a LOG line, keep the last 5
+  noupdate  touch nothing              → exercises the repair shift
+  overflow  blow past the size limit   → exercises the repair shift
+  hang      never return               → exercises the timeout (use SESSION_MINUTES=1)
+MOCK_SLEEP: seconds to pretend to work (default 2).
+"""
+import datetime
+import os
+import re
+import time
+
+root = os.environ["STUDIO_ROOT"]
+path = os.path.join(root, os.environ.get("HANDOVER_FILE", "handover.md"))
+no = os.environ.get("STUDIO_SESSION_NO", "0")
+mode = os.environ.get("STUDIO_MODE", "shift")
+behavior = "ok" if mode == "repair" else os.environ.get("MOCK_BEHAVIOR", "ok")
+print(f"[mock-agent] shift #{no} mode={mode} behavior={behavior}", flush=True)
+
+if behavior == "hang":
+    while True:
+        time.sleep(60)
+time.sleep(float(os.environ.get("MOCK_SLEEP", "2")))
+
+text = open(path, encoding="utf-8").read()
+if behavior == "overflow":
+    text = text.replace("## 坑 PITFALLS\n", "## 坑 PITFALLS\n" + "- MOCK-OVERFLOW 冗長的紀錄\n" * 600, 1)
+elif behavior == "ok":
+    text = re.sub(r"^- MOCK-OVERFLOW.*\n", "", text, flags=re.M)
+    head, sep, log = text.partition("## 班次紀錄 LOG\n")
+    lines = log.splitlines(keepends=True)
+    entries = [l for l in lines if l.startswith("- #")]
+    others = [l for l in lines if not l.startswith("- #")]
+    entries = (entries + [f"- #{no} {datetime.date.today()} mock 班次（{mode}）\n"])[-5:]
+    text = head + sep + "".join(others) + "".join(entries)
+    with open(os.path.join(root, ".studio", "mock-work.txt"), "a") as f:
+        f.write(f"shift {no}\n")
+with open(path, "w", encoding="utf-8") as f:
+    f.write(text)
+print("[mock-agent] done", flush=True)

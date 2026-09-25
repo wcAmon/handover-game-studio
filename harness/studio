@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# Control panel for the shift harness.
+set -uo pipefail
+. "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+cd "$STUDIO_ROOT"
+
+CRON_MARK="# handover-game-studio:$STUDIO_ROOT"
+
+usage() {
+  cat <<EOF
+usage: harness/studio <command>
+
+  status                   目前班次、剩餘時間、NOW 任務、最近結果
+  run-now [--foreground]   立刻開一班（不等 cron）；--foreground 在前景執行並顯示輸出
+  tick                     手動執行一次 cron tick
+  stop                     終止進行中的班次
+  pause [原因] | resume     暫停 / 恢復自動輪班
+  logs [shift]             harness 紀錄；加 shift 則追蹤最新班次的 agent 輸出
+  install-cron | uninstall-cron   安裝 / 移除「每 10 分鐘 tick」的 crontab
+  check                    驗證 handover.md
+EOF
+}
+
+cmd_status() {
+  echo "== Handover Game Studio ($AGENT, ${SESSION_MINUTES}m 班次) =="
+  [ -f "$PAUSE_FILE" ] && echo "⏸  已暫停：$(cat "$PAUSE_FILE")"
+  if [ -f "$SESSION_ENV" ] && load_session && pid_alive "${STUDIO_PID:-}"; then
+    echo "▶  班次 #$STUDIO_SESSION_NO 進行中（pid $STUDIO_PID）"
+    "$HARNESS_DIR/bin/time-left" | sed 's/^/   /'
+  else
+    echo "·  目前沒有班次在跑"
+  fi
+  echo "STATUS: $(handover_status)｜今日已開 $(today_count)/$MAX_SESSIONS_PER_DAY 班｜累計 $(cat "$STATE_DIR/counter" 2>/dev/null || echo 0) 班"
+  if [ -f "$HANDOVER_FILE" ]; then
+    echo "NOW:  $(awk '/^### .*NOW/{f=1;next} /^##/{f=0} f && /^- \[T-/{print; exit}' "$HANDOVER_FILE" | cut -c1-140)"
+  fi
+  [ -f "$LAST_RESULT" ] && echo "上一班：$(cat "$LAST_RESULT")"
+  crontab -l 2>/dev/null | grep -qF "$CRON_MARK" && echo "cron: 已安裝" || echo "cron: 未安裝"
+  echo "-- 最近紀錄 --"; tail -n 5 "$LOG_DIR/harness.log" 2>/dev/null
+}
+
+cmd_run_now() {
+  if [ "${1:-}" = "--foreground" ]; then
+    exec "$HARNESS_DIR/run-session.sh" --foreground
+  fi
+  setsid nohup "$HARNESS_DIR/run-session.sh" >> "$LOG_DIR/harness.log" 2>&1 < /dev/null &
+  echo "shift started in background — harness/studio status / harness/studio logs shift"
+}
+
+cmd_stop() {
+  [ -f "$SESSION_ENV" ] && load_session && pid_alive "${STUDIO_PID:-}" || { echo "no running shift"; return 0; }
+  kill_session_groups TERM; sleep 3; kill_session_groups KILL
+  log "shift #$STUDIO_SESSION_NO stopped by human"
+  echo "stopped shift #$STUDIO_SESSION_NO"
+}
+
+cmd_logs() {
+  if [ "${1:-}" = shift ]; then
+    latest="$(ls -t "$LOG_DIR"/shift-*.log 2>/dev/null | head -n1)"
+    [ -n "$latest" ] && exec tail -n 50 -f "$latest"
+    echo "no shift logs yet"
+  else
+    tail -n 40 "$LOG_DIR/harness.log" 2>/dev/null
+  fi
+}
+
+cmd_install_cron() {
+  line="*/10 * * * * $HARNESS_DIR/tick.sh >> $LOG_DIR/tick.log 2>&1 $CRON_MARK"
+  { crontab -l 2>/dev/null | grep -vF "$CRON_MARK"; echo "$line"; } | crontab -
+  echo "installed: $line"
+}
+
+cmd_uninstall_cron() {
+  crontab -l 2>/dev/null | grep -vF "$CRON_MARK" | crontab -
+  echo "removed cron entry"
+}
+
+case "${1:-}" in
+  status|"")      cmd_status ;;
+  run-now)        shift; cmd_run_now "$@" ;;
+  tick)           exec "$HARNESS_DIR/tick.sh" ;;
+  stop)           cmd_stop ;;
+  pause)          shift; echo "${*:-paused by human at $(ts)}" > "$PAUSE_FILE"; echo "paused" ;;
+  resume)         rm -f "$PAUSE_FILE"; echo "resumed" ;;
+  logs)           shift; cmd_logs "$@" ;;
+  install-cron)   cmd_install_cron ;;
+  uninstall-cron) cmd_uninstall_cron ;;
+  check)          exec python3 "$HARNESS_DIR/bin/check-handover" ;;
+  -h|--help|help) usage ;;
+  *)              usage; exit 2 ;;
+esac
