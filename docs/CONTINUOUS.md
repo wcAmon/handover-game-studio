@@ -41,3 +41,12 @@ python3 harness/continuous.py start --codex /Applications/ChatGPT.app/Contents/R
 ```
 
 這是此機器的已驗證路徑，其他主機用自己的新版 CLI；不假設所有人安裝路徑相同。真實 agent 已讀交班、執行測試與建置，再進入當班任務。完成整個產品仍以工作區驗收證據為準。
+
+## 明確授權的完整執行權限
+預設仍是 workspace-write。2026-09-27 本機班次被 macOS sandbox 阻擋 Chromium 啟動及 Git 寫入，人類在知悉移除限制後明確回覆「允許」。此工作區後續接班可使用：
+
+```sh
+python3 harness/continuous.py start --codex /Applications/ChatGPT.app/Contents/Resources/codex --sandbox danger-full-access
+```
+
+start 會將此選項傳給背景監督器與每個新 CLI；status 顯示實際 sandbox 設定。這是本次明確授權，不是其他工作區的預設。仍遵守專案範圍、不推送、不發布；原先失敗的瀏覽器驗收須重新執行，不能因授權就當作通過。

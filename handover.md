@@ -8,10 +8,12 @@ STATUS: ACTIVE
 - 已分離框架與範例；產品工作區為同層 swarm-agent-work。
 - 本輪人類明確要求真正的全新 agent 接班與連續開發，授權必要 harness 修改及啟動。
 - 新增 harness/continuous.py：macOS／Linux 標準庫監督器，每班新建 codex exec，不 resume。交班有效且有進度自動續班；DONE／BLOCKED／人工停止／連續失敗限制才停止。
-- 六項監督器測試通過：連續兩班不同 PID、BLOCKED 不啟動、失敗限次、無進度、逾時清理、停止與重複啟動；另六項工作區測試通過。
-- CLI 舊 --full-auto 已不支援，config.sh 改用 workspace-write 與非互動策略；continuous 使用工作區 sandbox 及網路權限，沒有繞過 sandbox。
+- 七項監督器測試通過：連續兩班不同 PID、BLOCKED 不啟動、失敗限次、無進度、逾時清理、停止與重複啟動；另六項工作區測試通過；共 13 項，含完整權限經 detached start 傳至 CLI。
+- CLI 舊 --full-auto 已不支援，config.sh 改用 workspace-write 與非互動策略；continuous 預設工作區 sandbox；新增明確 --sandbox 選項，完整權限需人類授權。
 - 已同步到遊戲工作區並實際啟動。PATH Codex 0.144.3 被模型版本檢查拒絕，改用桌面 App 0.155.0-alpha.9 後真實 agent 已讀交班、驗證既有測試與建置，從 T-005 接續。
 - 遊戲 supervisor 與 agent 在背景獨立執行，無 cron；當前狀態以工作區 continuous.json 為準，不以此快照 PID 推斷。
+
+- 第 4 班真實因 Chromium/Git sandbox 限制 BLOCKED，監督器保存提交 b4fc00b 後停止。人類已明確允許 danger-full-access；將以該模式重啟，重驗 T-005b。
 
 ## 任務佇列 TASKS
 ### NOW
@@ -40,5 +42,6 @@ STATUS: ACTIVE
 - 無待批准事項；已取得連續開發授權。僅有真正阻塞才回報，不再要求逐班「繼續」。
 
 ## 班次紀錄 LOG
+- #3 2026-09-27 人類明確允許 CLI 完整權限；新增顯式選項及傳遞測試，恢復接班。
 - #2 2026-09-27 F-003 新增持續 fresh-context 監督器、12 項測試通過、啟動真實 Codex CLI 接班。
 - #1 2026-09-27 T-004 遊戲工作區完成骨架，框架記錄產品路由。

@@ -72,7 +72,23 @@ p.write_text(s)
             args=(root/'args').read_text();self.assertNotIn('resume',args);self.assertNotIn('--full-auto',args)
             state=json.loads((root/'.studio/continuous.json').read_text())
             self.assertEqual(state['state'],'done')
+            self.assertEqual(state['sandbox'],'workspace-write')
             self.assertFalse((root/'.studio/session.env').exists())
+
+    def test_explicit_full_access_survives_detached_start(self):
+        import time
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            result=subprocess.run([sys.executable,str(RUNNER),'start','--workspace',str(root),'--codex',str(agent),'--sandbox','danger-full-access'],capture_output=True,text=True,timeout=5)
+            self.assertEqual(result.returncode,0,result.stderr)
+            deadline=time.monotonic()+5
+            while time.monotonic()<deadline:
+                state=json.loads((root/'.studio/continuous.json').read_text())
+                if state['state']=='done':break
+                time.sleep(.05)
+            self.assertEqual(state['state'],'done')
+            self.assertEqual(state['sandbox'],'danger-full-access')
+            self.assertIn("'--sandbox', 'danger-full-access'",(root/'args').read_text())
 
     def test_repeated_failure_stops(self):
         with tempfile.TemporaryDirectory() as t:

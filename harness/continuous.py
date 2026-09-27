@@ -84,7 +84,7 @@ def run(args):
             else: raise RuntimeError('another legacy shift is running')
         session.unlink()
     (state/'continuous.stop').unlink(missing_ok=True)
-    info={'pid':os.getpid(),'workspace':str(root),'state':'starting','shift':0,'started_at':time.time()}
+    info={'pid':os.getpid(),'workspace':str(root),'state':'starting','shift':0,'started_at':time.time(),'sandbox':args.sandbox}
     def update(status,**extra):
         info.update(state=status,updated_at=time.time(),**extra);atomic_json(state/'continuous.json',info)
     def stopped():return (state/'continuous.stop').exists() or (state/'PAUSE').exists()
@@ -111,7 +111,7 @@ def run(args):
             with session.open('x') as f:
                 for k,v in {**{k:env[k] for k in ['STUDIO_SESSION_NO','STUDIO_START_EPOCH','STUDIO_SOFT_DEADLINE_EPOCH','STUDIO_HARD_DEADLINE_EPOCH']},'STUDIO_PID':str(os.getpid())}.items():f.write(f'{k}={v}\n')
             logfile=logdir/f'continuous-{number:04d}.jsonl'
-            command=[codex,'exec','--sandbox','workspace-write','-c','approval_policy="never"','-c','sandbox_workspace_write.network_access=true','--json','-C',str(root),'-']
+            command=[codex,'exec','--sandbox',args.sandbox,'-c','approval_policy="never"','-c','sandbox_workspace_write.network_access=true','--json','-C',str(root),'-']
             update('running',shift=number,log=str(logfile),consecutive_failures=failures)
             with logfile.open('a') as output:
                 process=subprocess.Popen(command,cwd=root,env=env,stdin=subprocess.PIPE,stdout=output,stderr=subprocess.STDOUT,text=True,start_new_session=True)
@@ -161,6 +161,7 @@ def main():
     p.add_argument('action',choices=['start','run','status','stop'])
     p.add_argument('--workspace',type=Path,default=DEFAULT_ROOT)
     p.add_argument('--codex',default='codex')
+    p.add_argument('--sandbox',choices=['workspace-write','danger-full-access'],default='workspace-write',help='danger-full-access requires explicit human authorization')
     p.add_argument('--session-seconds',type=float,default=2700)
     p.add_argument('--max-failures',type=int,default=3)
     p.add_argument('--retry-delay',type=float,default=15)
@@ -174,7 +175,7 @@ def main():
         (state/'continuous.stop').touch();print('Stop requested; current agent group will terminate and work will be saved.');return 0
     if args.action=='start':
         if active(state):p.error('already running')
-        command=[sys.executable,str(Path(__file__).resolve()),'run','--workspace',str(args.workspace),'--codex',args.codex,'--session-seconds',str(args.session_seconds),'--max-failures',str(args.max_failures),'--retry-delay',str(args.retry_delay)]
+        command=[sys.executable,str(Path(__file__).resolve()),'run','--workspace',str(args.workspace),'--codex',args.codex,'--sandbox',args.sandbox,'--session-seconds',str(args.session_seconds),'--max-failures',str(args.max_failures),'--retry-delay',str(args.retry_delay)]
         with (state/'supervisor.log').open('a') as log:
             process=subprocess.Popen(command,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
         time.sleep(.5)
