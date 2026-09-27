@@ -1,59 +1,42 @@
-# HANDOVER — Swarm-Agent
-
+# HANDOVER — handover-shift 框架
 STATUS: BLOCKED
 
 ## 北極星 NORTH_STAR
-design/north-star.md 草案已建立，尚未核准，不可開始量產。既有選擇與新增驗收提案有明確區分；blueprint 尚未建立。
-目前里程碑：grill 玩法釐清，A＋C、六區順序、電腦瀏覽器鍵鼠平台已確認；首版沙漠、中低難度與滑鼠自由瞄準已確認。
+人類要求：此倉庫是使用者規劃、agent 分班交接開發的框架；Swarm-Agent 是一個範例。框架架構見 docs/DESIGN.md，不套用遊戲北極星。
 
 ## 目前狀態 STATE
-- game/ 只有 README，沒有可執行遊戲或遊戲測試。
-- 人類明確否定器官、血肉和細胞的可見描繪。新方向：古代科技＋植物覆蓋，明亮溫暖，包含沙漠、海灘、城市。
-- 人類指定：白血球＝四足攻擊機器人；紅血球＝三輪小卡車；血管＝路旁有灌木的道路；腎臟＝巨型樹屋；心臟＝活塞引擎；病毒／細菌＝恐龍、猛瑪象等生物。
-- 第二輪 004 沙漠樹屋主視覺、005 角色物件、006 海灘活塞引擎、007 城市假遊戲截圖已生成、讀圖並存於 design/concept/；同名 JSON 有完整 prompt。
-- design/concept/round-2-review.md 記錄驗證與限制；人類已確認整體風格，角色身分與玩法／關卡配置仍待確認。
-- 001–003 保留為歷史，JSON 和看板已標示被新版方向取代。
-- tools/imagegen.py 只匯入 PNG 與記錄生成資訊，無外部 API 或金鑰依賴；原生生圖工具可用性依環境確認。
-- design/style-guide.md 已建立，含參考圖用途、抽取色票、可見物件規則、prompt 配方與玩法待問題。
-- design/levels.md 已確認六區：沙漠→海灘→巨樹→城市→活塞高原→雲端城市；六區順序已確認，首版沙漠一關、5–10 分鐘、中低難度；具體互動細節待定。
-- 008 六區總覽、009 雲端核心已生成並讀圖；完整 prompt 存同名 JSON。
-- 看板：design/concept/board.html，共九張；004–007 為風格基準，008–009 是場景提案。
-- 驗證：四張新圖匯入成功，JSON 與看板引用一致；非實機畫面。
+- 框架與範例目錄已分離，README／AGENTS／WORKFLOW 已更新。
+- examples/swarm-agent/ 保存完整遊戲 design、九張概念圖、game 佔位、inbox、交班。北極星原文與圖片未改；approval.json 保存人類核准與 SHA256。
+- 遊戲尚未實作、尚無 blueprint。核准遊戲設計不等於自動啟動開發或排程。
+- tools/create_workspace.py 可建立空白或 swarm-agent 獨立工作區，只複製受版本控制的白名單共用檔案與範例；拒絕覆寫及框架內目的地。
+- tools/imagegen.py 與 concept_board.py 支援 --workspace；原獨立工作區預設仍可用。
+- harness/ 與 .studio/ 執行邏輯未修改，未啟用 agent 或 cron。舊 CLI 名稱／cron 標記保留作相容。
+- 六項整合測試通過；九張圖片與北極星搬移前後 SHA256 一致，兩份交班通過。整理報告見 docs/REORGANIZATION.md。
+- macOS 的完整無人值守 harness 未驗證；現有 Linux 命令依賴仍在。
 
 ## 任務佇列 TASKS
 ### NOW
-- [T-002] 執行 grill，建立人類核准的 north-star | 多輪互動 | 驗收：核心循環、平台操作、範圍與完成定義逐條核准 | 依賴 人類回答
+- [T-101] 由人類選定下一個框架工作項或轉往範例 blueprint | 待決策 | 驗收：明確工作範圍與目標工作區 | 依賴 人類選擇
 ### NEXT
-- [T-003] 依核准北極星建立 blueprint | ~30m | 驗收：里程碑、驗收條件與單一 NOW 開發任務 | 依賴 T-002
+- 若選範例開發：建立獨立工作區，讀範例交班，確認技術選型並建立 blueprint。
 ### LATER
-- blueprint：拆解里程碑與第一個可執行遊戲任務。
+- 可另案驗證 harness 跨平台及自動班次；本次未改 harness。
 
 ## 坑 PITFALLS
-- 不可使用 001–003 的器官、細胞與陰暗調性作為新圖參考。
-- 暖色自然植物為世界常態，不自行把植物解讀成病變。感染候選表現是史前動物入侵與設施受損。
-- 第二輪機器人細節在不同畫面有差異；定案後依選定設定圖統一，不能假稱已是可用的遊戲資產。
-- 內建工具輸出須複製入專案；PNG 匯入器拒絕覆寫圖片或同名 JSON。
+- 框架根交班不能混入遊戲任務；範例與匯出工作區各有自己的狀態。
+- 原北極星保留草案字樣，approval.json 的核准紀錄與匹配 SHA256 為準；不可再當作未核准。
+- 匯出器從 Git 追蹤清單取檔；維護時新共用檔必須先加入版本控制。
+- 圖片工具處理範例需指定 --workspace examples/swarm-agent。
 
 ## 有效做法 PLAYBOOK
-- 使用原生 image_gen，再執行 `python3 tools/imagegen.py --source <實際 PNG 路徑> --prompt <完整 prompt> --slug <名稱> --round 2 --note <方向說明>`。
-- `python3 tools/concept_board.py` 重建看板。
-- `harness/bin/check-handover` 驗證交班格式。
+- python3 -m unittest discover -s tests -v
+- harness/bin/check-handover
+- harness/bin/check-handover --file examples/swarm-agent/handover.md
+- python3 tools/concept_board.py --workspace examples/swarm-agent
+- python3 tools/create_workspace.py ../new-workspace --example swarm-agent
 
 ## 等待人類 HUMAN
-- 2026-09-27 人類回答「是」，確認第二輪明亮程度及古代科技／植物比例；已建立 style-guide。尚未啟動自動輪班。
-- 已確認 A＋C，最後一關為腦部雲端城市，奈米機器人在核心。六區與行進順序已確認；優先電腦瀏覽器、鍵盤滑鼠。首版沙漠一關，5–10 分鐘，中低難度；A／D 移動、空白跳躍、滑鼠瞄準、左鍵射擊、E 互動已確認。
-- 已確認失敗處理：角色倒下後回到最近檢查點、恢復生命，保留已開啟機關，不限次重試。
-- 已確認：首版四足防衛機器人可被射擊至停機，停機後留下機械殘骸；不加入解除警戒機制。
-- 已確認：首版三輪小卡車為運輸與補給單位；玩家清路、開橋後恢復通行並提供補給，不要求全程護送，不作為可搭乘操控的載具。
-- 已確認：首版只有一位固定可玩科學家、一把主武器；不加入角色選擇或切換，先驗證射擊與探索手感。
-- 已確認輕量敘事：開場簡報、途中環境／短通訊、結尾下一區伏筆。
-- 等待人類審閱 design/north-star.md，尤其新增音效音樂、效能、暫停、最少內容數量及首版反目標；核准後鎖定，再依 blueprint 技能拆解任務。
-- 2026-09-27：人類要求改用可得工具，已移除 Gemini／外部 API 設計。
-- 2026-09-27：人類指定完全非解剖的世界形象，明確物件對照已寫入 pitch，取代先前三張方向。
+- 整理完成後下一步要維護框架，還是為 Swarm-Agent 建立工作區並規劃 blueprint？不自行啟動輪班。
 
 ## 班次紀錄 LOG
-- #0 2026-09-27 前期製作：確認輕量敘事，整理北極星草案與標示待核准的驗收條件。
-- #0 2026-09-27 前期製作：確認首版一位固定科學家與一把主武器，不加入角色切換。
-- #0 2026-09-27 前期製作：確認三輪貨車清路開橋後恢復運輸與補給，首版無全程護送或載具操控。
-- #0 2026-09-27 前期製作：確認四足防衛機器人射擊停機及殘骸，首版不加入解除警戒。
-- #0 2026-09-27 前期製作：確認檢查點恢復生命、保留已開機關、不限次重試。
+- #0 2026-09-27 F-001 分離 handover-shift 框架與 Swarm-Agent 範例，新增獨立工作區建立流程。

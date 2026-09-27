@@ -1,85 +1,65 @@
-# Handover Game Studio
+# handover-shift
 
-讓 AI agent 以「**先看圖、再拷問、後交班**」的方式，長時間、分段地把一款遊戲做出來。
+**使用者決定方向與規劃，agent 分班實作、驗證、交接。**
 
-```
- ┌──────────────── 前期製作（人類在場，互動式） ────────────────┐
- │                                                              │
- │  ① /concept-art        ② /grill              ③ /blueprint    │
- │  生成概念圖 → 圍繞圖    一次一題拷問 →        里程碑 → 切任務 │
- │  討論風格/玩法/環境/故事  北極星 north-star.md  → handover.md   │
- │                                                              │
- └──────────────────────────────┬───────────────────────────────┘
-                                │  harness/studio install-cron
- ┌──────────────── 量產期（無人值守，自動輪班） ────────────────┐
- │                                                              │
- │   cron 每 10 分鐘 → tick：有班在跑？ ──是──▶ 什麼都不做       │
- │                          │否                                 │
- │                          ▼                                   │
- │   開新班（Claude Code / Codex，上限 45 分鐘，時間由 harness 注入）│
- │   讀 handover.md → 做 1 個 NOW 任務 → 驗證 → 改寫 handover.md │
- │   → harness 檢查（≤8000 字、結構完整）→ git commit → 交班      │
- │                                                              │
- └──────────────────────────────────────────────────────────────┘
-```
+這是可重用的開發與交班框架。**Swarm-Agent 是遊戲範例，不是框架本身。** 你可以從空白工作區開始其他專案，也可以帶著範例已完成的設計繼續開發。
 
-完整設計理念、每個決策的理由、Claude vs Codex 比較：**[docs/DESIGN.md](docs/DESIGN.md)**
+## 工作方式
 
-## 目錄結構
+1. 使用者與 agent 釐清目標、範圍與驗收條件；需要視覺時先做概念圖。
+2. 使用者核准北極星，再審閱技術方案與里程碑。
+3. agent 每班只做一個 NOW 任務，測試、更新 handover、檢查並提交。
+4. 下一班從自己的工作區交班檔接續；人類透過 inbox 與 HUMAN 決策調整方向。
 
-```
-.
-├── AGENTS.md                 # 所有 agent 共用的工作守則（Codex 直接讀；Claude 經 CLAUDE.md 引入）
-├── CLAUDE.md
-├── handover.md               # ★ 交班檔（由 /blueprint 產生，≤8000 字元，每班改寫）
-├── inbox.md                  # 人類隨時丟回饋給下一班的信箱
-├── design/                   # 前期製作的產物（北極星 = 人類核准，agent 不得自行改）
-│   ├── concept/              #   概念圖 + prompt sidecar + board.html 看板
-│   ├── style-guide.md        #   從概念圖萃取的美術規範 + 生圖 prompt 配方
-│   ├── north-star.md         #   北極星：一句話 + 支柱 + 反目標 + 完成定義
-│   └── blueprint.md          #   概略藍圖：里程碑與驗收條件
-├── docs/
-│   ├── DESIGN.md             # 本專案的設計說明
-│   └── lessons.md            # 從 handover 溢出的「坑」與經驗（無上限，按需 grep）
-├── game/                     # 遊戲本體（建議 Web：TypeScript + Vite + Phaser/Three.js）
-├── templates/                # handover / north-star / blueprint / style-guide 範本
-├── tools/
-│   ├── imagegen.py           # 匯入 agent 生圖工具的 PNG 與生成紀錄
-│   └── concept_board.py      # 把概念圖排成可比較的 HTML 看板
-├── .claude/
-│   ├── settings.json         # hooks：開班注入時間、工具呼叫後報時、收班檢查 handover
-│   └── skills/               # concept-art / grill / blueprint / shift（班次流程）
-└── harness/
-    ├── studio                # CLI：status / tick / run-now / pause / resume / logs / install-cron
-    ├── config.sh             # AGENT=claude|codex、SESSION_MINUTES=45、HANDOVER_MAX_CHARS=8000 …
-    ├── tick.sh               # cron 入口：有班在跑就不動，沒有就開新班
-    ├── run-session.sh        # 一個班次的完整生命週期
-    ├── prompts/              # 班次 prompt / 修復 prompt 範本
-    ├── hooks/                # Claude Code hooks（時間注入、收班閘門）
-    └── bin/                  # time-left、check-handover（agent 也可以呼叫）
-```
+## 先建立獨立工作區
 
-## 快速開始
+從本框架根目錄執行，目的地必須不存在且位於框架之外：
 
 ```bash
-# 0. 需求：git、python3、flock/setsid/timeout（Linux coreutils/util-linux）
-#    + Claude Code（建議）或 Codex CLI；生圖使用 agent 當前可用的原生工具，不需另設 API 金鑰
+# 全新專案
+python3 tools/create_workspace.py ../my-project
 
-# 1. 前期製作（互動式，人類在場）
-claude
-> /concept-art 我想做一款在沉沒城市裡划船送信的療癒冒險遊戲
-> /grill
-> /blueprint
-#   Codex 使用者：請它「閱讀 .claude/skills/<name>/SKILL.md 並照做」
-
-# 2. 試跑一班（前景執行，看得到輸出）
-harness/studio run-now --foreground
-
-# 3. 開始無人值守輪班
-harness/studio install-cron      # 每 10 分鐘 tick 一次
-harness/studio status            # 目前班次、剩餘時間、最近幾班結果
-harness/studio pause | resume    # 暫停 / 恢復
-echo "- 船的轉向太滑了，想要更有重量感" >> inbox.md   # 隨時給回饋
+# 延續範例（複製設計、九張概念圖、核准紀錄與交班）
+python3 tools/create_workspace.py ../swarm-agent-work --example swarm-agent
 ```
 
-用 `AGENT=mock harness/studio run-now --foreground` 可以在不花 token 的情況下演練整個 harness 流程。
+接著切換到新工作區，讀 `AGENTS.md` 和 `handover.md`，執行 `git init` 並提交初始檔案。工具不會啟動 agent、排程、建立 Git 歷史或發佈任何內容。匯出只帶版本控制中的選定檔案，不帶 `.studio/`、本機設定或 `.env`。
+
+**Swarm-Agent 狀態：北極星已核准，技術選型／blueprint 尚未完成，遊戲尚未實作。** 不要在框架根目錄執行遊戲班次。
+
+## 目錄與責任
+
+| 路徑 | 責任 |
+|---|---|
+| `README.md`、`AGENTS.md`、`handover.md`、`inbox.md` | 框架入口、維護規則、框架交班與留言 |
+| `harness/` | 班次鎖定、時間限制、檢查、修復與提交機制 |
+| `.claude/skills/` | 規劃與交班方法；概念圖為視覺專案選用流程 |
+| `templates/` | 新工作區規則、北極星、藍圖與交班模板 |
+| `tools/` | 建立工作區、匯入生圖成果與產生看板 |
+| `examples/swarm-agent/` | 遊戲設計、概念圖、核准紀錄、遊戲交班與 game/ |
+| `docs/WORKFLOW.md` | 人類規劃至 agent 開發的操作流程 |
+| `docs/DESIGN.md` | 框架架構與相容性界線 |
+| `tests/` | 工作區建立與隔離回歸測試 |
+
+## 驗證框架
+
+```bash
+python3 -m unittest discover -s tests -v
+harness/bin/check-handover
+harness/bin/check-handover --file examples/swarm-agent/handover.md
+python3 tools/concept_board.py --workspace examples/swarm-agent
+```
+
+## 在工作區進行輪班
+
+規劃通過且 `handover.md` 為 ACTIVE 後，先確認執行環境及 CLI 設定，再於獨立工作區使用：
+
+```bash
+harness/studio run-now --foreground
+# 使用者決定持續自動執行時才使用：
+harness/studio install-cron
+```
+
+目前 harness 是既有 Linux shell 實作，依賴 `flock`、`setsid`、`timeout` 等命令。macOS 可使用規劃、建立工作區與手動交班工具；本次未驗證 macOS 完整無人值守輪班。預設 agent 與執行權限參數請先檢視 `harness/config.sh`。CLI 保留舊的 Handover Game Studio 名稱和 cron 標記作相容，產品名稱為 handover-shift。
+
+詳細案例：[Swarm-Agent](examples/swarm-agent/README.md) · [工作流程](docs/WORKFLOW.md) · [架構](docs/DESIGN.md)

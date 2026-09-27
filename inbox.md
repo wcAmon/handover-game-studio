@@ -1,5 +1,3 @@
-# Inbox
+# 框架 Inbox
 
-給下一班的留言。每一行一則，下一班開班時會處理並刪除已處理的條目。
-
-<!-- 例：- 船的轉向太滑了，想要更有重量感 -->
+此處只記 handover-shift 框架留言。Swarm-Agent 回饋記入 examples/swarm-agent/inbox.md，已匯出的工作區使用自己的 inbox.md。

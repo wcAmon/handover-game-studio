@@ -1,33 +1,20 @@
-# AGENTS.md — Handover Game Studio 工作守則
+# AGENTS.md — handover-shift 框架工作守則
 
-本專案由 AI agent 分段（班次）開發一款遊戲。Claude Code 與 Codex 共用這份守則。
-整體設計見 `docs/DESIGN.md`。
+本倉庫是讓使用者規劃、agent 分班交接開發的框架。Swarm-Agent 僅是 `examples/swarm-agent/` 內的範例；不要把遊戲名稱、玩法或美術規則當作框架需求。
 
-## 你在哪個階段？
+## 先判斷工作範圍
+- 修改框架：讀根 `handover.md`、`docs/DESIGN.md`、`docs/WORKFLOW.md`。
+- 修改範例設計：讀 `examples/swarm-agent/handover.md` 與該處 design/；使用根 harness 檢查器的 `--file` 指向範例交班。
+- 實作範例遊戲：先依 README 匯出獨立工作區，於該工作區規劃 blueprint 及執行班次。根 game/、design/ 不用來承載範例。
+- 新專案：建立空白工作區，再依其中 AGENTS 與 skills 進行規劃。
 
-| 情境 | 做什麼 |
-|---|---|
-| 人類在線上，還沒有 `design/north-star.md` | 前期製作：依序 `concept-art` → `grill` → `blueprint` |
-| 由 harness 啟動（prompt 寫著「第 #N 班」），或人類要你「接班」 | 量產期：照 `.claude/skills/shift/SKILL.md` 走 |
-| 人類在線上，其他要求 | 照人類說的做；若改了程式，收尾時同步更新 `handover.md` |
+## 規則
+1. 人類核准目標與計畫，agent 依批准範圍實作；不得把審閱中的提案宣稱為核准。
+2. 已核准北極星不得自行修改。`design/approval.json` 可記錄人類核准及原文 SHA256；有變更需求寫入對應交班 HUMAN。
+3. 一班只做一個 NOW 任務；新發現放 TASKS。交班 ≤8000 字，經檢查通過後 git commit。
+4. 框架與範例交班分開。跨兩者的修改各自同步，不能遺失人類決策。
+5. 不修改 `.studio/`；不修改 `harness/`，除非人類明確要求修改 harness。
+6. 不刪除或跳過測試。確認時間用 `harness/bin/time-left`。
+7. 不因完成規劃就自行啟動 agent、cron 或推送；啟動遵從人類指示。
 
-Skills 位於 `.claude/skills/<name>/SKILL.md`。Claude Code 可直接用 `/<name>` 呼叫；**Codex 請直接讀該檔案並照做**。
-
-## 不可違反的規則
-
-1. **北極星不能改。** `design/north-star.md` 由人類核准；想改請寫在 handover 的 HUMAN 區。
-2. **一班只做一個 NOW 任務。** 其他發現記進 TASKS。
-3. **收班必須交班。** `handover.md` 改寫完成、`harness/bin/check-handover` 顯示 ✓、`git commit`。
-4. **handover.md ≤ 8000 字元。** 溢出的經驗移到 `docs/lessons.md`，不要硬刪。
-5. **不要動 `.studio/`、`harness/`**（除非人類要求修改 harness）。
-6. **不要刪除或跳過測試**來讓驗證通過。
-7. 看時間：`harness/bin/time-left`。過了軟截止就收班。
-
-## 重要檔案
-
-- `handover.md` — 交班檔（唯一的跨班記憶）
-- `inbox.md` — 人類留言，開班時處理並清空已處理條目
-- `design/north-star.md` / `blueprint.md` / `style-guide.md` / `concept/` — 目標、藍圖、美術規範、概念圖
-- `docs/lessons.md` — 經驗庫（grep 查詢）
-- `game/` — 遊戲本體
-- `tools/imagegen.py` — 匯入 agent 生圖工具產物並記錄來源；`tools/concept_board.py` — 概念圖看板
+Skills 位於 `.claude/skills/<name>/SKILL.md`，Codex 直接讀檔。這些 skills 的 `design/`、`handover.md`、`game/` 路徑均指目標工作區，不是框架根目錄。視覺流程按專案需要使用。

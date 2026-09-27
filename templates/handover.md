@@ -1,4 +1,4 @@
-# HANDOVER — <遊戲名稱>
+# HANDOVER — <專案名稱>
 
 > 交班檔。每班開頭完整讀取、收班時**改寫**（不是追加）。上限 8000 字元，`harness/bin/check-handover` 驗證。
 > 溢出的經驗 → `docs/lessons.md`；歷史 → `git log -p handover.md`。英文標記（NORTH_STAR 等）請勿刪除。
@@ -10,9 +10,9 @@ STATUS: ACTIVE
 
 **目前里程碑**：M0 骨架
 **驗收條件**：
-- [ ] `npm run dev` 可在瀏覽器開啟遊戲
-- [ ] `npm test` 綠燈
-- [ ] `npm run snap` 產生 `game/screenshots/latest.png`
+- [ ] <啟動指令> 可啟動產品或執行主要流程
+- [ ] <測試指令> 通過
+- [ ] <驗證指令> 產生可審閱成果（視覺產品可用截圖）
 
 ## 目前狀態 STATE
 - 尚未開始。
@@ -27,7 +27,7 @@ STATUS: ACTIVE
 - [T-002] <標題> | ~20m | 驗收：<…> | 依賴 T-001
 
 ### LATER
-- M1 灰盒核心循環：<粗項>
+- M1 最小核心流程：<粗項>
 
 ## 坑 PITFALLS
 <!-- 一行一個：現象 → 原因 → 解法。過時的移到 docs/lessons.md -->

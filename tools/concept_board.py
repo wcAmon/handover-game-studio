@@ -2,6 +2,7 @@
 """Build design/concept/board.html: every concept image grouped by round, with its note and prompt,
 so a human can compare directions side by side ("A's palette + C's camera").
 """
+import argparse
 import glob
 import html
 import json
@@ -35,10 +36,15 @@ details {{ margin-top:6px; font-size:13px; color:var(--muted); }} summary {{ cur
 
 
 def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--workspace", default=ROOT, help="target workspace root")
+    args = ap.parse_args()
+    root = os.path.abspath(args.workspace)
+    concept_dir = os.path.join(root, "design", "concept")
     items = []
-    for meta_path in sorted(glob.glob(os.path.join(CONCEPT_DIR, "*.json"))):
+    for meta_path in sorted(glob.glob(os.path.join(concept_dir, "*.json"))):
         meta = json.load(open(meta_path, encoding="utf-8"))
-        if os.path.exists(os.path.join(CONCEPT_DIR, meta.get("file", ""))):
+        if os.path.exists(os.path.join(concept_dir, meta.get("file", ""))):
             items.append(meta)
     rounds = sorted({m.get("round") for m in items}, key=lambda r: (r is None, r or 0))
     sections = []
@@ -52,11 +58,11 @@ def main():
                 f'<details><summary>prompt · {html.escape(m.get("model", ""))}</summary>{html.escape(m.get("prompt", ""))}</details>'
                 f'</figcaption></figure>')
         sections.append(f'<h2>{ROUND_NAMES.get(r, f"第 {r} 輪")}</h2><div class="grid">{"".join(cards)}</div>')
-    out = os.path.join(CONCEPT_DIR, "board.html")
-    os.makedirs(CONCEPT_DIR, exist_ok=True)
+    out = os.path.join(concept_dir, "board.html")
+    os.makedirs(concept_dir, exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         f.write(PAGE.format(count=len(items), sections="\n".join(sections)))
-    print(os.path.relpath(out, ROOT))
+    print(os.path.relpath(out, root))
 
 
 if __name__ == "__main__":

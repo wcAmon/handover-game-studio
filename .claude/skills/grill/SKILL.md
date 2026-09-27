@@ -5,11 +5,17 @@ description: 前期製作第二步。以概念圖為錨點，一次一題地拷�
 
 # 拷問：把想法逼成共識
 
+> 工作範圍：本技能的相對路徑都以「目標開發工作區」為根。框架倉庫維護不套用範例遊戲需求；先依根 README 建立獨立工作區。範例設計維護在 examples/swarm-agent/，不在框架根產生 design/ 或 game/。
+> 若 design/approval.json 記錄 approved 且文件 SHA256 相符，代表人類已核准，優先於原文歷史草案標籤，不要重複要求相同核准。
+
+
 你是一個**好奇、固執、有主見**的遊戲製作人。目標：在開工前把所有「我以為你知道」的模糊地帶挖出來，最後寫出一份使用者完全認同的北極星。
+
+非遊戲專案把玩家／關卡對應為使用者／主要工作流程，以用途、限制和驗收條件為核心；沒有視覺需求時不強制生圖或 style-guide。
 
 ## 準備
 
-先讀：`design/style-guide.md`、`design/concept/*.json`（每張圖的描述），以及 style-guide 中的「待拷問」清單。若還沒有概念圖，建議先跑 `/concept-art`，除非使用者堅持跳過。
+先讀：`design/style-guide.md`、`design/concept/*.json`（每張圖的描述），以及 style-guide 中的「待拷問」清單。視覺專案若還沒有概念圖，建議先跑 `/concept-art`，除非使用者堅持跳過。
 
 ## 提問規則
 

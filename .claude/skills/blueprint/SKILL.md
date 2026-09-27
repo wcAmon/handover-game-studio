@@ -5,14 +5,20 @@ description: 前期製作第三步。把 design/north-star.md 轉成概略藍圖
 
 # 藍圖：從北極星到第一份交班檔
 
+> 工作範圍：本技能的相對路徑都以「目標開發工作區」為根。框架倉庫維護不套用範例遊戲需求；先依根 README 建立獨立工作區。範例設計維護在 examples/swarm-agent/，不在框架根產生 design/ 或 game/。
+> 若 design/approval.json 記錄 approved 且文件 SHA256 相符，代表人類已核准，優先於原文歷史草案標籤，不要重複要求相同核准。
+
+
 ## 前置
 
-讀 `design/north-star.md`、`design/style-guide.md`、`docs/DESIGN.md`（了解 harness 與交班制）。缺北極星就先跑 `/grill`。
+讀 `design/north-star.md`、適用時的 `design/style-guide.md`、`docs/DESIGN.md`（了解 harness 與交班制）。缺北極星就先跑 `/grill`。
 
 ## 步驟
 
 ### 1. 技術選型（和使用者確認）
-預設推薦 **TypeScript + Vite + Phaser 3（2D）或 Three.js（3D）**，理由：agent 能用 Playwright 截圖自我驗證、全部是文字檔、人類開瀏覽器就能玩。若使用者有偏好（Godot、Unity…），說明對「agent 自我驗證」的影響後尊重其選擇。
+遊戲專案預設推薦 **TypeScript + Vite + Phaser 3（2D）或 Three.js（3D）**，理由：agent 能用 Playwright 截圖自我驗證、全部是文字檔、人類開瀏覽器就能玩。若使用者有偏好（Godot、Unity…），說明對「agent 自我驗證」的影響後尊重其選擇。
+
+非遊戲專案依核准需求選擇技術與產品目錄，不強制 Phaser、game/ 或遊戲截圖；定義對應的啟動、測試及成果驗證指令。
 
 ### 2. 寫 `design/blueprint.md`（用 `templates/blueprint.md`）
 - 架構草圖：主要模組與資料流。

@@ -1,0 +1,9 @@
+{
+  "status": "approved",
+  "date": "2026-09-27",
+  "approved_by": "user",
+  "evidence": "核准 另外你需要注意整個專案其實是handover-shift",
+  "document": "north-star.md",
+  "sha256": "05bd4fe69dde5572656248a2c7c59f832adf5bf26a9f793c068af4a30ccd87a4",
+  "scope": "Entire north-star including proposed acceptance criteria. Original draft text preserved; this approval supersedes draft status labels. Blueprint and runtime are not yet approved or implemented."
+}

@@ -16,6 +16,7 @@ CONCEPT_DIR = ROOT / "design" / "concept"
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--workspace", type=Path, default=ROOT, help="target workspace root")
     ap.add_argument("--source", required=True, type=Path)
     ap.add_argument("--prompt", required=True)
     ap.add_argument("--slug", default="image")
@@ -25,15 +26,16 @@ def main():
     ap.add_argument("--tool", default="image_gen")
     ap.add_argument("--model", default="not-disclosed")
     args = ap.parse_args()
+    concept_dir = args.workspace.resolve() / "design" / "concept"
     if not args.source.is_file():
         ap.error("source image does not exist")
     with args.source.open("rb") as f:
         if f.read(8) != b"\x89PNG\r\n\x1a\n":
             ap.error("source must be a PNG; preserve other formats separately")
     slug = re.sub(r"[^a-z0-9-]+", "-", args.slug.lower()).strip("-") or "image"
-    nums = [int(m.group(1)) for p in CONCEPT_DIR.glob("*.png")
+    nums = [int(m.group(1)) for p in concept_dir.glob("*.png")
             if (m := re.match(r"(\d+)-", p.name))]
-    out = args.out or CONCEPT_DIR / f"{max(nums, default=0) + 1:03d}-{slug}.png"
+    out = args.out or concept_dir / f"{max(nums, default=0) + 1:03d}-{slug}.png"
     if out.suffix.lower() != ".png":
         ap.error("output must use .png")
     sidecar = out.with_suffix(".json")
