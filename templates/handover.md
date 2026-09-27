@@ -35,7 +35,7 @@ STATUS: ACTIVE
 
 ## 有效做法 PLAYBOOK
 <!-- 驗證有效、值得沿用的做法、指令、慣例 -->
-- 美術素材：`python3 tools/imagegen.py`，prompt 以 design/style-guide.md 的配方為前綴。
+- 美術素材：使用 agent 可用的生圖工具，再以 `python3 tools/imagegen.py --source <生成的 PNG 路徑> --prompt <完整 prompt>` 匯入，prompt 以 design/style-guide.md 的配方為前綴。
 
 ## 等待人類 HUMAN
 <!-- 需要人類決定的問題（STATUS: BLOCKED 時必填）＋ 重要決策紀錄 -->

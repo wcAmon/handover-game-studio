@@ -9,13 +9,18 @@ description: 前期製作第一步。從使用者的遊戲點子生成概念圖�
 
 ## 工具
 
+先使用目前 agent 可用的原生生圖工具（Codex 本對話使用 `image_gen`），每個方向各生成一張，並取得工具實際回傳的本機圖片路徑。無須另外設定 API 金鑰。工具未提供本機檔案時，先使用其支援的儲存方式；不得虛構路徑或宣稱已存檔。
+
+再將生成結果匯入專案：
+
 ```bash
-python3 tools/imagegen.py --prompt "..." --slug harbor-pixel --round 1 --note "方向 A：像素"
-python3 tools/concept_board.py        # 重新生成 design/concept/board.html
+python3 tools/imagegen.py --source /實際/生成圖片.png --prompt "實際完整 prompt" --slug harbor-pixel --round 1 --note "方向 A：像素" --tool image_gen
+python3 tools/concept_board.py
 ```
 
-- 圖存到 `design/concept/NNN-slug.png`，同名 `.json` 記錄 prompt、模型、輪次、備註。
-- 需要 `OPENAI_API_KEY`（gpt-image）或 `GEMINI_API_KEY`（Gemini image）；兩者都沒有時，停下來請使用者設定。
+- `tools/imagegen.py` 只負責複製 PNG 與記錄來源，不呼叫生圖 API。圖片存到 `design/concept/NNN-slug.png`，同名 `.json` 記錄 prompt、工具、模型（工具未披露則標示 not-disclosed）、輪次、備註。
+- 修改或混搭圖片時，把參考圖交給可用的生圖工具，再匯入新結果。
+- 若當前 agent 沒有可用的生圖工具，明確回報限制；不要要求 API 金鑰或自動改走外部 API。
 - 生完圖**一定要自己讀圖**（Read 圖檔）確認內容，再給使用者看。生圖模型常常不照 prompt 畫；不符合就修 prompt 重生，不要把錯的圖端上桌。
 - 每輪結束後生成看板，告訴使用者打開 `design/concept/board.html`（或直接列出圖檔路徑）。
 

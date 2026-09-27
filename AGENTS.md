@@ -30,4 +30,4 @@ Skills 位於 `.claude/skills/<name>/SKILL.md`。Claude Code 可直接用 `/<nam
 - `design/north-star.md` / `blueprint.md` / `style-guide.md` / `concept/` — 目標、藍圖、美術規範、概念圖
 - `docs/lessons.md` — 經驗庫（grep 查詢）
 - `game/` — 遊戲本體
-- `tools/imagegen.py` — 生圖；`tools/concept_board.py` — 概念圖看板
+- `tools/imagegen.py` — 匯入 agent 生圖工具產物並記錄來源；`tools/concept_board.py` — 概念圖看板

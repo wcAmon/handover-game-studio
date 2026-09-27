@@ -49,7 +49,7 @@ flowchart TD
 
 ### 3.1 `/concept-art` — 先有圖
 
-Claude/Codex 本身不直接生圖，所以用 `tools/imagegen.py` 呼叫生圖 API（OpenAI `gpt-image-1` 或 Google Gemini image），agent 再用多模態能力「看」自己生出來的圖，和人類討論。
+生圖使用目前 agent 可用的原生工具（本次 Codex 對話提供 `image_gen`），不綁定外部 API 或金鑰。`tools/imagegen.py` 只匯入工具生成的 PNG 並保存 prompt 與來源紀錄；agent 必須讀圖驗證後再和人類討論。各執行環境的工具可用性需當場確認。
 
 三輪節奏：
 
@@ -202,7 +202,7 @@ agent 可能忘記更新交班檔、或寫超過 8000 字。兩道防線：
 
 ## 6. 選 Claude Code 還是 Codex？
 
-**建議：量產期用 Claude Code 當主力，生圖用 OpenAI 或 Gemini 的圖像 API；Codex 作為可切換的替代 adapter。**
+**建議：量產期用 Claude Code 當主力，生圖使用當前 agent 可用的原生工具；Codex 作為可切換的替代 adapter。**
 
 | 面向 | Claude Code | Codex CLI |
 |---|---|---|
@@ -211,7 +211,7 @@ agent 可能忘記更新交班檔、或寫超過 8000 字。兩道防線：
 | Skills | `.claude/skills/*/SKILL.md` 原生支援，`/grill` 直接呼叫 | 請它讀同一份 SKILL.md 照做 |
 | **Hooks（本設計的關鍵）** | `SessionStart` / `PostToolUse` / `Stop` 可以**強制**時間注入與收班閘門 | 較有限 → 靠 prompt 指示 + harness 事後檢查 |
 | 看圖（截圖對照概念圖） | ✅ 多模態讀檔 | ✅ |
-| 生圖 | ❌ 需外部 API | 同生態系有 gpt-image，但仍透過 API 最穩 |
+| 生圖 | 依當前環境提供的工具確認 | 本對話可用內建 image_gen，無須另設 API 金鑰 |
 
 Hooks 讓「時間注入」與「交班品質」從**請 agent 自律**變成**harness 強制保證**，這是選 Claude Code 當主力的主因。兩者可以混用：`config.sh` 設 `AGENT=codex` 即可切換，交班檔格式完全相同，甚至可以讓兩種 agent 輪流接班。
 

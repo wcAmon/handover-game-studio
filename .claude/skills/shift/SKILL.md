@@ -24,7 +24,7 @@ description: 量產期單一班次的標準流程（開班 → 做一個 NOW 任
 - 需要的背景才去讀：`design/north-star.md`（為什麼）、`design/blueprint.md`（里程碑）、`design/style-guide.md`（美術）、`grep docs/lessons.md`（舊的坑）。
 - 小步前進，每到一個可運作的節點就 `git commit`（訊息開頭 `#<班次號>`）。
 - **視覺工作要看圖驗證**：執行截圖指令（見 STATE/PLAYBOOK，通常是 `npm run snap`），讀截圖，對照 `design/concept/` 中的概念圖與 style-guide，記下差距。
-- 需要新美術素材時用 `tools/imagegen.py`，prompt 以 style-guide 的「prompt 配方」為前綴。
+- 需要新美術素材時使用目前 agent 可用的生圖工具，再用 `tools/imagegen.py --source <生成的 PNG 路徑> --prompt <完整 prompt>` 匯入，prompt 以 style-guide 的「prompt 配方」為前綴。
 - 同一個錯誤卡超過 10 分鐘 → 停下來，換方法或把它記成坑並縮小任務範圍。
 - 遵守時間提醒。過了軟截止就停止新工作。
 

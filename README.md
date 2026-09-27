@@ -44,7 +44,7 @@
 ├── game/                     # 遊戲本體（建議 Web：TypeScript + Vite + Phaser/Three.js）
 ├── templates/                # handover / north-star / blueprint / style-guide 範本
 ├── tools/
-│   ├── imagegen.py           # 生圖（OpenAI gpt-image 或 Google Gemini image）
+│   ├── imagegen.py           # 匯入 agent 生圖工具的 PNG 與生成紀錄
 │   └── concept_board.py      # 把概念圖排成可比較的 HTML 看板
 ├── .claude/
 │   ├── settings.json         # hooks：開班注入時間、工具呼叫後報時、收班檢查 handover
@@ -63,7 +63,7 @@
 
 ```bash
 # 0. 需求：git、python3、flock/setsid/timeout（Linux coreutils/util-linux）
-#    + Claude Code（建議）或 Codex CLI；生圖需要 OPENAI_API_KEY 或 GEMINI_API_KEY
+#    + Claude Code（建議）或 Codex CLI；生圖使用 agent 當前可用的原生工具，不需另設 API 金鑰
 
 # 1. 前期製作（互動式，人類在場）
 claude
