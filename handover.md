@@ -7,7 +7,7 @@ STATUS: BLOCKED
 ## 目前狀態 STATE
 - 框架與範例目錄已分離，README／AGENTS／WORKFLOW 已更新。
 - examples/swarm-agent/ 保存完整遊戲 design、九張概念圖、game 佔位、inbox、交班。北極星原文與圖片未改；approval.json 保存人類核准與 SHA256。
-- 遊戲尚未實作、尚無 blueprint。核准遊戲設計不等於自動啟動開發或排程。
+- 遊戲尚未實作；已建立同層獨立工作區 ../swarm-agent-work，分支 codex/swarm-agent。blueprint 已完成待核准，尚未安裝套件或啟動排程。
 - tools/create_workspace.py 可建立空白或 swarm-agent 獨立工作區，只複製受版本控制的白名單共用檔案與範例；拒絕覆寫及框架內目的地。
 - tools/imagegen.py 與 concept_board.py 支援 --workspace；原獨立工作區預設仍可用。
 - harness/ 與 .studio/ 執行邏輯未修改，未啟用 agent 或 cron。舊 CLI 名稱／cron 標記保留作相容。
@@ -16,9 +16,9 @@ STATUS: BLOCKED
 
 ## 任務佇列 TASKS
 ### NOW
-- [T-101] 由人類選定下一個框架工作項或轉往範例 blueprint | 待決策 | 驗收：明確工作範圍與目標工作區 | 依賴 人類選擇
+- [T-101] 等待 Swarm-Agent 藍圖審閱 | 待決策 | 驗收：核准後在獨立工作區從 T-004 接班 | 依賴 人類核准藍圖
 ### NEXT
-- 若選範例開發：建立獨立工作區，讀範例交班，確認技術選型並建立 blueprint。
+- 獨立工作區 ../swarm-agent-work 已有 blueprint 與交班；下一班依其交班，不在框架根實作遊戲。
 ### LATER
 - 可另案驗證 harness 跨平台及自動班次；本次未改 harness。
 
@@ -36,7 +36,8 @@ STATUS: BLOCKED
 - python3 tools/create_workspace.py ../new-workspace --example swarm-agent
 
 ## 等待人類 HUMAN
-- 整理完成後下一步要維護框架，還是為 Swarm-Agent 建立工作區並規劃 blueprint？不自行啟動輪班。
+- 人類要求繼續，已完成獨立工作區及藍圖。等待 Phaser 3 技術方案與 M0 計畫核准，不重問北極星或執行模式。
 
 ## 班次紀錄 LOG
+- #0 2026-09-27 F-002 建立 Swarm-Agent 獨立工作區與 blueprint 快照，待計畫核准。
 - #0 2026-09-27 F-001 分離 handover-shift 框架與 Swarm-Agent 範例，新增獨立工作區建立流程。

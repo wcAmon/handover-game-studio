@@ -25,7 +25,7 @@ python3 tools/create_workspace.py ../swarm-agent-work --example swarm-agent
 
 接著切換到新工作區，讀 `AGENTS.md` 和 `handover.md`，執行 `git init` 並提交初始檔案。工具不會啟動 agent、排程、建立 Git 歷史或發佈任何內容。匯出只帶版本控制中的選定檔案，不帶 `.studio/`、本機設定或 `.env`。
 
-**Swarm-Agent 狀態：北極星已核准，技術選型／blueprint 尚未完成，遊戲尚未實作。** 不要在框架根目錄執行遊戲班次。
+**Swarm-Agent 狀態：北極星已核准，技術選型／blueprint 已提出待核准，遊戲尚未實作。** 已建立框架同層的 swarm-agent-work 獨立工作區；不要在框架根目錄執行遊戲班次。
 
 ## 目錄與責任
 

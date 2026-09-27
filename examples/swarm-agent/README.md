@@ -5,7 +5,7 @@
 ## 目前狀態
 - 美術、六區方向與首版沙漠規格已確認。
 - [北極星原文](design/north-star.md) 已由人類核准全文，包括新增驗收條件；[核准紀錄](design/approval.json) 保存 SHA256。原文草案標籤保留為歷史，不必重新核准。
-- [交班](handover.md)：目前等待技術選型與 blueprint。
+- [交班](handover.md)：[blueprint 提案](design/blueprint.md) 已完成待核准；獨立工作區已建立於框架同層 swarm-agent-work/。
 - [概念圖看板](design/concept/board.html)：九張圖；001–003 為已淘汰方向。
 - game/ 僅有說明，沒有可執行遊戲。
 
