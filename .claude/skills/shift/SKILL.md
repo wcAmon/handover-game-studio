@@ -53,3 +53,6 @@ description: 量產期單一班次的標準流程（開班 → 做一個 NOW 任
 - 具體勝過抽象：檔名、指令、數值。
 - 坑要能行動：「Phaser 的 `setVelocity` 在 `update` 外呼叫會被物理步重置 → 改在 `preUpdate` 設」，而不是「物理有點怪」。
 - handover 是**儀表板**不是**日記**：只留下一班需要的資訊。
+
+## 持續開發的交接語義
+人類已授權持續開發且 supervisor 在執行時，正常收班保持 ACTIVE，準備下一個 NOW 後退出；下一個全新 context 由監督器啟動，agent 不自行再 spawn CLI。單班或里程碑完成不能當作 DONE，也不需人類逐班重複批准。只有核准北極星全部驗收完成才 DONE；確實無法繼續才 BLOCKED 並提供證據。詳細見 docs/CONTINUOUS.md。

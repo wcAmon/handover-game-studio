@@ -31,7 +31,7 @@ def create_workspace(destination, example=None):
             continue
         if name.startswith(('harness/', '.claude/', 'templates/')) or name in (
             'CLAUDE.md', '.gitignore', 'tools/imagegen.py', 'tools/concept_board.py',
-            'docs/WORKFLOW.md', 'docs/DESIGN.md', 'docs/GAME-STUDIO-ORIGIN.md', 'docs/lessons.md'):
+            'docs/WORKFLOW.md', 'docs/CONTINUOUS.md', 'docs/DESIGN.md', 'docs/GAME-STUDIO-ORIGIN.md', 'docs/lessons.md'):
             files[name] = ROOT / name
         prefix = 'examples/' + example + '/' if example else None
         if prefix and name.startswith(prefix):

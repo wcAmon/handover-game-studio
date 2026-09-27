@@ -50,16 +50,16 @@ harness/bin/check-handover --file examples/swarm-agent/handover.md
 python3 tools/concept_board.py --workspace examples/swarm-agent
 ```
 
-## 在工作區進行輪班
+## 在工作區持續開發
 
-規劃通過且 `handover.md` 為 ACTIVE 後，先確認執行環境及 CLI 設定，再於獨立工作區使用：
+人類核准規劃且授權執行後，在獨立工作區使用：
 
 ```bash
-harness/studio run-now --foreground
-# 使用者決定持續自動執行時才使用：
-harness/studio install-cron
+python3 harness/continuous.py start
+python3 harness/continuous.py status
+python3 harness/continuous.py stop
 ```
 
-目前 harness 是既有 Linux shell 實作，依賴 `flock`、`setsid`、`timeout` 等命令。macOS 可使用規劃、建立工作區與手動交班工具；本次未驗證 macOS 完整無人值守輪班。預設 agent 與執行權限參數請先檢視 `harness/config.sh`。CLI 保留舊的 Handover Game Studio 名稱和 cron 標記作相容，產品名稱為 handover-shift。
+每班是新的 Codex CLI context；驗證交班後自動啟動下一班，直到北極星完成、必要阻塞、人工停止或連續失敗達限制。正常交班不再等待使用者逐班批准。macOS／Linux 使用 Python 標準庫監督器，不需 flock／setsid／timeout。舊 Linux cron 流程保留相容，不與 continuous 同時啟動。
 
-詳細案例：[Swarm-Agent](examples/swarm-agent/README.md) · [工作流程](docs/WORKFLOW.md) · [架構](docs/DESIGN.md)
+詳細：[持續開發](docs/CONTINUOUS.md) · [Swarm-Agent](examples/swarm-agent/README.md) · [工作流程](docs/WORKFLOW.md) · [架構](docs/DESIGN.md)

@@ -13,8 +13,10 @@
 ## 3. 手動班次
 讀 .claude/skills/shift/SKILL.md，確認時間、交班、inbox、Git 狀態與現有測試。處理一個 NOW，驗證，改寫 handover，執行 harness/bin/check-handover，提交。手動班次無 harness 時限時仍須保留收班時間。
 
-## 4. 自動班次
-在有 flock、setsid、timeout 等依賴的環境配置 agent CLI，先執行前景班次；只有使用者要求持續輪班才安裝 cron。Swarm-Agent 目前尚缺 blueprint，不能直接開始量產。
+## 4. 持續開發與真正交接
+人類核准計畫並授權持續執行後，使用 `python3 harness/continuous.py start`。每班是一次全新的 Codex CLI context；完成 NOW、驗證、交班、提交後，監督器立即開下一班，直到北極星驗收完成或確實無法繼續。不要在正常交班時停等人類再說「繼續」。
+
+監督與停止指令、錯誤恢復見 CONTINUOUS.md。此模式支援 macOS／Linux，不依賴 flock、setsid、timeout 外部程式。舊 Linux cron 路徑保留，但不要同時使用。
 
 ## 5. 回饋與範圍管理
 inbox 留言由下一班處理；重要決策轉寫到 handover 再清除已處理條目。北極星變更需人類決定。handover 超過 8000 字時移出經驗到 lessons，不刪關鍵事實。

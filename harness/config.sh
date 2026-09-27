@@ -23,7 +23,7 @@ MAX_SESSIONS_PER_DAY="${MAX_SESSIONS_PER_DAY:-24}"
 CLAUDE_BIN="${CLAUDE_BIN:-claude}"
 CLAUDE_ARGS="${CLAUDE_ARGS:---dangerously-skip-permissions --output-format stream-json --verbose}"
 CODEX_BIN="${CODEX_BIN:-codex}"
-CODEX_ARGS="${CODEX_ARGS:---full-auto}"
+CODEX_ARGS="${CODEX_ARGS:---sandbox workspace-write -c approval_policy=\"never\" -c sandbox_workspace_write.network_access=true}"
 
 # Git: commit after every shift; push if GIT_PUSH=1
 GIT_COMMIT="${GIT_COMMIT:-1}"

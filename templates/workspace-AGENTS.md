@@ -23,3 +23,6 @@
 - handover.md、inbox.md：此工作區專用，不能混用其他專案記憶。
 - game/ 是遊戲範例的產品目錄；其他專案由 blueprint 指定 src/、app/ 等路徑。
 - docs/WORKFLOW.md：操作流程；.claude/skills/：Codex 直接讀檔執行。
+
+## 持續開發的交接語義
+人類已授權持續開發且 supervisor 在執行時，正常收班保持 ACTIVE，準備下一個 NOW 後退出；下一個全新 context 由監督器啟動，agent 不自行再 spawn CLI。單班或里程碑完成不能當作 DONE，也不需人類逐班重複批准。只有核准北極星全部驗收完成才 DONE；確實無法繼續才 BLOCKED 並提供證據。詳細見 docs/CONTINUOUS.md。

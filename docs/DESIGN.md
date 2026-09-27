@@ -8,7 +8,7 @@ handover-shift 管理「人類規劃 → 核准 → agent 分班開發 → 驗�
 - examples 保存具體產品的需求及產物；Swarm-Agent 是目前的遊戲案例，範例有自己的交班、inbox、design 和 game。
 - 獨立工作區是實際執行班次的根目錄：具有自己的 harness、.studio、handover 與 Git 歷史。由 create_workspace.py 以白名單及 Git 追蹤檔案建立。
 
-這次保留既有 harness 的單根目錄假設。沒有新增同一 harness 同時排程多個範例的功能，也沒有更動其鎖、process group、cron 標記或 Git 提交語義。
+保留單一工作區根目錄模型；新增 continuous.py 作 macOS／Linux 持續監督器，每班新建 Codex CLI context，驗證交班後立即續班。舊 shell／cron 路徑仍保留，不能與 continuous 同時啟動。
 
 ## 人類與 agent 的責任
 
@@ -22,6 +22,6 @@ handover-shift 管理「人類規劃 → 核准 → agent 分班開發 → 驗�
 
 Swarm-Agent 北極星原文仍含「草案／待核准」的歷史標籤；旁邊 approval.json 記錄人類後續對全文的核准與 SHA256。核准紀錄優先於歷史標籤，不代表驗收項目已完成。agent 必須比對雜湊；不符即回報而非假稱仍有效。
 
-harness 目前使用 Handover Game Studio 名稱、STUDIO_ROOT 與 .studio 作內部相容名稱。框架名稱已更新，內部執行介面留待專項遷移。本次不承諾 Windows 或 macOS 自動排程相容性。
+harness 目前使用 Handover Game Studio 名稱、STUDIO_ROOT 與 .studio 作內部相容名稱。框架名稱已更新，內部執行介面留待專項遷移。continuous 已於 macOS 執行 fresh-context CLI；不承諾 Windows，也未安裝開機恢復服務。
 
 舊版遊戲導向的完整設計推導保存在 [GAME-STUDIO-ORIGIN.md](GAME-STUDIO-ORIGIN.md)，作為歷史背景；現行工作範圍以本文件與 WORKFLOW.md 為準。歷史 agent 能力比較未在本次重新驗證。

@@ -15,6 +15,6 @@
 4. 框架與範例交班分開。跨兩者的修改各自同步，不能遺失人類決策。
 5. 不修改 `.studio/`；不修改 `harness/`，除非人類明確要求修改 harness。
 6. 不刪除或跳過測試。確認時間用 `harness/bin/time-left`。
-7. 不因完成規劃就自行啟動 agent、cron 或推送；啟動遵從人類指示。
+7. 不因完成規劃就自行啟動 agent、cron 或推送；啟動遵從人類指示。一旦人類授權持續開發，正常收班必須由監督器啟動全新 context 接班，不再逐班等待批准；直到北極星完成或確實無法繼續。
 
 Skills 位於 `.claude/skills/<name>/SKILL.md`，Codex 直接讀檔。這些 skills 的 `design/`、`handover.md`、`game/` 路徑均指目標工作區，不是框架根目錄。視覺流程按專案需要使用。
