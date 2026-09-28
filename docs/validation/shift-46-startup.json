@@ -1,0 +1,19 @@
+{
+  "shift": 46,
+  "workspace": "../swarm-agent-work",
+  "state_at_observation": "running",
+  "supervisor_pid": 95051,
+  "parent": {
+    "thread_id": "01a0e603-df09-7ac2-b38c-31e9511e21ae",
+    "model": "gpt-6-astra",
+    "effort": "high"
+  },
+  "child": {
+    "thread_id": "01a0e604-9337-7683-bf44-6146bf18b4dc",
+    "parent_thread_id": "01a0e603-df09-7ac2-b38c-31e9511e21ae",
+    "path": "/root/cargo_runtime",
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "evidence": "Observed session_meta parent linkage and turn_context model/effort in native rollout JSONL, not worker self-report. Parent reported valid unit/build cached-passed and delegated T-063; runtime delivery still in progress."
+}

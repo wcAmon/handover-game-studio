@@ -21,3 +21,6 @@ Both framework/example handover checkers and git diff --check are required befor
 - Exact validation dependencies are configured by the workspace. Unknown environment changes require forced validation. Hashes do not prove semantic correctness or human visual acceptance.
 - Content change detection measures delivery movement, not quality. Three unchanged game shifts request reassessment; one more unchanged shift pauses with evidence.
 - No empirical long-term speedup or account-wide quota attribution is claimed. Swarm-Agent first live run is the next measurement.
+
+## Actual resumed shift
+Swarm-Agent shift #46 started successfully. Native rollout metadata independently confirms Astra/high parent and Sol/high child `/root/cargo_runtime`, linked by parent_thread_id. Parent reused valid unit/build receipts and delegated T-063 implementation while preparing integration validation. Evidence: shift-46-startup.json. This proves actual multi-model routing and live startup, not finished cargo integration or measured long-term speedup.
