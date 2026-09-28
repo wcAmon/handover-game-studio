@@ -10,6 +10,8 @@ handover-shift 管理「人類規劃 → 核准 → agent 分班開發 → 驗�
 
 保留單一工作區根目錄模型；新增 continuous.py 作 macOS／Linux 持續監督器，每班新建 Codex CLI context，驗證交班後立即續班。舊 shell／cron 路徑仍保留，不能與 continuous 同時啟動。
 
+可選 `--team native`：班主固定 Astra，班內使用 Codex 原生 subagents，worker 模型由 Astra 選擇 Sol/Terra/Luna。既有 supervisor 只處理跨班生命週期，不重造班內喚醒。設定、實測與治理界線見 [NATIVE-TEAMS.md](NATIVE-TEAMS.md)。
+
 ## 人類與 agent 的責任
 
 人類決定目標、範圍、設計取捨及完成條件；agent 整理可審閱的方案、分解任務、實作及驗證。未核准設計或 blueprint 不能以 ACTIVE 掩蓋；等待決策時交班 BLOCKED 並明確列出問題。

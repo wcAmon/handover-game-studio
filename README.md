@@ -25,7 +25,7 @@ python3 tools/create_workspace.py ../swarm-agent-work --example swarm-agent
 
 接著切換到新工作區，讀 `AGENTS.md` 和 `handover.md`，執行 `git init` 並提交初始檔案。工具不會啟動 agent、排程、建立 Git 歷史或發佈任何內容。匯出只帶版本控制中的選定檔案，不帶 `.studio/`、本機設定或 `.env`。
 
-**Swarm-Agent 狀態：北極星已核准，技術選型／blueprint 已提出待核准，遊戲尚未實作。** 已建立框架同層的 swarm-agent-work 獨立工作區；不要在框架根目錄執行遊戲班次。
+**Swarm-Agent：範例目錄保存設計快照；實際遊戲在同層 swarm-agent-work 獨立工作區開發。** 產品即時狀態以該工作區交班為準；不要在框架根目錄執行遊戲班次。
 
 ## 目錄與責任
 
@@ -63,3 +63,5 @@ python3 harness/continuous.py stop
 每班是新的 Codex CLI context；驗證交班後自動啟動下一班，直到北極星完成、必要阻塞、人工停止或連續失敗達限制。正常交班不再等待使用者逐班批准。macOS／Linux 使用 Python 標準庫監督器，不需 flock／setsid／timeout。舊 Linux cron 流程保留相容，不與 continuous 同時啟動。
 
 詳細：[持續開發](docs/CONTINUOUS.md) · [Swarm-Agent](examples/swarm-agent/README.md) · [工作流程](docs/WORKFLOW.md) · [架構](docs/DESIGN.md)
+
+多模型團隊可選 `--team native`：班主固定 Astra，使用原生 subagents 派 Sol/Terra/Luna；班內回報不需重啟 orchestrator，跨班仍是全新 context。先執行 `python3 harness/continuous.py doctor --codex <CLI路徑>`，設定及驗證界線見 [原生多模型團隊](docs/NATIVE-TEAMS.md)。既有工作區不會自動切換或重新啟動。

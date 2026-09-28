@@ -18,6 +18,8 @@
 
 監督與停止指令、錯誤恢復見 CONTINUOUS.md。此模式支援 macOS／Linux，不依賴 flock、setsid、timeout 外部程式。舊 Linux cron 路徑保留，但不要同時使用。
 
+選用多模型團隊時加 `--team native`，見 [NATIVE-TEAMS.md](NATIVE-TEAMS.md)。班內子任務由 Astra 呼叫原生 subagents；只由班主驗收、更新交班和提交，不以子 agent 完成冒充北極星完成。
+
 ## 5. 回饋與範圍管理
 inbox 留言由下一班處理；重要決策轉寫到 handover 再清除已處理條目。北極星變更需人類決定。handover 超過 8000 字時移出經驗到 lessons，不刪關鍵事實。
 

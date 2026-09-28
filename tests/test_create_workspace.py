@@ -29,6 +29,14 @@ class WorkspaceTests(unittest.TestCase):
             result = subprocess.run([sys.executable, str(dest/'harness/bin/check-handover')], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('harness/bin/time-left', (dest/'AGENTS.md').read_text())
+            for name in ['harness/native_team.py','harness/native-agents/planner.md',
+                         'harness/native-agents/coder.md','harness/native-agents/artist.md',
+                         'harness/native-agents/reviewer.md','docs/NATIVE-TEAMS.md',
+                         'docs/validation/native-team-smoke-2026-09-28.md']:
+                self.assertTrue((dest/name).is_file(),name)
+            result=subprocess.run([sys.executable,str(dest/'harness/continuous.py'),'--help'],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertIn('--team',result.stdout)
 
     def test_example_preserves_approval_assets_and_board(self):
         with tempfile.TemporaryDirectory() as t:

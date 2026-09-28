@@ -15,6 +15,7 @@ class ContinuousTests(unittest.TestCase):
         root=Path(t)
         (root/'harness/bin').mkdir(parents=True)
         shutil.copy2(ROOT/'harness/bin/check-handover',root/'harness/bin/check-handover')
+        shutil.copytree(ROOT/'harness/native-agents',root/'harness/native-agents')
         (root/'handover.md').write_text('''# HANDOVER
 STATUS: ACTIVE
 ## NORTH_STAR
@@ -43,9 +44,13 @@ none
 import os,sys,time
 from pathlib import Path
 root=Path.cwd()
+if '--version' in sys.argv:
+ print('codex-cli fixture');sys.exit(0)
+if sys.argv[1:3]==['features','list']:
+ print('multi_agent stable true');sys.exit(0)
 with (root/'pids').open('a') as f:f.write(str(os.getpid())+'\\n')
 with (root/'args').open('a') as f:f.write(repr(sys.argv)+'\\n')
-sys.stdin.read()
+(root/'prompt.txt').write_text(sys.stdin.read())
 mode='''+repr(behavior)+'''
 if mode=='hang':time.sleep(10)
 if mode=='fail':sys.exit(7)
@@ -140,6 +145,60 @@ p.write_text(s)
             p=root/'handover.md';p.write_text(p.read_text().replace('STATUS: ACTIVE','STATUS: BLOCKED'))
             result=self.run_supervisor(root,agent)
             self.assertEqual(result.returncode,0,result.stderr)
+            self.assertFalse((root/'pids').exists())
+
+    def test_native_team_survives_detached_start_and_fresh_shifts(self):
+        import time
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            result=subprocess.run([sys.executable,str(RUNNER),'start','--workspace',str(root),
+                '--codex',str(agent),'--team','native'],capture_output=True,text=True,timeout=5)
+            self.assertEqual(result.returncode,0,result.stderr)
+            deadline=time.monotonic()+5
+            while time.monotonic()<deadline:
+                state=json.loads((root/'.studio/continuous.json').read_text())
+                if state['state']=='done':break
+                time.sleep(.05)
+            self.assertEqual(state['state'],'done')
+            self.assertEqual(state['team'],'native')
+            self.assertEqual(state['native_team']['orchestrator'],'gpt-6-astra')
+            argv=(root/'args').read_text().splitlines()
+            self.assertEqual(len(argv),2)
+            for line in argv:
+                self.assertIn("'-m', 'gpt-6-astra'",line)
+                self.assertIn('agents.default_subagent_model="gpt-6-sol"',line)
+                self.assertIn('agents.max_concurrent_threads_per_session=2',line)
+                self.assertNotIn('resume',line)
+            self.assertIn('最多一個 writer',(root/'prompt.txt').read_text())
+            self.assertIn('gpt-5.6-terra',(root/'prompt.txt').read_text())
+
+    def test_disabled_native_feature_fails_before_launch(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            agent.write_text(agent.read_text().replace('multi_agent stable true','multi_agent stable false'))
+            result=self.run_supervisor(root,agent,'--team','native')
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn('No fallback',result.stderr)
+            self.assertFalse((root/'pids').exists())
+            self.assertFalse((root/'.studio/session.env').exists())
+
+    def test_doctor_is_readonly_and_does_not_launch_agent(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            result=subprocess.run([sys.executable,str(RUNNER),'doctor','--workspace',str(root),
+                '--codex',str(agent)],capture_output=True,text=True,timeout=5)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(json.loads(result.stdout)['default_worker'],'gpt-6-sol')
+            self.assertFalse((root/'.studio').exists())
+            self.assertFalse((root/'pids').exists())
+
+    def test_native_requires_role_guidance_in_target_workspace(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            (root/'harness/native-agents/coder.md').unlink()
+            result=self.run_supervisor(root,agent,'--team','native')
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn('target workspace: coder',result.stderr)
             self.assertFalse((root/'pids').exists())
 
 if __name__=='__main__':unittest.main()

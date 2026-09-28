@@ -24,6 +24,8 @@ description: 量產期單一班次的標準流程（開班 → 做一個 NOW 任
 
 ## 2. 工作
 
+- 若班主啟用 `--team native`，按 docs/NATIVE-TEAMS.md 分派同一 NOW 的有界子任務。子 agent 不另開 shift；班主負責驗收、交班與提交。子 agent 回報前班主保持活躍、用原生 wait 等待；收班前確認全部停止寫入。
+
 - 只做 NOW 任務。發現其他問題 → 記到 TASKS 的 NEXT/LATER，不要順手做。
 - 需要的背景才去讀：`design/north-star.md`（為什麼）、`design/blueprint.md`（里程碑）、`design/style-guide.md`（美術）、`grep docs/lessons.md`（舊的坑）。
 - 小步前進，每到一個可運作的節點就 `git commit`（訊息開頭 `#<班次號>`）。
