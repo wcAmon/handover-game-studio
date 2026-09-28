@@ -9,7 +9,7 @@ STATUS: ACTIVE
 - 本輪新增樹狀knowledge索引、候選/採納/回滾版本與證據、transaction恢復；驗證按inputs/tools/env/content/output憑據保守重用；delivery產品指紋停滯重估/暫停；drain本班結束後停及resume新context恢復；每班耗時/提交憑據。
 - 效率以可靠交付時間/首次驗收/返工為主，token為輔。不是模型訓練，不自動證明知識有益，也不是任意環境完全重播。
 - docs/LEARNING.md有CLI/schema/限制，docs/CONTINUOUS.md與NATIVE-TEAMS.md有操作。export包含新工具与文件；不預設啟動。
-- 本輪實作/審查驗證詳docs/validation/learning-handover-2026-09-28.md。未push/發布，不動已核准北極星。遊戲遷移/恢復結果記在../swarm-agent-work/docs/runs/resume-assessment.md。
+- 本輪實作/審查驗證詳docs/validation/learning-handover-2026-09-28.md。未push/發布，不動已核准北極星。遊戲基線69unit/build及兩processor通過，第46班已以Astra/high/native啟動；遷移/恢復結果記在../swarm-agent-work/docs/runs/resume-assessment.md，實際後續進度需live status。
 
 ## 任務佇列 TASKS
 ### NOW

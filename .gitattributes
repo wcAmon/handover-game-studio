@@ -1,0 +1,2 @@
+# Preserve verbatim validation evidence rather than treating it as code.
+docs/runs/validation/*.log -whitespace

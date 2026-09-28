@@ -10,8 +10,9 @@ Keep native Codex agents and the existing fresh-context supervisor. Add project-
 - [x] Sol validation worker: harness/verify.py + tests/test_verify.py only. Deterministic validations, immutable logs/receipts, conservative reuse.
 - [x] Astra integrator: continuous.py delivery checks/drain/model effort; templates, workflow docs, exports and integration tests.
 - [x] Review all modules, full regression and export check; commit framework and integrate local base branch.
-- [ ] Assess paused Swarm-Agent: approvals, clean Git, existing artifacts and executable checks. Migrate workflow/knowledge/validation policy without changing product goals; snapshot and commit.
-- [ ] If assessment passes, resume native continuous development with Astra and worker routing. Observe first delivered change and next fresh context, or capture a real blocking condition.
+- [x] Assess paused Swarm-Agent: approvals, clean Git, existing artifacts and executable checks. Migrate workflow/knowledge/validation policy without changing product goals; snapshot and commit.
+- [x] Assessment passed; resumed native continuous development at shift #46 with Astra/high and worker routing.
+- [ ] Ongoing measurement: first delivered change and subsequent fresh-context handover; do not claim speedup before evidence. This remains normal background development (T-105).
 
 ## Contracts
 Validation config: version=1, groups object; group command argv, cwd, inputs exact relative files/directories, env_keys, tool_versions argv list, outputs optional, cache boolean, max_age_seconds, timeout_seconds. CLI: verify.py --workspace ROOT run GROUP [--force], status GROUP. Durable logs and JSON under docs/runs/validation, reuse only unchanged successful evidence; latest failure prevents older success reuse.
