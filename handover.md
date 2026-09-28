@@ -5,7 +5,7 @@ STATUS: ACTIVE
 人類規劃並核准，agent以全新context分班持續開發直到北極星完成或確實無法繼續。Swarm-Agent是examples及獨立工作區中的範例，不是框架。
 
 ## 目前狀態 STATE
-- 原生多模型：Astra班主，Sol/Terra/Luna由班主按任務選擇，同時最多兩child/一writer；不用tmux重造班內喚醒。--orchestrator-effort預設high，可明確調整。
+- 原生多模型：Astra只讀摘要、排優先序、派工與管理班次生命週期；coder/artist執行，獨立Sol reviewer審查，Sol finisher驗證、看圖、交班、知識採納與commit。同時最多兩child/一writer；finisher不再spawn。--orchestrator-effort預設high，可明確調整。
 - 本輪新增樹狀knowledge索引、候選/採納/回滾版本與證據、transaction恢復；驗證按inputs/tools/env/content/output憑據保守重用；delivery產品指紋停滯重估/暫停；drain本班結束後停及resume新context恢復；每班耗時/提交憑據。
 - 效率以可靠交付時間/首次驗收/返工為主，token為輔。不是模型訓練，不自動證明知識有益，也不是任意環境完全重播。
 - docs/LEARNING.md有CLI/schema/限制，docs/CONTINUOUS.md與NATIVE-TEAMS.md有操作。export包含新工具与文件；不預設啟動。
@@ -25,6 +25,7 @@ STATUS: ACTIVE
 - 驗證快取需涵蓋真正依賴，lockfile不證明安裝完整；GPU/服務/未知依賴改變需--force。receipt/content hash不是視覺或北極星驗收。
 - SIGKILL無法由驗證器捕捉，外部新session服務不保證清理；normal stop/timeout測試有覆蓋。
 - 知識採納不代表人類設計核准；不能覆蓋AGENTS/北極星/測試政策。
+- native prompt需獨立於非native單人指令；不可先命令Astra測試/提交再用附加政策覆蓋。軟截止停止新產品工作，仍須預留finisher收尾。
 
 ## 有效做法 PLAYBOOK
 - python3 -m unittest discover -s tests -v
@@ -37,8 +38,8 @@ STATUS: ACTIVE
 - 最新「照我們討論的建構專案、然後你再評估swarm agents繼續」授權本輪框架建構與評估後恢復遊戲，取代#45後暫停；不等逐班批准。無發布/推送授權。
 
 ## 班次紀錄 LOG
+- #6 2026-09-28 T-105 依使用者修正，native Astra僅統籌派工；新增獨立Sol reviewer與Sol finisher驗證交班，框架回歸後由另一位Sol複審。
 - #5 2026-09-28 T-104 跨班知識、驗證憑據、停滯/停班控制與模型效率政策，導入遊戲評估後續跑。
 - #4 2026-09-28 T-103 原生多模型團隊接上supervisor；Astra收Sol/Terra/Luna回報實測。
 - #3 2026-09-27 顯式sandbox選項與測試。
 - #2 2026-09-27 fresh-context持續監督器。
-- #1 2026-09-27 框架/產品工作區分離。

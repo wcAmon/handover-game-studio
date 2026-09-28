@@ -27,7 +27,7 @@
 ## 持續開發的交接語義
 人類已授權持續開發且 supervisor 在執行時，正常收班保持 ACTIVE，準備下一個 NOW 後退出；下一個全新 context 由監督器啟動，agent 不自行再 spawn CLI。單班或里程碑完成不能當作 DONE，也不需人類逐班重複批准。只有核准北極星全部驗收完成才 DONE；確實無法繼續才 BLOCKED 並提供證據。詳細見 docs/CONTINUOUS.md。
 
-若 supervisor 明確啟用 `--team native`，Astra 可在同一 NOW 內派原生 subagents，按 docs/NATIVE-TEAMS.md 選模型。子 agent 只做受派任務，不執行整班 shift、不更新 handover/inbox、不 commit、不再派生。父 agent 回收並驗證所有結果後才交班；這不授權 child 開下一班 CLI。
+若 supervisor 明確啟用 `--team native`，Astra 只讀 handover/index 摘要、排優先序、派工並管理 wait/send/stop，不實作、詳細審查、驗證、看圖、寫交班、知識採納或 commit。coder/artist 做產物，獨立 Sol reviewer 審查，Sol finisher 驗證、寫報告與 handover、審核知識並 commit；有問題由 Astra 再派 coder 修復。最多兩個 child、一個 writer；finisher 不再派生。只有 supervisor 開下一班 CLI。詳見 docs/NATIVE-TEAMS.md。
 
 ## 跨班知識與驗證
-存在 knowledge/index.json 時，handover 只保留摘要、任務及索引，按需讀 slug；知識不得覆蓋人類決策、核准設計或測試政策。只有班主可審閱並 accept/rollback refinement。存在 validation.json 時，以 harness/verify.py 的有效憑據沿用完全相同輸入的結果；失效必須重跑，不刪測試或降低驗收。詳見 docs/LEARNING.md。產品交付優先於 token 節省。
+存在 knowledge/index.json 時，handover 只保留摘要、任務及索引，按需讀 slug；知識不得覆蓋人類決策、核准設計或測試政策。Native 模式只有 Sol finisher 可審閱並 accept/rollback refinement；非 native 模式由執行班次的 agent 審核。存在 validation.json 時，以 harness/verify.py 的有效憑據沿用完全相同輸入的結果；失效必須重跑，不刪測試或降低驗收。詳見 docs/LEARNING.md。產品交付優先於 token 節省。

@@ -31,9 +31,13 @@ class WorkspaceTests(unittest.TestCase):
             self.assertIn('harness/bin/time-left', (dest/'AGENTS.md').read_text())
             for name in ['harness/native_team.py','harness/native-agents/planner.md',
                          'harness/native-agents/coder.md','harness/native-agents/artist.md',
-                         'harness/native-agents/reviewer.md','docs/NATIVE-TEAMS.md',
+                         'harness/native-agents/reviewer.md','harness/native-agents/finisher.md',
+                         'docs/NATIVE-TEAMS.md',
                          'docs/validation/native-team-smoke-2026-09-28.md']:
                 self.assertTrue((dest/name).is_file(),name)
+            self.assertIn('Sol finisher', (dest/'AGENTS.md').read_text())
+            self.assertIn('Do not spawn another agent', (dest/'harness/native-agents/finisher.md').read_text())
+            self.assertIn('product runtime when assigned', (dest/'harness/native-agents/coder.md').read_text())
             result=subprocess.run([sys.executable,str(dest/'harness/continuous.py'),'--help'],capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertIn('--team',result.stdout)
@@ -46,6 +50,8 @@ class WorkspaceTests(unittest.TestCase):
             approval = json.loads((dest/'design/approval.json').read_text())
             self.assertEqual(approval['status'], 'approved')
             self.assertEqual(approval['sha256'], hashlib.sha256((dest/'design/north-star.md').read_bytes()).hexdigest())
+            self.assertTrue((dest/'harness/native-agents/finisher.md').is_file())
+            self.assertIn('Sol finisher', (dest/'AGENTS.md').read_text())
             for src in (ROOT/'examples/swarm-agent/design/concept').glob('*.png'):
                 self.assertEqual(src.read_bytes(), (dest/'design/concept'/src.name).read_bytes())
             for command in [[sys.executable, str(dest/'tools/concept_board.py')], [sys.executable, str(dest/'harness/bin/check-handover')]]:

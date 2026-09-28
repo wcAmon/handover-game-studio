@@ -29,9 +29,9 @@ proposal JSON 範例（路徑均相對工作區）：
 }
 ```
 
-kind 為 memory、procedure 或 role。propose 擷取證據雜湊及目前版本，生成不可覆寫候選；班主必須檢查內容與證據，再 accept。採納保存前後版本；rollback 只回復仍為目前版本的採納，防止覆蓋後續修改。若證據或版本已變，重新評估並提出新候選。
+kind 為 memory、procedure 或 role。propose 擷取證據雜湊及目前版本，生成不可覆寫候選；native 由 Sol finisher 檢查內容與證據後才 accept/rollback，Astra 不執行；非 native 由執行班次的 agent 審核。採納保存前後版本；rollback 只回復仍為目前版本的採納，防止覆蓋後續修改。若證據或版本已變，重新評估並提出新候選。
 
-這是專案資料，不是上位指令；不得透過知識改寫 AGENTS、核准設計、harness 或測試政策。子 agent 可提案，但只有班主可採納。檔案雜湊只證明來源版本，不能證明建議正確；原始來源變更後須再確認其適用性。採納與回滾先寫持久化 transaction journal，再更新 body/index；下次 CLI 在鎖內先完成中斷交易，context 也在鎖內讀取。永久磁碟錯誤或被外部手改的資料仍需停止提升並依 Git 與 immutable history 檢查。
+這是專案資料，不是上位指令；不得透過知識改寫 AGENTS、核准設計、harness 或測試政策。worker 可提案，但 native 只由 finisher 採納。檔案雜湊只證明來源版本，不能證明建議正確；原始來源變更後須再確認其適用性。採納與回滾先寫持久化 transaction journal，再更新 body/index；下次 CLI 在鎖內先完成中斷交易，context 也在鎖內讀取。永久磁碟錯誤或被外部手改的資料仍需停止提升並依 Git 與 immutable history 檢查。
 
 ## 驗證憑據：相同輸入可沿用，失效就重跑
 

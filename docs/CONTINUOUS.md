@@ -1,6 +1,6 @@
 # 持續逼近北極星：全新 context 交接
 
-人類核准設計與計畫並要求持續開發後，監督器負責整個開發週期。每個 agent 仍只做一個 NOW，驗證、交班及提交後退出；監督器立即啟動下一個全新 `codex exec`。不用 resume，也不把本班的長對話轉交下一班。
+人類核准設計與計畫並要求持續開發後，監督器負責整個開發週期。每班仍只做一個 NOW，驗證、交班及提交後退出；監督器立即啟動下一個全新 `codex exec`。非 native 由單一 agent 收班；native 由 Sol finisher 驗證、交班及提交，Astra 只統籌派工。不用 resume，也不把本班的長對話轉交下一班。
 
 ## macOS／Linux（Python 3 標準庫）
 
@@ -24,7 +24,7 @@ start 是持續開發，不是只跑一班。程序獨立於目前對話終端�
 - CLI 錯誤、無進展、交班無效或硬截止：保存 Git 工作，以新 context 修復／接續；連續三次失敗則 error 停止，原因寫入狀態。
 - 人工 stop 或既有 PAUSE：停止當班程序群，保存工作，停止續班。
 
-監督器不是獨立品質審查員：格式檢查不代表遊戲完成，agent 仍必須執行測試與視覺驗收，不能只靠自述標 DONE。
+監督器不是獨立品質審查員：格式檢查不代表遊戲完成。native 的獨立 Sol reviewer 檢查 diff，Sol finisher 執行測試與視覺驗收；Astra 不接手審查或收尾。supervisor 的 deterministic checker 與必要救援提交維持原狀，不能用它們取代產品驗收。
 
 ## 狀態與限制
 `.studio/continuous.json` 顯示 supervisor／agent PID、當前班次、狀態及錯誤；`.studio/logs/continuous-NNNN.jsonl` 保存各班輸出。runtime 由監督器管理，agent 不手改。

@@ -175,6 +175,20 @@ p.write_text(s)
             self.assertIn('最多一個 writer',(root/'prompt.txt').read_text())
             self.assertIn('gpt-5.6-terra',(root/'prompt.txt').read_text())
 
+    def test_native_prompt_routes_review_and_finalization(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t,'drain')
+            result=self.run_supervisor(root,agent,'--team','native')
+            self.assertEqual(result.returncode,0,result.stderr)
+            prompt=(root/'prompt.txt').read_text()
+            self.assertIn('獨立 Sol reviewer',prompt)
+            self.assertIn('Sol finisher',prompt)
+            self.assertIn('reviewer 與 finisher 固定選 gpt-6-sol',prompt)
+            self.assertIn('軟截止後停止新產品任務',prompt)
+            self.assertIn('必要的 reviewer／finisher',prompt)
+            self.assertNotIn('先檢查 git 狀態與測試，再只做一個 NOW 任務，驗證、改寫交班、檢查並 git commit',prompt)
+            self.assertNotIn('只有你可更新 handover',prompt)
+
     def test_disabled_native_feature_fails_before_launch(self):
         with tempfile.TemporaryDirectory() as t:
             root,agent=self.fixture(t)
@@ -202,6 +216,15 @@ p.write_text(s)
             result=self.run_supervisor(root,agent,'--team','native')
             self.assertNotEqual(result.returncode,0)
             self.assertIn('target workspace: coder',result.stderr)
+            self.assertFalse((root/'pids').exists())
+
+    def test_native_requires_finisher_in_target_workspace(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            (root/'harness/native-agents/finisher.md').unlink()
+            result=self.run_supervisor(root,agent,'--team','native')
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn('target workspace: finisher',result.stderr)
             self.assertFalse((root/'pids').exists())
 
     def test_drain_finishes_current_shift_without_starting_next(self):

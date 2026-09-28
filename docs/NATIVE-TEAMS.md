@@ -1,22 +1,38 @@
 # 原生多模型團隊
 
-handover-shift 使用兩層協作：**班內由 Codex 原生 subagents 分工；跨班由 continuous supervisor 啟動全新 Astra context。** 不另造 tmux 喚醒、SQLite 任務排程器或每次結果都重啟父 agent。
+handover-shift 使用兩層協作：班內由 Astra 統籌 Codex 原生 subagents，跨班由既有 continuous supervisor 啟動全新 context。不另造班內 scheduler、tmux 喚醒或角色硬權限系統。
 
-## 模型與職責
+## 班內責任
 
-| 職責 | 起始選擇 | 決策原則 |
+| 角色 | 模型 | 工作 |
 |---|---|---|
-| Orchestrator | `gpt-6-astra`，high | 每班固定；選任務、模型、驗收、交班 |
-| Planner | `gpt-6-sol` | 規劃與依賴；小範圍資料整理可選 Luna/Terra |
-| Coder | `gpt-6-sol` | 一般實作；界線清楚且可驗證的小修改可選 Terra/Luna |
-| Artist | `gpt-6-sol` | 視覺分析及工具操作；必須先核對實際生圖/建模工具 |
-| Reviewer | `gpt-6-luna` 或 Sol | 狹窄查核用 Luna，複雜正確性審查用 Sol |
+| Orchestrator | `gpt-6-astra` | 讀 handover/index 摘要、排同一 NOW 的依賴與優先序、選模型派工、wait/send/stop 管理生命週期，依 reviewer/finisher 狀態安排下一步 |
+| Planner | 通常 `gpt-6-sol` | 唯讀釐清方案、依賴與風險；狹窄盤點可用 Terra/Luna |
+| Coder | 通常 `gpt-6-sol` | 實作指定產品路徑、修復 reviewer/finisher 具體問題；界線清楚的小修改可用 Terra/Luna |
+| Artist | 通常 `gpt-6-sol` | 視覺分析和已確認可用的生圖／建模工具操作 |
+| Reviewer | 獨立 `gpt-6-sol` | 在 writer 停止後詳細檢查穩定 diff、正確性、風險和證據；唯讀 |
+| Finisher | `gpt-6-sol` | 讀審查和驗證證據、執行最終測試與看圖、寫 team 報告和 handover、審核知識提案、check-handover、commit |
 
-Worker 的可選集合為 `gpt-6-sol`、`gpt-5.6-terra`、`gpt-6-luna`。Astra 按複雜度、驗證難度和工具需求選擇，記錄理由；角色不綁死模型。未指定 worker model 時預設 Sol，避免無意全部繼承 Astra。此表是本專案的起始路由策略，並非量測過的成本/速度排名。
+Astra 不實作、不做詳細 code review、不跑測試或看圖驗收、不寫報告／交班、不 accept/rollback 知識、不 commit。finisher 不再 spawn，產品需修復時回報 Astra，由 coder 修復、按需交 reviewer 複審。reviewer 和 finisher 不可由被審查的 coder 冒充。只有 finisher 在取得實際證據後決定驗收與收班；子 agent 完成訊息本身不構成驗收。
 
-模型 override 使用 fresh/精簡 context；目前 CLI 的全歷史 fork 會繼承父模型。每次派工傳入目的、輸入、必要知識索引、可寫路徑、驗收、截止時間及 `harness/native-agents/<role>.md` 的職責。角色檔是 prompt 素材，不假定每個 CLI 都支援相同的自訂 agent_type 介面。
+一般 worker 可選 `gpt-6-sol`、`gpt-5.6-terra`、`gpt-6-luna`；reviewer 與 finisher 固定 Sol。預設 worker Sol/medium，Astra 班主預設 high，可用 `--orchestrator-effort low|medium|high` 明確調整。這是行為路由，沒有強制模型 allowlist、檔案 ACL 或帳號成本上限。模型選擇以可靠交付時間、首次驗收和返工為準，不能為省用量讓不適合的模型反覆返工。
 
-## 啟用方式
+不同 worker 模型使用 fresh／精簡 context（若有 `fork_turns`，設 `none`），傳目的、輸入、必要知識索引、可寫路徑、驗收和截止時間，以及 `harness/native-agents/<role>.md`。全歷史 fork 會繼承父模型，不能用來假裝切到 Sol。最多兩個 child 同時工作、同時最多一個 writer；native subagents 共用工作區，不自動隔離 worktree。需要一致快照的 reviewer 在 coder/artist 完成寫入後開始，finisher 在審查與修復完成後收班。child 不啟動 CLI/cron，不開下一班，不再派生。
+
+## 截止時間與交班
+
+開班時 Astra 從 handover 和 index 摘要派任務，避免閱讀整套產品檔案。軟截止前要開始收斂產品工作並預留 Sol finisher 的時間；軟截止後不派新的產品任務，但可派必要的 reviewer／finisher 收尾與具體修復。硬截止前無法完成驗證或 worker 未停妥時，finisher 記錄真實失敗狀態；Astra 不代做。`docs/runs/team-<班次號>.md` 由 finisher 記錄角色、任務、模型、effort、理由、agent id、驗證與 fallback，handover 留摘要和索引。supervisor 保留原有 deterministic checker、停止清理、救援提交與下一班啟動；這些是 supervisor 程式，不是 Astra 的審查或提交。
+
+```text
+continuous supervisor
+  └─ 第 N 班：全新 Astra context（摘要、派工、wait/send/stop）
+       ├─ coder/artist：產品產物與具體修復
+       ├─ 獨立 Sol reviewer：唯讀審查
+       └─ Sol finisher：驗證、看圖、報告、交班、知識採納、commit
+  └─ deterministic 交班檢查 → 第 N+1 班全新 context
+```
+
+## 啟用與界線
 
 先在已核准的獨立工作區確認 CLI：
 
@@ -24,47 +40,8 @@ Worker 的可選集合為 `gpt-6-sol`、`gpt-5.6-terra`、`gpt-6-luna`。Astra �
 python3 harness/continuous.py doctor --codex /Applications/ChatGPT.app/Contents/Resources/codex
 ```
 
-`doctor` 只讀版本、feature 與角色檔；不啟動模型、不修改 `.studio`，也不保證帳號可用模型及影像工具。2026-09-28 此機兩個 CLI 均為原生 ARM64；PATH 為 0.144.3，App 內為 0.155.0-alpha.9。使用新版 App 路徑即可，不必重裝全機 CLI；其他機器自行指定可用路徑。
+`doctor` 唯讀檢查版本、multi_agent feature 和五個角色檔；不啟動模型，也不保證帳號或影像工具可用。使用者授權啟動目標工作區後才執行 `start` 或 `resume --team native`。預設仍是 `--team off`，不改全域 config 或既有 sandbox。`stop` 立即停止；`drain` 讓當前班收尾後停。狀態與停止語義見 [CONTINUOUS.md](CONTINUOUS.md)。
 
-**只有使用者授權啟動該工作區時**才執行：
+2026-09-28 的臨時 Git repo 唯讀探針確認 Astra 父 thread 可派 fresh Sol、Terra、Luna，並收到原生 completion；見 [測試證據](validation/native-team-smoke-2026-09-28.md)。探針沒有驗證 finisher 全流程、正式美術工具、平行寫入隔離或長期收益。CLI 退出後 native notification 不會復活父 thread；跨班仍由 supervisor 管理。外部新 process group 的服務也不在既有停止清理保證內。
 
-```bash
-python3 harness/continuous.py start --team native \
-  --codex /Applications/ChatGPT.app/Contents/Resources/codex
-python3 harness/continuous.py status
-python3 harness/continuous.py stop
-```
-
-預設仍是 `--team off`。不改使用者全域 config，不替現有遊戲工作區切換模式。完整權限仍需既有明確授權；`--team native` 不提升 sandbox。status 顯示 team、版本與固定 orchestrator。`stop` 是立即停止，不是「本班做完再停」。既有 PAUSE 亦是停止訊號；此次沒有新增 drain 或開機恢復服務。
-
-## 班內與跨班
-
-```text
-continuous supervisor
-  └─ 第 N 班：新的 Astra CLI context
-       ├─ native subagent：Sol / Terra / Luna
-       ├─ native subagent：Sol / Terra / Luna
-       └─ 收結果 → 驗證 → 更新交班 → commit → 退出
-  └─ 驗證交班與進度 → 第 N+1 班：新的 Astra CLI context
-```
-
-Native spawn、completion notification、wait 與 follow-up 負責班內回報。只要父 CLI 還活著，不需保存歷史再啟動才能收結果。CLI 已退出或崩潰時，不能假設 native notification 會復活它；外層監督器仍管理退出碼、時限、失敗限次及新班次。下一班讀 handover 和指向的任務證據，不 resume 舊 context。
-
-同一 NOW 可拆成有界子任務，但不平行展開其他未批准任務。最多兩個 child，同時最多一個 writer；read-only 工作避開正在修改的檔案，reviewer 在 writer 完成後看穩定結果。Native subagents 共用工作區，不自動產生 worktree。需要多個 writer 才另行設計 worktree 與序列整合；本版未實作自動分支合併。
-
-只有父 agent 更新 handover、inbox 與提交；child 不執行完整 shift、不再派生、不啟動 CLI/cron。父 agent 在軟截止前回收所有 worker，確認停止寫入，驗證結果再交班。正常 wait 是由 runtime 等待事件，不要求 LLM 每秒查狀態。
-
-派工紀錄寫到 `docs/runs/team-<班次號>.md`：role、task、model、effort、理由、agent id、驗證、fallback、坑與成功做法。handover 只留摘要及索引。此版使用行為指令約束路由/檔案責任，並非硬性的模型 allowlist、路徑隔離或成本上限；外層也尚未解析 child 日誌來強制驗收每筆派工紀錄。不可把這些宣稱成已完成的強制治理。
-
-## 已驗證與界線
-
-2026-09-28 以 App CLI 在臨時空白 Git repository 執行一次只讀測試：一個 Astra 父 thread 派出 fresh Sol、Terra、Luna，各完成一個運算並回報，父 thread 原生 wait 後完成。核對 rollout 的 parent_thread_id、model/effort、task_complete；詳見 [測試證據](validation/native-team-smoke-2026-09-28.md)。未啟動遊戲班次。
-
-外層停止目前清理 CLI 的 process group；worker 工具若另外建立 process group 或外部服務，不保證全部被清理，尚未實測此類停止情境。
-
-此測試證明三個文字模型及原生回報鏈可用；不證明 artist 有影像工具、平行寫入隔離、長時間穩定性或成本節省。部分無關 MCP 啟動警告未阻止測試，不據此宣稱該 MCP 可用。正式子任務仍需檢查實際工具及產物。
-
-依據：[OpenAI 官方 Subagents 文件](https://learn.chatgpt.com/docs/agent-configuration/subagents)，以及上述本機實測。不同版本的工具/設定可能不同；本版不啟用 multi_agent_v2，也不依賴獨立 session queue 喚醒。
-
-## 效率優先
-班主預設 Astra/high，`--orchestrator-effort low|medium|high` 可明確調整。有界實作優先考慮 Sol，例行盤點可用 Luna/Terra；選擇由班主依風險與任務决定，不能為了省額度反覆讓弱配對返工。品質、交付時間及首次驗收優先；連續失敗應重估分工或提升模型。子 agent 只提出知識候選，由班主驗證與採納。
+依據：[OpenAI 官方 Subagents 文件](https://learn.chatgpt.com/docs/agent-configuration/subagents)及上述本機實測。不同 CLI 版本的工具與設定可能不同；本版不依賴 multi_agent_v2。

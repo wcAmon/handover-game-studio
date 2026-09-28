@@ -18,13 +18,13 @@
 
 監督與停止指令、錯誤恢復見 CONTINUOUS.md。此模式支援 macOS／Linux，不依賴 flock、setsid、timeout 外部程式。舊 Linux cron 路徑保留，但不要同時使用。
 
-選用多模型團隊時加 `--team native`，見 [NATIVE-TEAMS.md](NATIVE-TEAMS.md)。班內子任務由 Astra 呼叫原生 subagents；只由班主驗收、更新交班和提交，不以子 agent 完成冒充北極星完成。
+選用多模型團隊時加 `--team native`，見 [NATIVE-TEAMS.md](NATIVE-TEAMS.md)。Astra 只依 handover/index 摘要排優先序、派原生 subagents 並管理生命週期；coder/artist 執行，獨立 Sol reviewer 審查，Sol finisher 用實際驗證與看圖證據驗收、更新交班和提交。不以子 agent 完成訊息冒充北極星完成；supervisor 的 checker 與救援提交保留。
 
 ## 5. 回饋與範圍管理
 inbox 留言由下一班處理；重要決策轉寫到 handover 再清除已處理條目。北極星變更需人類決定。handover 保留摘要及索引、上限 8000 字；經驗按需收進 knowledge slug，保留原驗收條件的歷史連結，不刪關鍵事實。
 
 ## 6. 改善接班效率
-依 [LEARNING.md](LEARNING.md) 建立知識索引、validation.json 與 delivery.json。開班先查驗證憑據，變更後驗證受影響群組；班主審核可重用方法並版本化。以可玩／可執行交付耗時、首次驗收率、返工與停滯衡量，不只比較模型或 token。
+依 [LEARNING.md](LEARNING.md) 建立知識索引、validation.json 與 delivery.json。開班先查驗證憑據，變更後驗證受影響群組；native 由 Sol finisher 審核可重用方法並版本化，非 native 由執行班次的 agent 審核。以可玩／可執行交付耗時、首次驗收率、返工與停滯衡量，不只比較模型或 token。
 
 ## 影像工具
 有可用的 agent 原生工具才生成影像。tools/imagegen.py 僅匯入 PNG 與實際 prompt，tools/concept_board.py 產生看板。在框架內維護範例時兩工具使用 `--workspace examples/swarm-agent`；獨立工作區不需指定。
