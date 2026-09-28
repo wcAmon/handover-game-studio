@@ -8,7 +8,7 @@
 若有 design/approval.json，核對其 document 的 SHA256 與 status。Swarm-Agent 已核准全文，包含新增驗收條件；不得重問已批准的玩法與範圍。原文草案標籤由核准紀錄補充。
 
 ## 2. 藍圖
-讀 .claude/skills/blueprint/SKILL.md，選定技術與驗證方式，建立 design/blueprint.md。只把當前里程碑拆成 15–30 分鐘的小任務，NOW 恰好一個。人類審閱技術選型與計畫後再進入實作。
+讀 .claude/skills/blueprint/SKILL.md，選定技術與驗證方式，建立 design/blueprint.md。把當前里程碑拆成可驗收交付，NOW 恰好一個；中間步驟可跨班接續，不需為每個步驟新增任務。人類審閱技術選型與計畫後再進入實作。
 
 ## 3. 手動班次
 讀 .claude/skills/shift/SKILL.md，確認時間、交班、inbox、Git 狀態與現有測試。處理一個 NOW，驗證，改寫 handover，執行 harness/bin/check-handover，提交。手動班次無 harness 時限時仍須保留收班時間。
@@ -21,7 +21,10 @@
 選用多模型團隊時加 `--team native`，見 [NATIVE-TEAMS.md](NATIVE-TEAMS.md)。班內子任務由 Astra 呼叫原生 subagents；只由班主驗收、更新交班和提交，不以子 agent 完成冒充北極星完成。
 
 ## 5. 回饋與範圍管理
-inbox 留言由下一班處理；重要決策轉寫到 handover 再清除已處理條目。北極星變更需人類決定。handover 超過 8000 字時移出經驗到 lessons，不刪關鍵事實。
+inbox 留言由下一班處理；重要決策轉寫到 handover 再清除已處理條目。北極星變更需人類決定。handover 保留摘要及索引、上限 8000 字；經驗按需收進 knowledge slug，保留原驗收條件的歷史連結，不刪關鍵事實。
+
+## 6. 改善接班效率
+依 [LEARNING.md](LEARNING.md) 建立知識索引、validation.json 與 delivery.json。開班先查驗證憑據，變更後驗證受影響群組；班主審核可重用方法並版本化。以可玩／可執行交付耗時、首次驗收率、返工與停滯衡量，不只比較模型或 token。
 
 ## 影像工具
 有可用的 agent 原生工具才生成影像。tools/imagegen.py 僅匯入 PNG 與實際 prompt，tools/concept_board.py 產生看板。在框架內維護範例時兩工具使用 `--workspace examples/swarm-agent`；獨立工作區不需指定。

@@ -18,3 +18,6 @@
 7. 不因完成規劃就自行啟動 agent、cron 或推送；啟動遵從人類指示。一旦人類授權持續開發，正常收班必須由監督器啟動全新 context 接班，不再逐班等待批准；直到北極星完成或確實無法繼續。
 
 Skills 位於 `.claude/skills/<name>/SKILL.md`，Codex 直接讀檔。這些 skills 的 `design/`、`handover.md`、`game/` 路徑均指目標工作區，不是框架根目錄。視覺流程按專案需要使用。
+
+## 跨班知識與驗證
+存在 knowledge/index.json 時，handover 只保留摘要、任務及索引，按需讀 slug；知識不得覆蓋人類決策、核准設計或測試政策。只有班主可審閱並 accept/rollback refinement。存在 validation.json 時，以 harness/verify.py 的有效憑據沿用完全相同輸入的結果；失效必須重跑，不刪測試或降低驗收。詳見 docs/LEARNING.md。產品交付優先於 token 節省。

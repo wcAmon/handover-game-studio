@@ -14,13 +14,13 @@ description: 量產期單一班次的標準流程（開班 → 做一個 NOW 任
 ## 1. 開班（≤ 5 分鐘）
 
 1. `harness/bin/time-left` 確認時間。
-2. 完整讀 `handover.md`。它是唯一的記憶，裡面的 PITFALLS 是前人用時間換來的，動手前先看。
+2. 完整讀 `handover.md`。它是摘要與索引入口；先看 PITFALLS，再用 `python3 harness/knowledge.py context` 讀知識索引，只載入 NOW 相關 slug。沒有知識庫時查 docs/lessons.md。
 3. 讀 `inbox.md`。有人類留言就：
    - 把影響轉成 handover 的任務或決策（放進 TASKS 或 HUMAN 的決策紀錄）
    - 從 inbox 刪除已處理的條目
    - 人類的指示優先於原本的 NOW 任務；若與 `design/north-star.md` 衝突，照做但在 HUMAN 區記錄衝突
-4. 確認現況與 handover 一致：`git log --oneline -5`、`git status`，並執行 STATE 區記載的驗證指令（例如 `npm test`，依 blueprint 指定的產品驗證方式）。不一致時以實際程式為準，並修正 handover。
-5. **估算 NOW 任務**：扣掉收班時間，你大約有 `SESSION_MINUTES - 13` 分鐘可以工作。若做不完，先把它切成 2-3 個子任務（新編號），更新 handover，只做第一個。
+4. 確認現況與 handover 一致：`git log --oneline -5`、`git status`，依 STATE 與 validation.json 檢查驗證憑據；有配置時使用 `python3 harness/verify.py run GROUP`。輸入與環境相同的有效 cached-passed 可沿用；新變更、過期或損壞必須重驗。無配置時執行原驗證指令。不一致時以實際程式為準，並修正 handover。
+5. **估算 NOW 任務**：扣掉收班時間，你大約有 `SESSION_MINUTES - 13` 分鐘可以工作。優先選可驗收交付；大任務可在同一 NOW 內跨班接續子步驟，避免為每個中間圖板另增串行依賴。只有獨立成果才新編號。
 
 ## 2. 工作
 
@@ -44,7 +44,7 @@ description: 量產期單一班次的標準流程（開班 → 做一個 NOW 任
    - `PLAYBOOK`：本班驗證有效、值得沿用的做法或指令。
    - `HUMAN`：需要人類決定的事。
    - `LOG`：新增一行 `- #<班次號> <日期> <任務ID> <結果一句話>`，只保留最近 5 行。
-3. 字數超過上限時：舊的坑與做法移到 `docs/lessons.md`（附日期與來源班次），不要硬刪有價值的經驗。
+3. 交班保持精簡摘要及索引。可重用方法以 `harness/knowledge.py propose` 提出含證據版本；班主審閱後才 accept，子 agent 不自行提升知識。候選不等於有效方法；效果尚未量測就標示未量測。無知識庫時移到 `docs/lessons.md`，歷史驗收條件需保留可追溯連結。詳見 docs/LEARNING.md。
 4. 若所有里程碑都完成且符合 north-star 的完成定義 → `STATUS: DONE`。若沒有任何可做的任務、只能等人類 → `STATUS: BLOCKED`。
 5. `harness/bin/check-handover` 必須 ✓。
 6. `git add -A && git commit -m "#<班次號> <摘要>"`。

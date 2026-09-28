@@ -65,3 +65,6 @@ Native spawn、completion notification、wait 與 follow-up 負責班內回報�
 此測試證明三個文字模型及原生回報鏈可用；不證明 artist 有影像工具、平行寫入隔離、長時間穩定性或成本節省。部分無關 MCP 啟動警告未阻止測試，不據此宣稱該 MCP 可用。正式子任務仍需檢查實際工具及產物。
 
 依據：[OpenAI 官方 Subagents 文件](https://learn.chatgpt.com/docs/agent-configuration/subagents)，以及上述本機實測。不同版本的工具/設定可能不同；本版不啟用 multi_agent_v2，也不依賴獨立 session queue 喚醒。
+
+## 效率優先
+班主預設 Astra/high，`--orchestrator-effort low|medium|high` 可明確調整。有界實作優先考慮 Sol，例行盤點可用 Luna/Terra；選擇由班主依風險與任務决定，不能為了省額度反覆讓弱配對返工。品質、交付時間及首次驗收優先；連續失敗應重估分工或提升模型。子 agent 只提出知識候選，由班主驗證與採納。

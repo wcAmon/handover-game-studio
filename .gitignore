@@ -6,3 +6,7 @@ node_modules/
 dist/
 .DS_Store
 __pycache__/
+
+# Transient locks; retain accepted knowledge and validation evidence
+refinements/.lock
+docs/runs/validation/run.lock

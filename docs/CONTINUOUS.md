@@ -50,3 +50,15 @@ python3 harness/continuous.py start --codex /Applications/ChatGPT.app/Contents/R
 ```
 
 start 會將此選項傳給背景監督器與每個新 CLI；status 顯示實際 sandbox 設定。這是本次明確授權，不是其他工作區的預設。仍遵守專案範圍、不推送、不發布；原先失敗的瀏覽器驗收須重新執行，不能因授權就當作通過。
+
+## 本班結束後暫停與明確恢復
+```sh
+python3 harness/continuous.py drain
+python3 harness/continuous.py status
+python3 harness/continuous.py resume --team native --orchestrator-effort high --codex /path/to/codex
+```
+`drain` 讓本班保存、驗證及提交後暫停，不中断當班；`stop` 立即終止當班。drain 存在時一般 start/run 不開新班；resume 是人類恢復授權後的操作，會清除停止旗標，但仍每班新建 context，並非 Codex history resume。sandbox 選項需沿用實際授權範圍。
+
+有 delivery.json 時，連續多班受監看產品內容未變會要求下一班重估路徑，再無變化則 stalled 暫停。這是異常效率保護，不是每班等待批准。watch 應涵蓋真實交付，不能只監看交班文件；閾值需符合任務性質。詳見 LEARNING.md。
+
+正常退出的每班憑據在 docs/runs/shifts/，包含耗時、Git 基準、配置模型與交付指紋；中途強制 stop 不保證有完整憑據。模型欄是配置，不代表實測每個 child 的用量。status 顯示當班秒數與 pending_drain。

@@ -2,48 +2,43 @@
 STATUS: ACTIVE
 
 ## 北極星 NORTH_STAR
-人類規劃並核准，agent 以全新 context 分班持續開發直到北極星完成或確實無法繼續。Swarm-Agent 是範例，不是框架本身。
+人類規劃並核准，agent以全新context分班持續開發直到北極星完成或確實無法繼續。Swarm-Agent是examples及獨立工作區中的範例，不是框架。
 
 ## 目前狀態 STATE
-- 框架、範例與產品工作區已分離；產品在同層 swarm-agent-work。
-- continuous.py 每班新建 CLI context，不 resume；有效交班且有進度才續班，保留時限與失敗限次。
-- 人類已要求遊戲本班結束後暫停。第 45 班完成後 supervisor 已停止，未啟動第 46 班；重新啟動需遵從新的指示，先前持續開發授權不能覆蓋此暫停。
-- 本輪只實作框架原生多模型架構：--team native 固定 Astra/high 班主，Sol/medium worker 預設，班主可明確選 Sol/Terra/Luna；最多兩個 child，同時最多一個 writer。
-- 班內交給 Codex native spawn/wait/completion；跨班才由既有 supervisor 開新 context。不新增 tmux 喚醒或自製班內排程器。
-- doctor 只讀 CLI feature 與目標工作區角色檔；不改全域設定，不自動更新或啟動舊工作區。模型/路徑政策為行為規範，並非硬隔離。
-- 真實只讀 scratch probe 已核對三種 child 的 model 與 parent_thread_id；同一 Astra 父 thread 收到完成結果後自行繼續。證據：docs/validation/native-team-smoke-2026-09-28.md。
-- 框架全套 17 項測試及兩份交班檢查通過，包含 detached start 傳遞、目標角色缺失、doctor 唯讀與匯出完整性。
-- 新架構操作及限制見 docs/NATIVE-TEAMS.md。正式美術工具能力、長期壓力、獨立工具 process group 的停止清理尚未實測。
+- 原生多模型：Astra班主，Sol/Terra/Luna由班主按任務選擇，同時最多兩child/一writer；不用tmux重造班內喚醒。--orchestrator-effort預設high，可明確調整。
+- 本輪新增樹狀knowledge索引、候選/採納/回滾版本與證據、transaction恢復；驗證按inputs/tools/env/content/output憑據保守重用；delivery產品指紋停滯重估/暫停；drain本班結束後停及resume新context恢復；每班耗時/提交憑據。
+- 效率以可靠交付時間/首次驗收/返工為主，token為輔。不是模型訓練，不自動證明知識有益，也不是任意環境完全重播。
+- docs/LEARNING.md有CLI/schema/限制，docs/CONTINUOUS.md與NATIVE-TEAMS.md有操作。export包含新工具与文件；不預設啟動。
+- 本輪實作/審查驗證詳docs/validation/learning-handover-2026-09-28.md。未push/發布，不動已核准北極星。遊戲遷移/恢復結果記在../swarm-agent-work/docs/runs/resume-assessment.md。
 
 ## 任務佇列 TASKS
 ### NOW
-- [T-104] 等待使用者決定何時將原生團隊模式導入已暫停的遊戲工作區 | 驗收：恢復授權後先同步所需 harness/角色檔、doctor、再啟動；目前不啟動 | 估時 15 分鐘
+- [T-105] 觀測新架構首批真實班次效果 | 依遊戲team/shift/validation紀錄比較交付耗時、首次驗收與返工；不能只算agent數或token；未量測長期收益 | 估時隨實際班次
 ### NEXT
-- 若導入正式班次，核對派工紀錄、產物驗證及實際模型分工效果，避免只計算 agent 數量。
+- 若實際派工/快取/停滯控制暴露問題，依證據在框架修補並測試；不可让遊戲agent自行改harness。
 ### LATER
-- 樹狀知識索引、素材去重與驗證快取是先前審查建議，未在本次全面實作。
-- 多 writer worktree 整合、硬模型/成本政策、開機恢復與 Windows 相容性未實作。
+- 可選驗證證據保留/歸檔政策，素材去重不主動刪來源或歷史；多writer worktree整合、硬模型/權限控制、開機恢復與Windows未實作。
 
 ## 坑 PITFALLS
-- 原生 child 完成回報可續跑仍活著的父 CLI；不能誤認一定要重啟 orchestrator。已退出父程序則是另一種生命週期問題。
-- Full-history fork 繼承父模型；切換 worker 模型使用 fresh/精簡 context 並明確 model/effort。
-- Native subagents 共用目錄，不等於自動 worktree 隔離；先限制一個 writer。
-- --workspace 指向舊匯出時，要檢查目標工作區角色檔，不能只檢查框架根。
-- 角色及文字模型不是生圖能力；需檢查實際工具，不以佔位冒充正式素材。
-- 本機 PATH 0.144.3 曾被帳號模型版本要求拒絕；使用 App 0.155.0-alpha.9，不用換模型掩蓋。
+- Full-history fork繼承父模型；切worker模型須fresh/精簡context。native共用目錄不是自動worktree隔離。
+- CLI PATH 0.144.3曾遭帳號模型版本要求拒絕；本機使用App 0.155.0-alpha.9，版本需live doctor。
+- 驗證快取需涵蓋真正依賴，lockfile不證明安裝完整；GPU/服務/未知依賴改變需--force。receipt/content hash不是視覺或北極星驗收。
+- SIGKILL無法由驗證器捕捉，外部新session服務不保證清理；normal stop/timeout測試有覆蓋。
+- 知識採納不代表人類設計核准；不能覆蓋AGENTS/北極星/測試政策。
 
 ## 有效做法 PLAYBOOK
 - python3 -m unittest discover -s tests -v
 - harness/bin/check-handover
 - python3 harness/continuous.py doctor --codex /Applications/ChatGPT.app/Contents/Resources/codex
 - python3 harness/continuous.py status --workspace ../swarm-agent-work
-- 班內委派證據寫 docs/runs/team-<班次號>.md，handover 只留摘要與索引。
+- 開班knowledge.py context、選slug；verify.py run GROUP；必要--force。使用前配置相對工作區路徑。
 
 ## 等待人類 HUMAN
-- 遊戲保持人工暫停。本輪架構開發不等於授權重新啟動遊戲；不逐班重問的規則只在持續執行授權有效時適用。
+- 最新「照我們討論的建構專案、然後你再評估swarm agents繼續」授權本輪框架建構與評估後恢復遊戲，取代#45後暫停；不等逐班批准。無發布/推送授權。
 
 ## 班次紀錄 LOG
-- #4 2026-09-28 T-103 原生多模型團隊接上既有跨班 supervisor；實測 Astra 收 Sol/Terra/Luna 完成訊息，遊戲保持暫停。
-- #3 2026-09-27 新增顯式 sandbox 選項及傳遞測試。
-- #2 2026-09-27 F-003 新增持續 fresh-context 監督器、啟動真實 Codex CLI 接班。
-- #1 2026-09-27 T-004 遊戲工作區完成骨架，框架記錄產品路由。
+- #5 2026-09-28 T-104 跨班知識、驗證憑據、停滯/停班控制與模型效率政策，導入遊戲評估後續跑。
+- #4 2026-09-28 T-103 原生多模型團隊接上supervisor；Astra收Sol/Terra/Luna回報實測。
+- #3 2026-09-27 顯式sandbox選項與測試。
+- #2 2026-09-27 fresh-context持續監督器。
+- #1 2026-09-27 框架/產品工作區分離。

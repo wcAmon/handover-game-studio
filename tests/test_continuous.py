@@ -58,7 +58,8 @@ if mode=='unchanged':sys.exit(0)
 p=root/'handover.md'; s=p.read_text()
 step=int(s.split('step ')[1].split()[0])+1
 s=s.replace('step '+str(step-1),'step '+str(step))
-if step>=2:s=s.replace('STATUS: ACTIVE','STATUS: DONE')
+if mode=='drain':(root/'.studio/continuous.drain').touch()
+if step>=2 and mode!='forever':s=s.replace('STATUS: ACTIVE','STATUS: DONE')
 p.write_text(s)
 ''')
         agent.chmod(0o755)
@@ -152,7 +153,7 @@ p.write_text(s)
         with tempfile.TemporaryDirectory() as t:
             root,agent=self.fixture(t)
             result=subprocess.run([sys.executable,str(RUNNER),'start','--workspace',str(root),
-                '--codex',str(agent),'--team','native'],capture_output=True,text=True,timeout=5)
+                '--codex',str(agent),'--team','native','--orchestrator-effort','medium'],capture_output=True,text=True,timeout=5)
             self.assertEqual(result.returncode,0,result.stderr)
             deadline=time.monotonic()+5
             while time.monotonic()<deadline:
@@ -161,12 +162,14 @@ p.write_text(s)
                 time.sleep(.05)
             self.assertEqual(state['state'],'done')
             self.assertEqual(state['team'],'native')
+            self.assertEqual(state['orchestrator_effort'],'medium')
             self.assertEqual(state['native_team']['orchestrator'],'gpt-6-astra')
             argv=(root/'args').read_text().splitlines()
             self.assertEqual(len(argv),2)
             for line in argv:
                 self.assertIn("'-m', 'gpt-6-astra'",line)
                 self.assertIn('agents.default_subagent_model="gpt-6-sol"',line)
+                self.assertIn('model_reasoning_effort="medium"',line)
                 self.assertIn('agents.max_concurrent_threads_per_session=2',line)
                 self.assertNotIn('resume',line)
             self.assertIn('最多一個 writer',(root/'prompt.txt').read_text())
@@ -200,5 +203,76 @@ p.write_text(s)
             self.assertNotEqual(result.returncode,0)
             self.assertIn('target workspace: coder',result.stderr)
             self.assertFalse((root/'pids').exists())
+
+    def test_drain_finishes_current_shift_without_starting_next(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t,'drain')
+            result=self.run_supervisor(root,agent)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(len((root/'pids').read_text().splitlines()),1)
+            state=json.loads((root/'.studio/continuous.json').read_text())
+            self.assertEqual(state['state'],'paused')
+            self.assertIn('step 1',(root/'handover.md').read_text())
+            result=self.run_supervisor(root,agent)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(len((root/'pids').read_text().splitlines()),1)
+
+    def test_delivery_stagnation_replans_then_stops(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t,'forever')
+            (root/'product.txt').write_text('unchanged')
+            (root/'delivery.json').write_text(json.dumps({'version':1,'watch':['product.txt'],'stagnation_shifts':2,'replan_shifts':1}))
+            result=self.run_supervisor(root,agent)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(len((root/'pids').read_text().splitlines()),3)
+            state=json.loads((root/'.studio/continuous.json').read_text())
+            self.assertEqual(state['state'],'stalled')
+            self.assertIn('交付停滯',(root/'prompt.txt').read_text())
+            self.assertEqual(state['delivery']['stagnant_shifts'],3)
+
+    def test_done_takes_precedence_over_stagnation(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            (root/'product.txt').write_text('unchanged')
+            (root/'delivery.json').write_text(json.dumps({'version':1,'watch':['product.txt'],'stagnation_shifts':1,'replan_shifts':1}))
+            result=self.run_supervisor(root,agent)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(json.loads((root/'.studio/continuous.json').read_text())['state'],'done')
+            receipts=list((root/'docs/runs/shifts').glob('*.json'))
+            self.assertEqual(len(receipts),2)
+            self.assertGreaterEqual(json.loads(receipts[0].read_text())['elapsed_seconds'],0)
+
+    def test_resume_clears_drain_and_starts_fresh_contexts(self):
+        import time
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t)
+            (root/'.studio').mkdir()
+            for name in ['continuous.drain','continuous.stop','PAUSE']:
+                (root/'.studio'/name).touch()
+            result=subprocess.run([sys.executable,str(RUNNER),'resume','--workspace',str(root),
+                '--codex',str(agent),'--team','native'],capture_output=True,text=True,timeout=5)
+            self.assertEqual(result.returncode,0,result.stderr)
+            deadline=time.monotonic()+5
+            while time.monotonic()<deadline:
+                state=json.loads((root/'.studio/continuous.json').read_text())
+                if state['state']=='done':break
+                time.sleep(.05)
+            self.assertEqual(state['state'],'done')
+            self.assertEqual(len((root/'pids').read_text().splitlines()),2)
+            self.assertFalse((root/'.studio/continuous.drain').exists())
+
+    def test_external_delivery_change_resets_previous_stagnation(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as t:
+            root,agent=self.fixture(t,'drain')
+            (root/'product.txt').write_text('new external change')
+            policy=root/'delivery.json'
+            policy.write_text(json.dumps({'version':1,'watch':['product.txt'],'stagnation_shifts':2,'replan_shifts':1}))
+            (root/'.studio').mkdir()
+            (root/'.studio/delivery.json').write_text(json.dumps({'policy_hash':hashlib.sha256(policy.read_bytes()).hexdigest(),
+                'fingerprint':'previous product fingerprint','stagnant_shifts':2,'action':'replan'}))
+            result=self.run_supervisor(root,agent)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(json.loads((root/'.studio/continuous.json').read_text())['delivery']['stagnant_shifts'],1)
 
 if __name__=='__main__':unittest.main()

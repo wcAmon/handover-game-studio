@@ -8,10 +8,10 @@ WORKERS = ('gpt-6-sol', 'gpt-5.6-terra', 'gpt-6-luna')
 ROLES = ('planner', 'coder', 'artist', 'reviewer')
 
 
-def options():
+def options(effort='high'):
     result = ['-m', ORCHESTRATOR]
     settings = {
-        'model_reasoning_effort': 'high',
+        'model_reasoning_effort': effort,
         'agents.enabled': True,
         'agents.max_concurrent_threads_per_session': 2,
         'agents.default_subagent_model': WORKERS[0],
@@ -50,6 +50,8 @@ PROMPT = '''
 允許 worker 模型：gpt-6-sol、gpt-5.6-terra、gpt-6-luna。
 一般規劃、跨檔實作、美術整合優先 Sol；狹窄查核、盤點、摘要可選 Luna；
 Terra 用於界線清楚、有可靠驗證的小修改或整理。以上是起始策略，不宣稱固定價格/速度。
+首要指標是可靠交付速度、一次驗收成功率與返工；不是最少token或最便宜模型。
+有明確範圍的一般實作優先派 Sol，班主聚焦決策與整合；反覆失敗時重估方法或升級，不為省用量硬撐。
 worker 不預設繼承 Astra。選其他模型須用 fresh/精簡 context（若有 fork_turns，設 none），
 明確提供目的、輸入、知識索引、可寫路徑、驗證與截止時間。不要複製全部歷史。
 模型/工具不可用時保留原始錯誤與實際選擇；最多一次有理由的替代/升級，不能默默換模型。

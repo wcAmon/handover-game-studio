@@ -65,3 +65,5 @@ python3 harness/continuous.py stop
 詳細：[持續開發](docs/CONTINUOUS.md) · [Swarm-Agent](examples/swarm-agent/README.md) · [工作流程](docs/WORKFLOW.md) · [架構](docs/DESIGN.md)
 
 多模型團隊可選 `--team native`：班主固定 Astra，使用原生 subagents 派 Sol/Terra/Luna；班內回報不需重啟 orchestrator，跨班仍是全新 context。先執行 `python3 harness/continuous.py doctor --codex <CLI路徑>`，設定及驗證界線見 [原生多模型團隊](docs/NATIVE-TEAMS.md)。既有工作區不會自動切換或重新啟動。
+
+跨班效率功能：見 [知識、驗證憑據與停滯控制](docs/LEARNING.md)。搭配原生多模型團隊使用；預設不自動啟動、不更動已核准目標。
