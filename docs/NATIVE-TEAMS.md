@@ -23,6 +23,12 @@ Astra 不實作、不做詳細 code review、不跑測試或看圖驗收、不�
 
 開班時 Astra 從 handover 和 index 摘要派任務，避免閱讀整套產品檔案。軟截止前要開始收斂產品工作並預留 Sol finisher 的時間；軟截止後不派新的產品任務，但可派必要的 reviewer／finisher 收尾與具體修復。硬截止前無法完成驗證或 worker 未停妥時，finisher 記錄真實失敗狀態；Astra 不代做。`docs/runs/team-<班次號>.md` 由 finisher 記錄角色、任務、模型、effort、理由、agent id、驗證與 fallback，handover 留摘要和索引。supervisor 保留原有 deterministic checker、停止清理、救援提交與下一班啟動；這些是 supervisor 程式，不是 Astra 的審查或提交。
 
+### 審查快照與證據契約
+
+Astra 派 reviewer 時交付本班起始 commit SHA。writer 停止後，獨立 Sol reviewer 在工作區執行 `python3 harness/native_team.py fingerprint --base BASE_SHA`；此唯讀指令回傳完整 base SHA、`working_diff_sha256`、changed/untracked paths 與每個變更路徑的內容／模式指紋。指紋涵蓋相對 base 的已追蹤 diff 與未追蹤檔內容，不包含 ignored 檔案或外部服務狀態。reviewer 回報實際看過的路徑、具體 findings 或明確 `no findings`、未驗證之處，以及同一快照欄位；不需自行寫報告。
+
+finisher 在 `docs/runs/team-<班次號>.md` 保存 reviewer 身分與模型、base SHA、所看路徑與指紋、findings／no-findings、coder 修復、複審者與複審快照／結果、測試及看圖證據。提交前再次執行相同 fingerprint，比對最近一次已審快照的總指紋和逐路徑指紋。若不同，找出後續變動路徑並交 Astra 安排必要複審；finisher 自寫的報告、handover、inbox 或知識檔也要列為「finisher 收班後變更，未經 reviewer 審查」，不能寫成 final diff 全部已審。來不及複審就如實標記覆蓋範圍與風險，不能把舊 `no findings` 套到新 diff。這是可稽核記錄，尚非 runtime 強制驗收閘門。
+
 ```text
 continuous supervisor
   └─ 第 N 班：全新 Astra context（摘要、派工、wait/send/stop）

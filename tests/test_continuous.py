@@ -186,8 +186,29 @@ p.write_text(s)
             self.assertIn('reviewer 與 finisher 固定選 gpt-6-sol',prompt)
             self.assertIn('軟截止後停止新產品任務',prompt)
             self.assertIn('必要的 reviewer／finisher',prompt)
+            self.assertIn('本班起始 Git HEAD SHA',prompt)
             self.assertNotIn('先檢查 git 狀態與測試，再只做一個 NOW 任務，驗證、改寫交班、檢查並 git commit',prompt)
             self.assertNotIn('只有你可更新 handover',prompt)
+
+    def test_native_working_diff_fingerprint_tracks_untracked_content(self):
+        with tempfile.TemporaryDirectory() as t:
+            root,_=self.fixture(t)
+            base=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()
+            command=[sys.executable,str(ROOT/'harness/native_team.py'),'--workspace',str(root),
+                     'fingerprint','--base',base]
+            first=subprocess.run(command,capture_output=True,text=True)
+            self.assertEqual(first.returncode,0,first.stderr)
+            first_snapshot=json.loads(first.stdout)
+            self.assertEqual(first_snapshot['base_sha'],base)
+            (root/'product.txt').write_text('first')
+            second=json.loads(subprocess.check_output(command,text=True))
+            self.assertIn('product.txt',second['changed_paths'])
+            self.assertNotEqual(first_snapshot['working_diff_sha256'],second['working_diff_sha256'])
+            (root/'product.txt').write_text('second')
+            third=json.loads(subprocess.check_output(command,text=True))
+            self.assertEqual(second['changed_paths'],third['changed_paths'])
+            self.assertNotEqual(second['path_fingerprints']['product.txt'],third['path_fingerprints']['product.txt'])
+            self.assertNotEqual(second['working_diff_sha256'],third['working_diff_sha256'])
 
     def test_disabled_native_feature_fails_before_launch(self):
         with tempfile.TemporaryDirectory() as t:

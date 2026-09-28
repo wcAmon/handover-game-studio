@@ -1,11 +1,57 @@
 """Use Codex's native subagents inside a shift; no second scheduling runtime."""
+import argparse
+import hashlib
 import json
+import os
 from pathlib import Path
+import re
 import subprocess
+import sys
 
 ORCHESTRATOR = 'gpt-6-astra'
 WORKERS = ('gpt-6-sol', 'gpt-5.6-terra', 'gpt-6-luna')
 ROLES = ('planner', 'coder', 'artist', 'reviewer', 'finisher')
+SHA_RE = re.compile(r'^[0-9a-f]{7,64}$')
+
+
+def _git_bytes(root, *args):
+    return subprocess.check_output(['git', '-C', str(root), *args])
+
+
+def _path_fingerprint(path):
+    if path.is_symlink():
+        return 'link:' + hashlib.sha256(os.fsencode(os.readlink(path))).hexdigest()
+    if path.is_file():
+        hashed = hashlib.sha256()
+        hashed.update(str(path.stat().st_mode & 0o111).encode() + b'\0')
+        with path.open('rb') as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b''):
+                hashed.update(block)
+        return 'file:' + hashed.hexdigest()
+    if not path.exists():
+        return 'deleted'
+    raise ValueError('changed path is not a file or symlink: ' + str(path))
+
+
+def fingerprint(workspace, base):
+    """Read-only digest of the working diff, including untracked file contents."""
+    root = Path(workspace).resolve()
+    if not SHA_RE.fullmatch(base):
+        raise ValueError('base must be a commit SHA')
+    full_base = _git_bytes(root, 'rev-parse', '--verify', base + '^{commit}').decode().strip()
+    tracked_diff = _git_bytes(root, 'diff', '--binary', '--no-ext-diff', '--no-textconv', full_base, '--')
+    tracked = [os.fsdecode(path) for path in _git_bytes(root, 'diff', '--name-only', '-z', full_base, '--').split(b'\0') if path]
+    untracked = [os.fsdecode(path) for path in _git_bytes(root, 'ls-files', '--others', '--exclude-standard', '-z').split(b'\0') if path]
+    hashed = hashlib.sha256(b'native-working-diff-v1\0' + full_base.encode() + b'\0' + tracked_diff)
+    paths = sorted(set(tracked + untracked))
+    path_fingerprints = {}
+    for relative in paths:
+        state = _path_fingerprint(root / relative)
+        path_fingerprints[relative] = state
+        hashed.update(b'\0path\0' + os.fsencode(relative) + b'\0' + state.encode())
+    return {'base_sha': full_base, 'working_diff_sha256': hashed.hexdigest(),
+            'changed_paths': paths, 'untracked_paths': sorted(untracked),
+            'path_fingerprints': path_fingerprints}
 
 
 def options(effort='high'):
@@ -75,5 +121,28 @@ finisher 收班前確認其他 worker 停止寫入；若無法停妥或驗證失
 不得冒稱乾淨收班。Astra 等 finisher 回報並結束本班，不代做剩餘工作。
 將每次派工 role、task、model、effort、選擇理由、agent id、驗證指令/結果、fallback 與坑，
 交給 finisher 寫入 docs/runs/team-<班次號>.md；handover 僅留摘要與該檔索引。
+reviewer 在穩定 diff 上用 native_team.py fingerprint 記錄 base SHA、工作樹指紋、所看路徑、
+具體 findings 或明確 no-findings；修復後重新回報複審指紋與結果。
+finisher 保存這些原樣證據，提交前以相同 base 重算指紋，記錄所有後續變更及哪些
+finisher 收班檔案未經 reviewer 審查。指紋不同而未複審，不得宣稱 final diff 全部已審。
 這是可稽核的行為政策，不是模型/路徑權限的硬隔離。遵循既有 sandbox 與核准邊界。
 '''
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--workspace', type=Path, default=Path.cwd())
+    commands = parser.add_subparsers(dest='command', required=True)
+    snapshot = commands.add_parser('fingerprint', help='read-only working diff fingerprint')
+    snapshot.add_argument('--base', required=True)
+    args = parser.parse_args(argv)
+    try:
+        print(json.dumps(fingerprint(args.workspace, args.base), ensure_ascii=False, sort_keys=True))
+        return 0
+    except (ValueError, OSError, subprocess.CalledProcessError) as error:
+        print(str(error), file=sys.stderr)
+        return 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

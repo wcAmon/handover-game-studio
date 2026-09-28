@@ -65,6 +65,7 @@ def prompt(number,previous,team='off'):
 獨立 code review、驗證／看圖、派工報告、交班、知識採納與 commit 都交給對應 worker。
 先用 handover 與 knowledge 索引決定需要哪些細節，再以精簡 context 派給 worker；
 不得親自執行測試或因任務簡單自行實作。reviewer 與 finisher 固定由 Sol 擔任。
+派 reviewer 時附本班起始 Git HEAD SHA；finisher 依 docs/NATIVE-TEAMS.md 保存審查快照與複審證據。
 必須保留時間派 Sol finisher 做最終驗證、交班與 commit；軟截止停止新的產品任務，
 但不得阻止必要收尾派工。若驗證失敗，由 coder 修復，不由 Astra 接手。
 時間由 STUDIO_* 環境及 harness/bin/time-left 提供。上一班資訊：{previous or '正常接班'}
