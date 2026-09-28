@@ -1,0 +1,76 @@
+{
+  "scope": "Completed shifts 5 through 44 only; shift 45 in progress excluded",
+  "usage": {
+    "input_tokens": 156557223,
+    "cached_input_tokens": 151674752,
+    "output_tokens": 1039124,
+    "reasoning_output_tokens": 251281
+  },
+  "cached_fraction": 0.9688135053340847,
+  "notes": [
+    "Usage is summed CLI turn.completed counters, not unique context or monetary billing.",
+    "input_tokens includes cached input; reasoning_output_tokens not added again to output_tokens."
+  ],
+  "runtime_trees": [
+    {
+      "commit": "cd106ba",
+      "time": "2026-09-28 06:55:24 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "6b5209c",
+      "time": "2026-09-28 07:07:53 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "c21bc00",
+      "time": "2026-09-28 07:29:38 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "da2960e",
+      "time": "2026-09-28 07:44:12 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "98507db",
+      "time": "2026-09-28 07:58:28 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "8fdf155",
+      "time": "2026-09-28 08:14:33 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "ead4be8",
+      "time": "2026-09-28 08:37:24 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "2cd674a",
+      "time": "2026-09-28 08:52:09 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "72dcac5",
+      "time": "2026-09-28 09:13:22 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    },
+    {
+      "commit": "968430c",
+      "time": "2026-09-28 09:30:55 +0800",
+      "src": "b381a3155bde94ad0a103d2dbee935d6aab117b8",
+      "public": "51811af9f73264384bc93670b142d2a29f183b67"
+    }
+  ]
+}

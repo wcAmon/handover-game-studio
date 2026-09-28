@@ -1,0 +1,1397 @@
+{
+  "scope": "design docs game/src public screenshots scripts tests; excludes Git dependencies dist runtime logs",
+  "files": 1701,
+  "logicalBytes": 506684363,
+  "duplicateGroups": 129,
+  "exactDuplicateExtraBytes": 51263406,
+  "groups": [
+    {
+      "bytes": 2316552,
+      "copies": 2,
+      "extraBytes": 2316552,
+      "sha256": "3908342c7179aeaf3019d3d3bcbbbebed33d05ed444e0d9097561883961c487e",
+      "paths": [
+        "docs/art/t056/RN-extraction-probe.png",
+        "docs/art/t061/RN-extracted.png"
+      ]
+    },
+    {
+      "bytes": 2207119,
+      "copies": 2,
+      "extraBytes": 2207119,
+      "sha256": "c6209dbb1f84148a556278d0cb933a5087d3393a7c33c34f09125b274498e4bd",
+      "paths": [
+        "docs/art/t056/RF-extraction-probe.png",
+        "docs/art/t061/RF-extracted.png"
+      ]
+    },
+    {
+      "bytes": 2085907,
+      "copies": 2,
+      "extraBytes": 2085907,
+      "sha256": "ed827b852c712bbda3b7c7f79ca20fabfbc90958fcd8e4f0725c9d375975d868",
+      "paths": [
+        "docs/art/t043/idle-0-extraction-probe.png",
+        "docs/art/t042/idle-extraction-probe.png"
+      ]
+    },
+    {
+      "bytes": 2073687,
+      "copies": 2,
+      "extraBytes": 2073687,
+      "sha256": "0dec36b81fdb3c6f0bb1669717cbe4f0a6dc470ed0c3fab7afb260ab4cfbd23b",
+      "paths": [
+        "docs/art/t059/console-lamp-open-01-probe.png",
+        "docs/art/t062/lamp-open-extracted.png"
+      ]
+    },
+    {
+      "bytes": 933801,
+      "copies": 3,
+      "extraBytes": 1867602,
+      "sha256": "d94781c7dad603a2904e0281882826a1707349a6956f4eb6c214a799aef8817b",
+      "paths": [
+        "design/assets/robot/processed/windup-0.png",
+        "docs/art/t044/windup-0-before-edge.png",
+        "game/public/assets/robot/windup-0.png"
+      ]
+    },
+    {
+      "bytes": 1565658,
+      "copies": 2,
+      "extraBytes": 1565658,
+      "sha256": "5eabd93f24206818586181dd5360db2c2d42bc998401d06aab2fda7671c7a435",
+      "paths": [
+        "docs/art/t059/console-body-03-probe.png",
+        "docs/art/t062/body-extracted.png"
+      ]
+    },
+    {
+      "bytes": 615185,
+      "copies": 3,
+      "extraBytes": 1230370,
+      "sha256": "5aa09f3ef5b50cfc0f245247cf38aab6d7976312dabbc43ccbdd70086610fdff",
+      "paths": [
+        "docs/art/t058/latch-selected-probe.png",
+        "docs/art/t058/latch-01-extraction-probe.png",
+        "docs/art/t062/latch-extracted.png"
+      ]
+    },
+    {
+      "bytes": 100701,
+      "copies": 13,
+      "extraBytes": 1208412,
+      "sha256": "b7ffda237366d8872c610d2730060d73c87837c96b7bc7fb09c849faad776ab8",
+      "paths": [
+        "game/screenshots/t015-restart.png",
+        "game/screenshots/t056/baseline-t015-restart.png",
+        "game/screenshots/t058/baseline-t015-restart.png",
+        "game/screenshots/t060/baseline-t015-restart.png",
+        "game/screenshots/t061/baseline-t015-restart.png",
+        "game/screenshots/t059/baseline-t015-restart.png",
+        "game/screenshots/t057/baseline-t015-restart.png",
+        "game/screenshots/t040/retry.png",
+        "game/screenshots/t047/baseline-t015-restart.png",
+        "game/screenshots/t046/snap-t015-restart.png",
+        "game/screenshots/t038/retry.png",
+        "game/screenshots/t038/production.png",
+        "game/screenshots/t062/baseline-t015-restart.png"
+      ]
+    },
+    {
+      "bytes": 107599,
+      "copies": 12,
+      "extraBytes": 1183589,
+      "sha256": "0b3665a35fb0e2fd8cb3838fc2e03357d6ea2799a243750fc6a8a08426a7b8b6",
+      "paths": [
+        "game/screenshots/t016-escape-restart.png",
+        "game/screenshots/t056/baseline-t016-escape-restart.png",
+        "game/screenshots/t058/baseline-t016-escape-restart.png",
+        "game/screenshots/t060/baseline-t016-escape-restart.png",
+        "game/screenshots/t061/baseline-t016-escape-restart.png",
+        "game/screenshots/t059/baseline-t016-escape-restart.png",
+        "game/screenshots/t057/baseline-t016-escape-restart.png",
+        "game/screenshots/t047/baseline-t016-escape-restart.png",
+        "game/screenshots/t046/snap-t016-escape-restart.png",
+        "game/screenshots/t055/baseline-t016-escape-restart.png",
+        "game/screenshots/t062/baseline-t016-escape-restart.png",
+        "game/screenshots/t053/baseline-t016-escape-restart.png"
+      ]
+    },
+    {
+      "bytes": 1008171,
+      "copies": 2,
+      "extraBytes": 1008171,
+      "sha256": "f8996000fec1b688a2a8a6b551c7f3698a8ee256c73d68bba3365ed27b825900",
+      "paths": [
+        "design/assets/robot/processed/idle-0.png",
+        "game/public/assets/robot/idle-0.png"
+      ]
+    },
+    {
+      "bytes": 940448,
+      "copies": 2,
+      "extraBytes": 940448,
+      "sha256": "70571aa81e5e38987ead27a0f40520d7397fda5c3fa06838238e20ac09c651da",
+      "paths": [
+        "design/assets/robot/processed/strike-1.png",
+        "game/public/assets/robot/strike-1.png"
+      ]
+    },
+    {
+      "bytes": 916422,
+      "copies": 2,
+      "extraBytes": 916422,
+      "sha256": "66499f9af9a168c761532cb33d7d102eb607263fc9a428127752d3efcbd91899",
+      "paths": [
+        "design/assets/robot/processed/strike-0.png",
+        "game/public/assets/robot/strike-0.png"
+      ]
+    },
+    {
+      "bytes": 898801,
+      "copies": 2,
+      "extraBytes": 898801,
+      "sha256": "138d0a83f8224c6bda5676f932018bf107f4034e60c506e1e644fa62f4493180",
+      "paths": [
+        "design/assets/robot/processed/windup-1.png",
+        "game/public/assets/robot/windup-1.png"
+      ]
+    },
+    {
+      "bytes": 111678,
+      "copies": 9,
+      "extraBytes": 893424,
+      "sha256": "64479b848cff4e34ecf4c893caca1cc00d675a1c9af35c73a760542ad4cbfc7b",
+      "paths": [
+        "game/screenshots/t056/baseline-t016-escape-retry.png",
+        "game/screenshots/t058/baseline-t016-escape-retry.png",
+        "game/screenshots/t060/baseline-t016-escape-retry.png",
+        "game/screenshots/t061/baseline-t016-escape-retry.png",
+        "game/screenshots/t057/baseline-t016-escape-retry.png",
+        "game/screenshots/t046/snap-t016-escape-retry.png",
+        "game/screenshots/t055/baseline-t016-escape-retry.png",
+        "game/screenshots/t062/baseline-t016-escape-retry.png",
+        "game/screenshots/t053/baseline-t016-escape-retry.png"
+      ]
+    },
+    {
+      "bytes": 878381,
+      "copies": 2,
+      "extraBytes": 878381,
+      "sha256": "1e1833870c41eed57ad6aecbd6e701731dc5590d1ff7f97f32ed2e404f83a99d",
+      "paths": [
+        "design/assets/robot/processed/disabled-0.png",
+        "game/public/assets/robot/disabled-0.png"
+      ]
+    },
+    {
+      "bytes": 109128,
+      "copies": 9,
+      "extraBytes": 873024,
+      "sha256": "7d9ccfc002444de73a1c5420bcf0aa912314db6aa25a5c1d50bf77206802fc17",
+      "paths": [
+        "game/screenshots/t056/baseline-t015-retry.png",
+        "game/screenshots/t058/baseline-t015-retry.png",
+        "game/screenshots/t060/baseline-t015-retry.png",
+        "game/screenshots/t061/baseline-t015-retry.png",
+        "game/screenshots/t059/baseline-t015-retry.png",
+        "game/screenshots/t057/baseline-t015-retry.png",
+        "game/screenshots/t046/snap-t015-retry.png",
+        "game/screenshots/t055/baseline-t015-retry.png",
+        "game/screenshots/t062/baseline-t015-retry.png"
+      ]
+    },
+    {
+      "bytes": 836470,
+      "copies": 2,
+      "extraBytes": 836470,
+      "sha256": "589f964ca56cd08f0b926af2234f300e8dd92a51323c18d54ca6f360cf3f4bf3",
+      "paths": [
+        "design/assets/scientist/processed-t032/far-glove.png",
+        "game/public/assets/scientist/far-glove.png"
+      ]
+    },
+    {
+      "bytes": 762715,
+      "copies": 2,
+      "extraBytes": 762715,
+      "sha256": "a642624507e5606e66d65a2ecdadb481728931786568a5553f44d8d5c7e4d256",
+      "paths": [
+        "docs/art/t058/housing-selected-probe.png",
+        "docs/art/t058/housing-01-extraction-probe.png"
+      ]
+    },
+    {
+      "bytes": 756139,
+      "copies": 2,
+      "extraBytes": 756139,
+      "sha256": "2d5017cbc64a2b1684185ff191829197a2cc62436a193b7e9138ad1a77ee2c6a",
+      "paths": [
+        "design/assets/scientist/hurt-dead-t037/processed/hurt-01.png",
+        "game/public/assets/scientist/hurt-01.png"
+      ]
+    },
+    {
+      "bytes": 710563,
+      "copies": 2,
+      "extraBytes": 710563,
+      "sha256": "25056219a05da9516a958d825460dd1b773feeae9ce2fafdcc75e162b0ac9493",
+      "paths": [
+        "design/assets/scientist/hurt-dead-t037/processed/hurt-02.png",
+        "game/public/assets/scientist/hurt-02.png"
+      ]
+    },
+    {
+      "bytes": 137184,
+      "copies": 6,
+      "extraBytes": 685920,
+      "sha256": "1d7b8e61048579f21e62512ff248dd82d07d25d2266354593d22b09d10b692db",
+      "paths": [
+        "game/screenshots/t040/idle-1-scientist-idle-03.png",
+        "game/screenshots/t040/jump-1-scientist-idle-03.png",
+        "game/screenshots/t046/idle-1-scientist-idle-03.png",
+        "game/screenshots/t046/jump-1-scientist-idle-03.png",
+        "game/screenshots/t038/idle-1-scientist-idle-03.png",
+        "game/screenshots/t038/jump-1-scientist-idle-03.png"
+      ]
+    },
+    {
+      "bytes": 137060,
+      "copies": 6,
+      "extraBytes": 685300,
+      "sha256": "be6055ca2eaf245da89ca10c1a0c1039ffc3d4add31ddbf0bb81800abbc46fa2",
+      "paths": [
+        "game/screenshots/t040/idle--1-scientist-idle-02.png",
+        "game/screenshots/t040/jump--1-scientist-idle-02.png",
+        "game/screenshots/t046/idle--1-scientist-idle-02.png",
+        "game/screenshots/t046/jump--1-scientist-idle-02.png",
+        "game/screenshots/t038/idle--1-scientist-idle-02.png",
+        "game/screenshots/t038/jump--1-scientist-idle-02.png"
+      ]
+    },
+    {
+      "bytes": 136900,
+      "copies": 6,
+      "extraBytes": 684500,
+      "sha256": "44e023c6843356be655a55c1234ffe58fbb985c7c63ea47661e79398f6fa5b44",
+      "paths": [
+        "game/screenshots/t040/idle-1-scientist-idle-02.png",
+        "game/screenshots/t040/jump-1-scientist-idle-02.png",
+        "game/screenshots/t046/idle-1-scientist-idle-02.png",
+        "game/screenshots/t046/jump-1-scientist-idle-02.png",
+        "game/screenshots/t038/idle-1-scientist-idle-02.png",
+        "game/screenshots/t038/jump-1-scientist-idle-02.png"
+      ]
+    },
+    {
+      "bytes": 657002,
+      "copies": 2,
+      "extraBytes": 657002,
+      "sha256": "db66bb88d4fc6009d56423aeeab97a5f7c60fbfe2ea8e21c9949a42af08a0cc4",
+      "paths": [
+        "design/assets/scientist/processed-t032/body.png",
+        "game/public/assets/scientist/body.png"
+      ]
+    },
+    {
+      "bytes": 448118,
+      "copies": 2,
+      "extraBytes": 448118,
+      "sha256": "fbd3abfa9300bcdebbed868c3d19544f31eccf9ba1399e766c15d8022b1e1d37",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/jump-03.png",
+        "game/public/assets/scientist/jump-03.png"
+      ]
+    },
+    {
+      "bytes": 109023,
+      "copies": 5,
+      "extraBytes": 436092,
+      "sha256": "c8983727ee506b30a233abcad02e8d31b0916a09a2065e8dd379e4b405d8dbce",
+      "paths": [
+        "game/screenshots/t058/baseline-t013-closed.png",
+        "game/screenshots/t060/baseline-t013-closed.png",
+        "game/screenshots/t061/baseline-t013-closed.png",
+        "game/screenshots/t047/baseline-t013-closed.png",
+        "game/screenshots/t055/baseline-t013-closed.png"
+      ]
+    },
+    {
+      "bytes": 106212,
+      "copies": 5,
+      "extraBytes": 424848,
+      "sha256": "a8d15217518e55fb395ab02a743ef8f6bf0ff53bc760b3ca9a30d7573198e683",
+      "paths": [
+        "game/screenshots/t015-preserved.png",
+        "game/screenshots/t056/baseline-t015-preserved.png",
+        "game/screenshots/t057/baseline-t015-preserved.png",
+        "game/screenshots/t055/baseline-t015-preserved.png",
+        "game/screenshots/t053/baseline-t015-preserved.png"
+      ]
+    },
+    {
+      "bytes": 105992,
+      "copies": 5,
+      "extraBytes": 423968,
+      "sha256": "6cb9517a35d7fdb5452be2f1d7be7f2e22c3ddc3c22fe8e0f4bc220ef786ac3d",
+      "paths": [
+        "game/screenshots/t058/baseline-t015-preserved.png",
+        "game/screenshots/t060/baseline-t015-preserved.png",
+        "game/screenshots/t059/baseline-t015-preserved.png",
+        "game/screenshots/t046/snap-t015-preserved.png",
+        "game/screenshots/t062/baseline-t015-preserved.png"
+      ]
+    },
+    {
+      "bytes": 420907,
+      "copies": 2,
+      "extraBytes": 420907,
+      "sha256": "85678ad0001b03c3b5a1a5131dbc2104c0ee402b64b7191a787cd0e20716b973",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/jump-01.png",
+        "game/public/assets/scientist/jump-01.png"
+      ]
+    },
+    {
+      "bytes": 137363,
+      "copies": 4,
+      "extraBytes": 412089,
+      "sha256": "ba020849aae384469e3cea13e3cc7156b2b012c5ed919515759a67b89e6b6540",
+      "paths": [
+        "game/screenshots/t040/idle--1-scientist-idle-03.png",
+        "game/screenshots/t046/jump--1-scientist-idle-03.png",
+        "game/screenshots/t046/idle--1-scientist-idle-03.png",
+        "game/screenshots/t038/idle--1-scientist-idle-03.png"
+      ]
+    },
+    {
+      "bytes": 405560,
+      "copies": 2,
+      "extraBytes": 405560,
+      "sha256": "20764041b393b3941a888b7025d11dc5abf809593a3a646c70e3956d58e29262",
+      "paths": [
+        "design/assets/scientist/processed-t032/weapon.png",
+        "game/public/assets/scientist/weapon.png"
+      ]
+    },
+    {
+      "bytes": 404483,
+      "copies": 2,
+      "extraBytes": 404483,
+      "sha256": "ee1a39e729276697d7cedafb7f0a8988defb4d9e19f7cfe40bc8b957b1ffa9b7",
+      "paths": [
+        "docs/art/t059/console-lever-02-probe.png",
+        "docs/art/t062/lever-extracted.png"
+      ]
+    },
+    {
+      "bytes": 377011,
+      "copies": 2,
+      "extraBytes": 377011,
+      "sha256": "c68532f1edc23dcd79d6177191219312f9a3d6db37f7d7131a152621f005b5ed",
+      "paths": [
+        "design/assets/scientist/hurt-dead-t037/processed/dead-03.png",
+        "game/public/assets/scientist/dead-03.png"
+      ]
+    },
+    {
+      "bytes": 373661,
+      "copies": 2,
+      "extraBytes": 373661,
+      "sha256": "e4c1a59a327fe8bb936113a05e1ff1a3990970a32ae7924b1f1921af78d17018",
+      "paths": [
+        "design/assets/scientist/processed-t032/upper-arm.png",
+        "game/public/assets/scientist/upper-arm.png"
+      ]
+    },
+    {
+      "bytes": 371722,
+      "copies": 2,
+      "extraBytes": 371722,
+      "sha256": "21b725c2fcfd59520b49e7851a1205da18317c8fa99d20ab12b611c0c085ae20",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/jump-02.png",
+        "game/public/assets/scientist/jump-02.png"
+      ]
+    },
+    {
+      "bytes": 367580,
+      "copies": 2,
+      "extraBytes": 367580,
+      "sha256": "41baf019218569d41b5b4653273ed836f86ff553f7649a10dd85c00f8e21b355",
+      "paths": [
+        "design/assets/scientist/hurt-dead-t037/processed/dead-01.png",
+        "game/public/assets/scientist/dead-01.png"
+      ]
+    },
+    {
+      "bytes": 356959,
+      "copies": 2,
+      "extraBytes": 356959,
+      "sha256": "c336ed7999a56eef115db2ffc74e795c106c20c426674eef7c6e0d0a7afa6e1d",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-05.png",
+        "game/public/assets/scientist/run-05.png"
+      ]
+    },
+    {
+      "bytes": 117641,
+      "copies": 4,
+      "extraBytes": 352923,
+      "sha256": "cc3daa630acbe32b4c6a349c3af30c86964d43e1a46bf3cba4b4dd0b4f9f6264",
+      "paths": [
+        "game/screenshots/t015-dead.png",
+        "game/screenshots/t056/baseline-t015-dead.png",
+        "game/screenshots/t059/baseline-t015-dead.png",
+        "game/screenshots/t046/snap-t015-dead.png"
+      ]
+    },
+    {
+      "bytes": 352202,
+      "copies": 2,
+      "extraBytes": 352202,
+      "sha256": "e351032e136110ce8c03efa09a99c98cf4041951b5a66f23f97dd45b8979e5c2",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-01.png",
+        "game/public/assets/scientist/run-01.png"
+      ]
+    },
+    {
+      "bytes": 346147,
+      "copies": 2,
+      "extraBytes": 346147,
+      "sha256": "bce262133e74fb3f32d3af089dd5455aca13dfea344cf38183b382827245ea8e",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-03.png",
+        "game/public/assets/scientist/run-03.png"
+      ]
+    },
+    {
+      "bytes": 345019,
+      "copies": 2,
+      "extraBytes": 345019,
+      "sha256": "28ee21443e9b2a3b430dbc39ac7b0be9c5d19bf6e1cb323b4f605ef9cec81772",
+      "paths": [
+        "design/assets/scientist/hurt-dead-t037/processed/dead-02.png",
+        "game/public/assets/scientist/dead-02.png"
+      ]
+    },
+    {
+      "bytes": 341141,
+      "copies": 2,
+      "extraBytes": 341141,
+      "sha256": "500b3b15f4d119a0e7eb456d2848cc8508592031d3613a1c4105ed55860e1365",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-07.png",
+        "game/public/assets/scientist/run-07.png"
+      ]
+    },
+    {
+      "bytes": 341050,
+      "copies": 2,
+      "extraBytes": 341050,
+      "sha256": "28bcbbc743dbf8172d8aaee592d90ded91f3e2aeee45cd3b53199aec0f2f10a2",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-08.png",
+        "game/public/assets/scientist/run-08.png"
+      ]
+    },
+    {
+      "bytes": 111759,
+      "copies": 4,
+      "extraBytes": 335277,
+      "sha256": "b494780b0503e84360f91ed5fce15bf898c15024a3d5d1df37ab54552cbeed27",
+      "paths": [
+        "game/screenshots/t060/baseline-t013-crossing.png",
+        "game/screenshots/t059/baseline-t013-crossing.png",
+        "game/screenshots/t057/baseline-t013-crossing.png",
+        "game/screenshots/t055/baseline-t013-crossing.png"
+      ]
+    },
+    {
+      "bytes": 111610,
+      "copies": 4,
+      "extraBytes": 334830,
+      "sha256": "a098f61bb3cadcb9af647f74138f11e80cdbc79bfde6d3c3966be7ab16d71e5d",
+      "paths": [
+        "game/screenshots/t013-branch.png",
+        "game/screenshots/t061/baseline-t013-branch.png",
+        "game/screenshots/t059/baseline-t013-branch.png",
+        "game/screenshots/t047/baseline-t013-branch.png"
+      ]
+    },
+    {
+      "bytes": 111427,
+      "copies": 4,
+      "extraBytes": 334281,
+      "sha256": "375670f6864e329693a9898b91b1128f73581c94fe752cfb8e1439aceff7c62d",
+      "paths": [
+        "game/screenshots/t013-crossing.png",
+        "game/screenshots/t058/baseline-t013-crossing.png",
+        "game/screenshots/t062/baseline-t013-crossing.png",
+        "game/screenshots/t053/baseline-t013-crossing.png"
+      ]
+    },
+    {
+      "bytes": 333251,
+      "copies": 2,
+      "extraBytes": 333251,
+      "sha256": "a4aa650a3cd3d2616d640b04d07de1fe7f6a39420ab8de4cdb36dae69df01871",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-04.png",
+        "game/public/assets/scientist/run-04.png"
+      ]
+    },
+    {
+      "bytes": 106674,
+      "copies": 4,
+      "extraBytes": 320022,
+      "sha256": "d97f91f9b22f7bbf8ab58a1dc3b80cf80fe6904ceebe8f20ff5427e342e2aece",
+      "paths": [
+        "game/screenshots/t060/baseline-t016-escape-airborne.png",
+        "game/screenshots/t059/baseline-t016-escape-airborne.png",
+        "game/screenshots/t062/baseline-t016-escape-airborne.png",
+        "game/screenshots/t053/baseline-t016-escape-airborne.png"
+      ]
+    },
+    {
+      "bytes": 312665,
+      "copies": 2,
+      "extraBytes": 312665,
+      "sha256": "4f5f9d173f0d2f464b2a607217a4f381ea2cf7584e9aedd40fe94fdaeb2631d6",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-06.png",
+        "game/public/assets/scientist/run-06.png"
+      ]
+    },
+    {
+      "bytes": 103211,
+      "copies": 4,
+      "extraBytes": 309633,
+      "sha256": "416a66838ab5209ecb9de1f10b3943726e2c2fcf9927d9b4c4a561eb8751b865",
+      "paths": [
+        "game/screenshots/t058/baseline-t013-open.png",
+        "game/screenshots/t060/baseline-t013-open.png",
+        "game/screenshots/t061/baseline-t013-open.png",
+        "game/screenshots/t055/baseline-t013-open.png"
+      ]
+    },
+    {
+      "bytes": 306448,
+      "copies": 2,
+      "extraBytes": 306448,
+      "sha256": "f4b960b59ec2fcdf979220c26f280a3fe8bf5e7c0a4651e3066b2808401d8851",
+      "paths": [
+        "design/assets/scientist/run-t033/processed/run-02.png",
+        "game/public/assets/scientist/run-02.png"
+      ]
+    },
+    {
+      "bytes": 306398,
+      "copies": 2,
+      "extraBytes": 306398,
+      "sha256": "5c30a4f06afe07669a88feebecd85e9145ba88f5e1a88ca5ca2964d40816ab1a",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/idle-03.png",
+        "game/public/assets/scientist/idle-03.png"
+      ]
+    },
+    {
+      "bytes": 101031,
+      "copies": 4,
+      "extraBytes": 303093,
+      "sha256": "f9f086e454c06cfdcaf4ab4bc13477c8a72be2fdf75e7fda4e9e263047ca5c39",
+      "paths": [
+        "game/screenshots/latest.png",
+        "game/screenshots/t046/retry.png",
+        "game/screenshots/t055/baseline-t015-restart.png",
+        "game/screenshots/t053/baseline-t015-restart.png"
+      ]
+    },
+    {
+      "bytes": 299181,
+      "copies": 2,
+      "extraBytes": 299181,
+      "sha256": "11acc57fc1ae9d73387068a9e5b81a563fa6c416a1703eab6a55d3e66dc71cff",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/idle-02.png",
+        "game/public/assets/scientist/idle-02.png"
+      ]
+    },
+    {
+      "bytes": 295460,
+      "copies": 2,
+      "extraBytes": 295460,
+      "sha256": "0312261ddfaeda76a3b76b3149c6994629ebecf05d24d65e2202900aab485f81",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/idle-04.png",
+        "game/public/assets/scientist/idle-04.png"
+      ]
+    },
+    {
+      "bytes": 288460,
+      "copies": 2,
+      "extraBytes": 288460,
+      "sha256": "9697cd6e5762a6253674bceb49a099dcba218964cf3f192154e2f4cc69337468",
+      "paths": [
+        "design/assets/scientist/idle-jump-t036/processed/idle-01.png",
+        "game/public/assets/scientist/idle-01.png"
+      ]
+    },
+    {
+      "bytes": 141512,
+      "copies": 3,
+      "extraBytes": 283024,
+      "sha256": "c87c39088058a49430c1cd72d5a3246d3a0e17e6c088d88041b2b0d19baeb8e7",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-05.png",
+        "game/screenshots/t046/run-1-scientist-run-05.png",
+        "game/screenshots/t038/run-1-scientist-run-05.png"
+      ]
+    },
+    {
+      "bytes": 141295,
+      "copies": 3,
+      "extraBytes": 282590,
+      "sha256": "e223aba27964b00c88c29092c98f07a0ce9730b338f4e62f08bce64ef076cdb6",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-01.png",
+        "game/screenshots/t046/run-1-scientist-run-01.png",
+        "game/screenshots/t038/run-1-scientist-run-01.png"
+      ]
+    },
+    {
+      "bytes": 139478,
+      "copies": 3,
+      "extraBytes": 278956,
+      "sha256": "d8c5aad32cf9cb52ddd8ca63d278e719dfedd9486415349f632d8c30ab65f199",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-07.png",
+        "game/screenshots/t046/run-1-scientist-run-07.png",
+        "game/screenshots/t038/run-1-scientist-run-07.png"
+      ]
+    },
+    {
+      "bytes": 139316,
+      "copies": 3,
+      "extraBytes": 278632,
+      "sha256": "94c4f4374a3b2e87b44a593ccff71537e894146b1606d73829deeab74f331899",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-08.png",
+        "game/screenshots/t046/run-1-scientist-run-08.png",
+        "game/screenshots/t038/run-1-scientist-run-08.png"
+      ]
+    },
+    {
+      "bytes": 139224,
+      "copies": 3,
+      "extraBytes": 278448,
+      "sha256": "82d94059512fa97417dbfe94c19027e87635d5c05733a10dd876659f98f4fc21",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-06.png",
+        "game/screenshots/t046/run-1-scientist-run-06.png",
+        "game/screenshots/t038/run-1-scientist-run-06.png"
+      ]
+    },
+    {
+      "bytes": 139144,
+      "copies": 3,
+      "extraBytes": 278288,
+      "sha256": "0499fa8f65713a3a7679db6411a63cfbbd850e3f8fde56d8c3e1529b99054f2e",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-04.png",
+        "game/screenshots/t046/run-1-scientist-run-04.png",
+        "game/screenshots/t038/run-1-scientist-run-04.png"
+      ]
+    },
+    {
+      "bytes": 138629,
+      "copies": 3,
+      "extraBytes": 277258,
+      "sha256": "033a272f3a3a8800a1cc0575e7bd9656affaa252cfb6b6ba747e20d5dccbb1e2",
+      "paths": [
+        "game/screenshots/t040/run-1-scientist-run-02.png",
+        "game/screenshots/t046/run-1-scientist-run-02.png",
+        "game/screenshots/t038/run-1-scientist-run-02.png"
+      ]
+    },
+    {
+      "bytes": 136922,
+      "copies": 3,
+      "extraBytes": 273844,
+      "sha256": "a9b0c88e9a2654c5ebac8faa850d6153c7db047d8c9080b19bead0313aab4a26",
+      "paths": [
+        "game/screenshots/t040/idle--1-scientist-idle-04.png",
+        "game/screenshots/t046/idle--1-scientist-idle-04.png",
+        "game/screenshots/t038/idle--1-scientist-idle-04.png"
+      ]
+    },
+    {
+      "bytes": 136809,
+      "copies": 3,
+      "extraBytes": 273618,
+      "sha256": "80b1cbe2a3f7559df66e52dd069ef73ee016904dbe72ca3b8ad33f99d3327bc1",
+      "paths": [
+        "game/screenshots/t040/idle--1-scientist-idle-01.png",
+        "game/screenshots/t046/idle--1-scientist-idle-01.png",
+        "game/screenshots/t038/idle--1-scientist-idle-01.png"
+      ]
+    },
+    {
+      "bytes": 136804,
+      "copies": 3,
+      "extraBytes": 273608,
+      "sha256": "ee60e302c81293b82c4c9774db4080742eb0d35b5337a2d07853c9ba532d55e9",
+      "paths": [
+        "game/screenshots/t040/idle-1-scientist-idle-04.png",
+        "game/screenshots/t046/idle-1-scientist-idle-04.png",
+        "game/screenshots/t038/idle-1-scientist-idle-04.png"
+      ]
+    },
+    {
+      "bytes": 136800,
+      "copies": 3,
+      "extraBytes": 273600,
+      "sha256": "97aea1d2449c2e42f7a362a0d11ef3df7b19fc48d2f9cd125e5e5ec046cdb725",
+      "paths": [
+        "game/screenshots/t040/jump--1-scientist-idle-01.png",
+        "game/screenshots/t046/jump--1-scientist-idle-01.png",
+        "game/screenshots/t038/jump--1-scientist-idle-01.png"
+      ]
+    },
+    {
+      "bytes": 136620,
+      "copies": 3,
+      "extraBytes": 273240,
+      "sha256": "e9811c8927de59433a88e2f52abc3f867ec9523d2bdf61cd966ee0b482923f20",
+      "paths": [
+        "game/screenshots/t040/idle-1-scientist-idle-01.png",
+        "game/screenshots/t046/idle-1-scientist-idle-01.png",
+        "game/screenshots/t038/idle-1-scientist-idle-01.png"
+      ]
+    },
+    {
+      "bytes": 136600,
+      "copies": 3,
+      "extraBytes": 273200,
+      "sha256": "551c7bb40d0eff2fafdc1a53a5d50b1022f1b062d82382296063752c24de0a26",
+      "paths": [
+        "game/screenshots/t040/jump-1-scientist-idle-01.png",
+        "game/screenshots/t046/jump-1-scientist-idle-01.png",
+        "game/screenshots/t038/jump-1-scientist-idle-01.png"
+      ]
+    },
+    {
+      "bytes": 136298,
+      "copies": 3,
+      "extraBytes": 272596,
+      "sha256": "4da038779dc078103dbabc8a5455cd3e1bb05ccf44c6203912d29d5a2b2abf9e",
+      "paths": [
+        "game/screenshots/t040/jump--1-scientist-jump-03.png",
+        "game/screenshots/t046/jump--1-scientist-jump-03.png",
+        "game/screenshots/t038/jump--1-scientist-jump-03.png"
+      ]
+    },
+    {
+      "bytes": 136009,
+      "copies": 3,
+      "extraBytes": 272018,
+      "sha256": "962149026e5abefc1182b05799594739d07de617d73d0f08beb30a1b55667b87",
+      "paths": [
+        "game/screenshots/t040/jump-1-scientist-jump-03.png",
+        "game/screenshots/t046/jump-1-scientist-jump-03.png",
+        "game/screenshots/t038/jump-1-scientist-jump-03.png"
+      ]
+    },
+    {
+      "bytes": 135208,
+      "copies": 3,
+      "extraBytes": 270416,
+      "sha256": "9fa35251c0c2627a68ef4be3ed4e3943315861a65113d5bf20b554515f28accc",
+      "paths": [
+        "game/screenshots/t011-hurt.png",
+        "game/screenshots/t042/baseline-hurt.png",
+        "game/screenshots/t041/baseline-hurt.png"
+      ]
+    },
+    {
+      "bytes": 133869,
+      "copies": 3,
+      "extraBytes": 267738,
+      "sha256": "e80f69e71c57f249eedec0785fab8ad91b5d61753bf47af4eff8e7b7aebebde4",
+      "paths": [
+        "game/screenshots/t040/jump--1-scientist-jump-02.png",
+        "game/screenshots/t046/jump--1-scientist-jump-02.png",
+        "game/screenshots/t038/jump--1-scientist-jump-02.png"
+      ]
+    },
+    {
+      "bytes": 133768,
+      "copies": 3,
+      "extraBytes": 267536,
+      "sha256": "5cd4df5f23bfc5a89f06d016a07ad7e2948b2f1731ab6fb210ee94f28b4eb748",
+      "paths": [
+        "game/screenshots/t040/jump-1-scientist-jump-02.png",
+        "game/screenshots/t046/jump-1-scientist-jump-02.png",
+        "game/screenshots/t038/jump-1-scientist-jump-02.png"
+      ]
+    },
+    {
+      "bytes": 250643,
+      "copies": 2,
+      "extraBytes": 250643,
+      "sha256": "41303a597b9eae4021c1b348b008827104ba8d00c61bf05ac5e6b05c7470b490",
+      "paths": [
+        "design/assets/scientist/hurt-dead-t037/processed/dead-04.png",
+        "game/public/assets/scientist/dead-04.png"
+      ]
+    },
+    {
+      "bytes": 111464,
+      "copies": 3,
+      "extraBytes": 222928,
+      "sha256": "a64482432c1606cc7c6c2a9f84b24a1aef4e50008c7fd8982f711c04bebe8a5b",
+      "paths": [
+        "game/screenshots/t060/baseline-t015-checkpoint.png",
+        "game/screenshots/t055/baseline-t015-checkpoint.png",
+        "game/screenshots/t053/baseline-t015-checkpoint.png"
+      ]
+    },
+    {
+      "bytes": 109027,
+      "copies": 3,
+      "extraBytes": 218054,
+      "sha256": "83f7279166221b1f655c5ccb9b6129d5721774cc7513d702beebb44559b29a10",
+      "paths": [
+        "game/screenshots/t013-closed.png",
+        "game/screenshots/t059/baseline-t013-closed.png",
+        "game/screenshots/t062/baseline-t013-closed.png"
+      ]
+    },
+    {
+      "bytes": 107488,
+      "copies": 3,
+      "extraBytes": 214976,
+      "sha256": "c348fbb52bce9826a7b3fdd6e21a93da8e88a18e9db8dcef032fcc43d078dc1a",
+      "paths": [
+        "game/screenshots/t014-arrived.png",
+        "game/screenshots/t061/baseline-t014-arrived.png",
+        "game/screenshots/t057/baseline-t014-arrived.png"
+      ]
+    },
+    {
+      "bytes": 107109,
+      "copies": 3,
+      "extraBytes": 214218,
+      "sha256": "68a803400c7b44b9e9420efdb3afc3c248c453a4905e38cabb9120eec7a8382a",
+      "paths": [
+        "game/screenshots/t056/baseline-t014-arrived.png",
+        "game/screenshots/t047/baseline-t014-arrived.png",
+        "game/screenshots/t055/baseline-t014-arrived.png"
+      ]
+    },
+    {
+      "bytes": 106301,
+      "copies": 3,
+      "extraBytes": 212602,
+      "sha256": "7383116d3076aa21d633481a84c8593906225905e1dfbe9b143179b4830c2d1c",
+      "paths": [
+        "game/screenshots/t056/baseline-t014-claimed.png",
+        "game/screenshots/t047/baseline-t014-claimed.png",
+        "game/screenshots/t055/baseline-t014-claimed.png"
+      ]
+    },
+    {
+      "bytes": 205812,
+      "copies": 2,
+      "extraBytes": 205812,
+      "sha256": "51ef62a1cb3b17516f1329084a777e0c61b16aad147c371e46b31a07f0862043",
+      "paths": [
+        "design/assets/scientist/processed-t032/near-glove.png",
+        "game/public/assets/scientist/near-glove.png"
+      ]
+    },
+    {
+      "bytes": 197538,
+      "copies": 2,
+      "extraBytes": 197538,
+      "sha256": "1d494244b7d16da99960929391e989a8b0de4bf2197e510d6e9569f2515a8573",
+      "paths": [
+        "game/screenshots/t045/direction--1-000--1-idle-robot-idle-0-normal.png",
+        "game/screenshots/t046/direction--1-000--1-idle-robot-idle-0-normal.png"
+      ]
+    },
+    {
+      "bytes": 186748,
+      "copies": 2,
+      "extraBytes": 186748,
+      "sha256": "dfc3b04d1b590d2ca6cd310e5d2b80ab80a408fcf03e3c7e775712d092d78afd",
+      "paths": [
+        "design/assets/scientist/processed-t032/forearm.png",
+        "game/public/assets/scientist/forearm.png"
+      ]
+    },
+    {
+      "bytes": 171215,
+      "copies": 2,
+      "extraBytes": 171215,
+      "sha256": "0de3d7a3be754cf40055dad41ce7d6f248a10c72ecc2cef92e6554cfc9f8d27e",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-dead-01.png",
+        "game/screenshots/t046/reactions--1-scientist-dead-01.png"
+      ]
+    },
+    {
+      "bytes": 171023,
+      "copies": 2,
+      "extraBytes": 171023,
+      "sha256": "cbcaf70ea1fa878e983f575adbf483a72a5288cbceb3dad5197ee42bb6b5a330",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-dead-03.png",
+        "game/screenshots/t046/reactions--1-scientist-dead-03.png"
+      ]
+    },
+    {
+      "bytes": 169928,
+      "copies": 2,
+      "extraBytes": 169928,
+      "sha256": "fb173921e7ca14262673c8f748ac8fdb1c07d2b5ec62e059db92f1d548f7196e",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-dead-02.png",
+        "game/screenshots/t046/reactions--1-scientist-dead-02.png"
+      ]
+    },
+    {
+      "bytes": 166987,
+      "copies": 2,
+      "extraBytes": 166987,
+      "sha256": "f60ecf89f08e16c5d13fad78ff9bc0ffcd0190290916a0c790b4179a2fa06e9d",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-dead-04.png",
+        "game/screenshots/t046/reactions--1-scientist-dead-04.png"
+      ]
+    },
+    {
+      "bytes": 160406,
+      "copies": 2,
+      "extraBytes": 160406,
+      "sha256": "35118c997e5f40b841459fd87f42c950ed0fc5535545f91aa4578cad2f2c3187",
+      "paths": [
+        "game/screenshots/t046/hurt-moving-scientist-hurt-01.png",
+        "game/screenshots/t039/hurt-moving-scientist-hurt-01.png"
+      ]
+    },
+    {
+      "bytes": 159836,
+      "copies": 2,
+      "extraBytes": 159836,
+      "sha256": "46cac1f11be201e36851aeb870ee310b222109a19495f2299722f20d107db866",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-hurt-01.png",
+        "game/screenshots/t046/reactions--1-scientist-hurt-01.png"
+      ]
+    },
+    {
+      "bytes": 159012,
+      "copies": 2,
+      "extraBytes": 159012,
+      "sha256": "9b719c0618f424ba25333b7e9513e8c562e7c650903132ed3dc41345b0958a3e",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-hurt-02.png",
+        "game/screenshots/t046/reactions--1-scientist-hurt-02.png"
+      ]
+    },
+    {
+      "bytes": 158439,
+      "copies": 2,
+      "extraBytes": 158439,
+      "sha256": "39e9e736a4fc9b21396058ab4fde3f9d7a6bd77c5a11b77bb0f549ab41fde2f0",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-idle-03.png",
+        "game/screenshots/t046/reactions--1-scientist-idle-03.png"
+      ]
+    },
+    {
+      "bytes": 158132,
+      "copies": 2,
+      "extraBytes": 158132,
+      "sha256": "5d7c2534928a85c75f9225f727fb8b024692899d27d753b4bf4bd4e218150344",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-idle-04.png",
+        "game/screenshots/t046/reactions--1-scientist-idle-04.png"
+      ]
+    },
+    {
+      "bytes": 158064,
+      "copies": 2,
+      "extraBytes": 158064,
+      "sha256": "177dc38d90aa92d488f2f1b77a8b4b2b7d2e30359b69933b051ce2331bd167cd",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-idle-02.png",
+        "game/screenshots/t046/reactions--1-scientist-idle-02.png"
+      ]
+    },
+    {
+      "bytes": 157965,
+      "copies": 2,
+      "extraBytes": 157965,
+      "sha256": "c189fe4c4c3dbbfecf9823ecd09f4e272c1c39cda7e5080652d50aee5ad3d4a4",
+      "paths": [
+        "game/screenshots/t040/reactions--1-scientist-idle-01.png",
+        "game/screenshots/t046/reactions--1-scientist-idle-01.png"
+      ]
+    },
+    {
+      "bytes": 141511,
+      "copies": 2,
+      "extraBytes": 141511,
+      "sha256": "c7e14ddac89542ed80c1751f3ba0f40598dc88ecf9ef3ee6a3d70d701676c28e",
+      "paths": [
+        "game/screenshots/t040/run--1-scientist-run-05.png",
+        "game/screenshots/t038/run--1-scientist-run-05.png"
+      ]
+    },
+    {
+      "bytes": 139762,
+      "copies": 2,
+      "extraBytes": 139762,
+      "sha256": "a5c45ecdd943853fc26df85e06890458ced983880ba92fe176d5f6dbec86d864",
+      "paths": [
+        "game/screenshots/t040/run--1-scientist-run-03.png",
+        "game/screenshots/t038/run--1-scientist-run-03.png"
+      ]
+    },
+    {
+      "bytes": 139717,
+      "copies": 2,
+      "extraBytes": 139717,
+      "sha256": "c822bdd6c4a6a9439aeba7f6c1b0bca353c51a485aa31f97f32ee2655fbf7256",
+      "paths": [
+        "game/screenshots/t046/run-1-scientist-run-03.png",
+        "game/screenshots/t038/run-1-scientist-run-03.png"
+      ]
+    },
+    {
+      "bytes": 139465,
+      "copies": 2,
+      "extraBytes": 139465,
+      "sha256": "6e8eb894348a5b93c4c3592b17d40851dd7a410d2df49b59d85921e5672b3e9e",
+      "paths": [
+        "game/screenshots/t040/run--1-scientist-run-07.png",
+        "game/screenshots/t038/run--1-scientist-run-07.png"
+      ]
+    },
+    {
+      "bytes": 139424,
+      "copies": 2,
+      "extraBytes": 139424,
+      "sha256": "febc9de6fd6f3b82a88755308cda099925afd0540ad31ad36f843a8c56e33132",
+      "paths": [
+        "game/screenshots/t040/run--1-scientist-run-06.png",
+        "game/screenshots/t038/run--1-scientist-run-06.png"
+      ]
+    },
+    {
+      "bytes": 139322,
+      "copies": 2,
+      "extraBytes": 139322,
+      "sha256": "f6a0abc9fff8dfbe94d71fe19662360713c63d7bfc523f767efb7c8c22134fe6",
+      "paths": [
+        "game/screenshots/t046/run--1-scientist-run-04.png",
+        "game/screenshots/t038/run--1-scientist-run-04.png"
+      ]
+    },
+    {
+      "bytes": 139122,
+      "copies": 2,
+      "extraBytes": 139122,
+      "sha256": "adc05e7e41ba7cbc56268f018741d03b1fd01f0802de2e072654496d8d1f1631",
+      "paths": [
+        "game/screenshots/t040/run--1-scientist-run-08.png",
+        "game/screenshots/t038/run--1-scientist-run-08.png"
+      ]
+    },
+    {
+      "bytes": 134174,
+      "copies": 2,
+      "extraBytes": 134174,
+      "sha256": "d05e2fe6d8bcb854d7cc650667143e41ba46ed2d18b5aa61f2cdc148406f921f",
+      "paths": [
+        "game/screenshots/t011-warning.png",
+        "game/screenshots/t043/baseline-warning.png"
+      ]
+    },
+    {
+      "bytes": 117673,
+      "copies": 2,
+      "extraBytes": 117673,
+      "sha256": "4a6bfd82f5de7272443ad4d066ecf5303c0a8eb2aedd016f7ed3507043760edd",
+      "paths": [
+        "game/screenshots/t047/baseline-t015-dead.png",
+        "game/screenshots/t055/baseline-t015-dead.png"
+      ]
+    },
+    {
+      "bytes": 117613,
+      "copies": 2,
+      "extraBytes": 117613,
+      "sha256": "8717886b8cd4a062d4f3068828b219ab12d2013b36c14f0ed8ed713e983e568e",
+      "paths": [
+        "game/screenshots/t061/baseline-t015-dead.png",
+        "game/screenshots/t062/baseline-t015-dead.png"
+      ]
+    },
+    {
+      "bytes": 111965,
+      "copies": 2,
+      "extraBytes": 111965,
+      "sha256": "5a1e7a66bf5251840dcb36674b452fadc839cc326be70ea0611cb2960083b578",
+      "paths": [
+        "game/screenshots/t060/baseline-t013-branch.png",
+        "game/screenshots/t053/baseline-t013-branch.png"
+      ]
+    },
+    {
+      "bytes": 111934,
+      "copies": 2,
+      "extraBytes": 111934,
+      "sha256": "a6951a26549ba3eff43933a72a8882c508232ef2a68ae0953436820065d22e29",
+      "paths": [
+        "game/screenshots/t059/baseline-t016-escape-retry.png",
+        "game/screenshots/t047/baseline-t016-escape-retry.png"
+      ]
+    },
+    {
+      "bytes": 111842,
+      "copies": 2,
+      "extraBytes": 111842,
+      "sha256": "def619dac362f7c487e2d24f9f9df6740a81b28d539b5f405b3d891ebc60652b",
+      "paths": [
+        "game/screenshots/t057/baseline-t013-branch.png",
+        "game/screenshots/t046/snap-t013-branch.png"
+      ]
+    },
+    {
+      "bytes": 111727,
+      "copies": 2,
+      "extraBytes": 111727,
+      "sha256": "2e0375be2f2c01b902b996d74d24e122f34ac0eb639547e369f07d6d46af902f",
+      "paths": [
+        "game/screenshots/t058/baseline-t013-branch.png",
+        "game/screenshots/t062/baseline-t013-branch.png"
+      ]
+    },
+    {
+      "bytes": 111725,
+      "copies": 2,
+      "extraBytes": 111725,
+      "sha256": "5f893f7f826dacfbd7aeb6e981a64217eac77a924a190328dc4e50d03959fa4c",
+      "paths": [
+        "game/screenshots/t061/baseline-t013-crossing.png",
+        "game/screenshots/t046/snap-t013-crossing.png"
+      ]
+    },
+    {
+      "bytes": 109375,
+      "copies": 2,
+      "extraBytes": 109375,
+      "sha256": "3a8ebc767276adf42e418a616c2e537b300edaac61f763c22204502d09bd2d12",
+      "paths": [
+        "game/screenshots/t047/baseline-t015-retry.png",
+        "game/screenshots/t053/baseline-t015-retry.png"
+      ]
+    },
+    {
+      "bytes": 109245,
+      "copies": 2,
+      "extraBytes": 109245,
+      "sha256": "d2a0314323a0c72405874a67510726de321d7b0e31db7e0e75142fe05ea8205e",
+      "paths": [
+        "game/screenshots/t014-waiting.png",
+        "game/screenshots/t062/baseline-t014-waiting.png"
+      ]
+    },
+    {
+      "bytes": 108972,
+      "copies": 2,
+      "extraBytes": 108972,
+      "sha256": "8cd2d269ec24f91e3d4d69b6618e6b5faa86bfdcaacacb8169c2ad3b352e1d8a",
+      "paths": [
+        "game/screenshots/t056/baseline-t013-closed.png",
+        "game/screenshots/t053/baseline-t013-closed.png"
+      ]
+    },
+    {
+      "bytes": 106656,
+      "copies": 2,
+      "extraBytes": 106656,
+      "sha256": "7ab35e6553caf59ab47b4c9809076f4bfcfbfd686491b708d7fd18c9d0f19a1d",
+      "paths": [
+        "game/screenshots/t016-escape-airborne.png",
+        "game/screenshots/t058/baseline-t016-escape-airborne.png"
+      ]
+    },
+    {
+      "bytes": 106649,
+      "copies": 2,
+      "extraBytes": 106649,
+      "sha256": "1d3b88f4854f05eb342db7c00211884e1c9330cc73c6e5fc08a64d5dbf171b82",
+      "paths": [
+        "game/screenshots/t056/baseline-t016-escape-airborne.png",
+        "game/screenshots/t055/baseline-t016-escape-airborne.png"
+      ]
+    },
+    {
+      "bytes": 103426,
+      "copies": 2,
+      "extraBytes": 103426,
+      "sha256": "4974701565c834947c56a608b4315613f4c887f3618fcfb22e611899010c7608",
+      "paths": [
+        "game/screenshots/t047/baseline-t013-open.png",
+        "game/screenshots/t046/snap-t013-open.png"
+      ]
+    },
+    {
+      "bytes": 103396,
+      "copies": 2,
+      "extraBytes": 103396,
+      "sha256": "d0348ee6910a5a188f20c79761e488f5533414120ce19531f421bfa915fe9beb",
+      "paths": [
+        "game/screenshots/t056/baseline-t013-open.png",
+        "game/screenshots/t053/baseline-t013-open.png"
+      ]
+    },
+    {
+      "bytes": 101274,
+      "copies": 2,
+      "extraBytes": 101274,
+      "sha256": "69a7e5dbd25b60846d08634023513ec638087a173a802bdffec1ee407d1286d2",
+      "paths": [
+        "game/screenshots/t019/retry.png",
+        "game/screenshots/t019/production.png"
+      ]
+    },
+    {
+      "bytes": 100873,
+      "copies": 2,
+      "extraBytes": 100873,
+      "sha256": "1ec8f8ce456097c8383aaae7c3bc86abe0b5219c17b85c403fc1f013cd18c3cf",
+      "paths": [
+        "game/screenshots/t040/aim-1.png",
+        "game/screenshots/t038/aim-1.png"
+      ]
+    },
+    {
+      "bytes": 100727,
+      "copies": 2,
+      "extraBytes": 100727,
+      "sha256": "909f842685a882f69f9bc32055c20f05dd814fba2e6545569e042e5dae43dabc",
+      "paths": [
+        "game/screenshots/t040/aim-0.png",
+        "game/screenshots/t038/aim-0.png"
+      ]
+    },
+    {
+      "bytes": 100724,
+      "copies": 2,
+      "extraBytes": 100724,
+      "sha256": "d6daa8bd1ed6b9d7be5b2209c649a7b8560408ba3bbbf73503a31f568578c81f",
+      "paths": [
+        "game/screenshots/t040/production.png",
+        "game/screenshots/t039/production.png"
+      ]
+    },
+    {
+      "bytes": 100619,
+      "copies": 2,
+      "extraBytes": 100619,
+      "sha256": "248c71c83676dd151a9432d69435a04af3dab6e63bac1afa0aab7d627ae08567",
+      "paths": [
+        "game/screenshots/t040/aim-5.png",
+        "game/screenshots/t038/aim-5.png"
+      ]
+    },
+    {
+      "bytes": 100164,
+      "copies": 2,
+      "extraBytes": 100164,
+      "sha256": "8f96a54f1ade94ac4cf317534c4bcec8fa81ac67bc964a9a8042597cbe2712b7",
+      "paths": [
+        "game/screenshots/t040/aim-2.png",
+        "game/screenshots/t038/aim-2.png"
+      ]
+    },
+    {
+      "bytes": 26950,
+      "copies": 2,
+      "extraBytes": 26950,
+      "sha256": "56899c354586b300641b2b895e0ed32b250f16ee28491a977c5b72b71b5cf251",
+      "paths": [
+        "game/screenshots/t045/lifecycle.json",
+        "game/screenshots/t046/lifecycle.json"
+      ]
+    },
+    {
+      "bytes": 3905,
+      "copies": 2,
+      "extraBytes": 3905,
+      "sha256": "373eb29484e3e73f8c437d6d02d3ac1f7666ff375853688184807f0e425d8f55",
+      "paths": [
+        "docs/art/t032-registration.json",
+        "game/src/art/scientist-registration.json"
+      ]
+    },
+    {
+      "bytes": 1951,
+      "copies": 2,
+      "extraBytes": 1951,
+      "sha256": "a6e5312cb5c8b13a336032f5c48b2675efc8c85dfcec06c6e7c1ff0fcc8c8c0c",
+      "paths": [
+        "docs/art/t045-production-audit.json",
+        "docs/art/t046-production-audit.json"
+      ]
+    },
+    {
+      "bytes": 384,
+      "copies": 3,
+      "extraBytes": 768,
+      "sha256": "dec23502e47750ee53d1af1fcc8863f5e16b8a53d6fd54b679f753b228b64eff",
+      "paths": [
+        "docs/art/t061/source-check.log",
+        "docs/art/t057/geometry.log",
+        "docs/art/t057/geometry-check.log"
+      ]
+    },
+    {
+      "bytes": 442,
+      "copies": 2,
+      "extraBytes": 442,
+      "sha256": "eb6fb375f0e49c5c388bd8e7d93f3d26e446460a68072d9c9cee3b5c5477fed7",
+      "paths": [
+        "docs/art/t056/approvals.json",
+        "docs/art/t057/approvals.json"
+      ]
+    },
+    {
+      "bytes": 394,
+      "copies": 2,
+      "extraBytes": 394,
+      "sha256": "4496f77c886ec27265bd92aa35cf0df68a5096ad953ddfb726edc8ffd5c31c8c",
+      "paths": [
+        "docs/art/t060/approvals.json",
+        "docs/art/t059/approvals.json"
+      ]
+    },
+    {
+      "bytes": 129,
+      "copies": 2,
+      "extraBytes": 129,
+      "sha256": "7b756dd6a3e03a508b7be866094d8a4ac0e80e741c31d179f1f31a689749afa3",
+      "paths": [
+        "docs/art/t057/assembly.log",
+        "docs/art/t057/assembly-check.log"
+      ]
+    }
+  ]
+}
