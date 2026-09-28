@@ -1,6 +1,6 @@
 # 人類規劃、agent 交班開發
 
-本文件路徑均相對於獨立工作區。框架倉庫中請先用 tools/create_workspace.py 建立工作區。
+本文件路徑均相對於獨立工作區。新專案可從框架用 tools/create_workspace.py 建立；`--example swarm-agent` 只帶設計範例，不帶現有遊戲實作。要延續已開發的遊戲，請使用私人 `wcAmon/swarm-agent-work` 的 `codex/swarm-agent` 分支並先讀其交班與暫停狀態。
 
 ## 1. 規劃
 人類描述用途、對象與範圍。agent 用 grill 一次釐清一個有影響的問題；有視覺需求才先使用 concept-art。輸出 design/north-star.md 草案及可檢驗完成條件，人類確認後鎖定。

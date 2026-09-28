@@ -1,15 +1,16 @@
-# Swarm-Agent — handover-shift 遊戲開發範例
+# Swarm-Agent — handover-shift 設計範例
 
-這是示範「使用者規劃、agent 接班」的遊戲案例。框架名稱為 handover-shift；遊戲既有名稱保留 Swarm-Agent（使用者口語亦稱 swarm agents）。
+此目錄示範遊戲在進入分班實作前的規劃：北極星、blueprint、六區方向、美術規範、九張概念圖與人類核准紀錄。它**不含現有可玩遊戲的產品程式或開發歷史**。框架仍可從這份設計建立一個全新獨立工作區。
 
-## 目前狀態
-- 美術、六區方向與首版沙漠規格已確認。
-- [北極星原文](design/north-star.md) 已由人類核准全文，包括新增驗收條件；[核准紀錄](design/approval.json) 保存 SHA256。原文草案標籤保留為歷史，不必重新核准。
-- [交班](handover.md)：[blueprint 提案](design/blueprint.md) 已完成待核准；獨立工作區已建立於框架同層 swarm-agent-work/。
-- [概念圖看板](design/concept/board.html)：九張圖；001–003 為已淘汰方向。
-- game/ 僅有說明，沒有可執行遊戲。
+[北極星](design/north-star.md)及[blueprint](design/blueprint.md)均已核准；[北極星核准](design/approval.json)和[blueprint 核准](design/blueprint-approval.json)記錄原文 SHA256。原文中的草案字樣是歷史標籤，不表示核准失效。[概念圖看板](design/concept/board.html)含九張圖，001–003 為已淘汰方向。
 
-## 繼續開發
-範例存放於框架時，依框架 README 用 `tools/create_workspace.py <目的地> --example swarm-agent` 匯出，不能從框架根目錄直接執行遊戲班次。
+現有遊戲、完整素材與接班記錄保存在私人 [wcAmon/swarm-agent-work](https://github.com/wcAmon/swarm-agent-work) 倉庫的 `codex/swarm-agent` 分支。2026-09-28 備份提交為 `12090dbe532bca2291d2cc43b39750979e0c7bad`；第 47 班已完成，監督器處於暫停狀態。若有私人倉庫權限並要檢視可玩遊戲：
 
-匯出後本文件位於工作區根目錄：讀 AGENTS.md、handover.md，初始化 Git，完成 blueprint，再依 docs/WORKFLOW.md 接班。每個工作區的 .studio、Git、inbox 和交班各自獨立。
+```sh
+git clone --branch codex/swarm-agent --single-branch https://github.com/wcAmon/swarm-agent-work.git
+cd swarm-agent-work
+cat handover.md
+cd game && npm ci && npm run dev -- --port 5179 --strictPort
+```
+
+這些 clone／啟動遊戲指令不會啟動分班監督器；續班前須依私人倉庫的 `AGENTS.md`、`docs/BACKUP-RESTORE.md` 與即時狀態核對。沒有私人倉庫權限或要從設計另起專案時，在框架根目錄執行 `python3 tools/create_workspace.py ../swarm-agent-from-design --example swarm-agent`；目的地須不存在。這只匯出核准設計與工作區工具，**不會帶入第 47 班產品成果**。

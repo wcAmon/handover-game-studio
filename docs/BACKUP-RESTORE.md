@@ -1,6 +1,6 @@
 # Framework cloud backup and restore
 
-This repository is the reusable handover framework. The separately developed game has its own private Git repository and history; do not copy it into this repository root.
+This repository is the reusable handover framework. `examples/swarm-agent/` preserves the approved design and concept art as an exportable example; it does not contain the playable game's source or development history. The separately developed game is in the private [wcAmon/swarm-agent-work](https://github.com/wcAmon/swarm-agent-work) repository, branch `codex/swarm-agent`. Its backup checkpoint is `12090dbe532bca2291d2cc43b39750979e0c7bad` and its supervisor was paused after shift 47. Do not copy it into this repository root or start a shift from the design-only example.
 
 The cloud backup branch is `claude/inspiring-feynman-46c62a`. Select this branch explicitly when restoring so a future default-branch change does not select an older line of work:
 

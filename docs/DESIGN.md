@@ -5,8 +5,8 @@
 handover-shift 管理「人類規劃 → 核准 → agent 分班開發 → 驗證 → 交班」流程，並不固定產品類型。
 
 - 框架倉庫保存可重用工具、技能、模板與 harness；根 handover 是框架維護狀態。
-- examples 保存具體產品的需求及產物；Swarm-Agent 是目前的遊戲案例，範例有自己的交班、inbox、design 和 game。
-- 獨立工作區是實際執行班次的根目錄：具有自己的 harness、.studio、handover 與 Git 歷史。由 create_workspace.py 以白名單及 Git 追蹤檔案建立。
+- examples 保存具體產品的設計與核准快照；Swarm-Agent 是目前的遊戲案例，範例有自己的導覽、交班、inbox 和 design，但不含現有遊戲實作。
+- 獨立工作區是實際執行班次的根目錄：具有自己的 harness、.studio、handover 與 Git 歷史。新工作區可由 create_workspace.py 以白名單及 Git 追蹤檔案建立。現有可玩 Swarm-Agent 工作區獨立保存在私人 `wcAmon/swarm-agent-work` 倉庫，分支 `codex/swarm-agent`；範例匯出不承接其產品進度。
 
 保留單一工作區根目錄模型；新增 continuous.py 作 macOS／Linux 持續監督器，每班新建 Codex CLI context，驗證交班後立即續班。舊 shell／cron 路徑仍保留，不能與 continuous 同時啟動。
 
