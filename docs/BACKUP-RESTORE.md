@@ -2,7 +2,7 @@
 
 This repository is the reusable handover framework. The separately developed game has its own private Git repository and history; do not copy it into this repository root.
 
-The cloud backup branch is `claude/inspiring-feynman-46c62a`, not the older default branch. Restore this exact line of work with:
+The cloud backup branch is `claude/inspiring-feynman-46c62a`. Select this branch explicitly when restoring so a future default-branch change does not select an older line of work:
 
 ```sh
 git clone --branch claude/inspiring-feynman-46c62a --single-branch https://github.com/wcAmon/handover-game-studio.git
